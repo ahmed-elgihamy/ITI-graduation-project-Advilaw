@@ -1,0 +1,22 @@
+@AdviLaw_HostAddress = https://localhost:44302
+@id=1
+
+
+GET {{AdviLaw_HostAddress}}/api/specializations
+
+###
+
+###
+
+GET {{AdviLaw_HostAddress}}/api/specializations/2
+
+###
+
+POST {{AdviLaw_HostAddress}}/api/specializations
+Content-Type: application/json
+
+{
+"name": "dfdfdfdf"
+}
+
+###

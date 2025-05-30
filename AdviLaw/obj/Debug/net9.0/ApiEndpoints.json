@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "AdviLaw.Controllers.SpecializationsController",
+    "Method": "CreateSpecialization",
+    "RelativePath": "api/Specializations",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "command",
+        "Type": "AdviLaw.Application.Specializations.Command.CreateSpecialization.CreateSpeciallizationCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

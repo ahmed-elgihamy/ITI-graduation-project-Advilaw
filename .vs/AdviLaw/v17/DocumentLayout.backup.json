@@ -1,0 +1,417 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Repos\\AdviLaw\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\advilaw.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\advilaw.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\controllers\\specializationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\controllers\\specializationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|d:\\repos\\advilaw\\advilaw.infrastructure\\repositories\\specializationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|solutionrelative:advilaw.infrastructure\\repositories\\specializationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|d:\\repos\\advilaw\\advilaw.infrastructure\\persistence\\advilawdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|solutionrelative:advilaw.infrastructure\\persistence\\advilawdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|d:\\repos\\advilaw\\advilaw.domain\\repositories\\ispecializationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|solutionrelative:advilaw.domain\\repositories\\ispecializationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|d:\\repos\\advilaw\\advilaw.domain\\entities\\specialization .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|solutionrelative:advilaw.domain\\entities\\specialization .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\specializations\\command\\createspecialization\\createspeciallizationcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\specializations\\command\\createspecialization\\createspeciallizationcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\specializations\\command\\createspecialization\\createspecializationdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\specializations\\command\\createspecialization\\createspecializationdtovalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\specializations\\command\\createspecialization\\createspecializtionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\specializations\\command\\createspecialization\\createspecializtionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\specializations\\dtos\\specializationprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\specializations\\dtos\\specializationprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\specializations\\dtos\\specializationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\specializations\\dtos\\specializationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|d:\\repos\\advilaw\\advilaw.infrastructure\\advilaw.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|solutionrelative:advilaw.infrastructure\\advilaw.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|d:\\repos\\advilaw\\advilaw.application\\advilaw.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DDBDEA59-1BD7-48D8-A337-078B7E8395C5}|AdviLaw.Application\\AdviLaw.Application.csproj|solutionrelative:advilaw.application\\advilaw.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|d:\\repos\\advilaw\\advilaw.domain\\advilaw.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7C7D8B9E-6100-4BF8-A7F6-C8B9DA65BA75}|AdviLaw.Domain\\AdviLaw.Domain.csproj|solutionrelative:advilaw.domain\\advilaw.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|d:\\repos\\advilaw\\advilaw.infrastructure\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|solutionrelative:advilaw.infrastructure\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|d:\\repos\\advilaw\\advilaw\\advilaw.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1508AB7D-3E53-424D-B6F6-ECE044DF79BD}|AdviLaw\\AdviLaw.csproj|solutionrelative:advilaw\\advilaw.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|d:\\repos\\advilaw\\advilaw.infrastructure\\migrations\\20250529213950_addfiled.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FB78D07-1B1C-408D-B09B-EB309396BD0F}|AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj|solutionrelative:advilaw.infrastructure\\migrations\\20250529213950_addfiled.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 14,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ISpecializationRepository.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\Repositories\\ISpecializationRepository.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Domain\\Repositories\\ISpecializationRepository.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\Repositories\\ISpecializationRepository.cs",
+              "RelativeToolTip": "AdviLaw.Domain\\Repositories\\ISpecializationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T19:54:28.338Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdviLawDBContext.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Persistence\\AdviLawDBContext.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Infrastructure\\Persistence\\AdviLawDBContext.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Persistence\\AdviLawDBContext.cs*",
+              "RelativeToolTip": "AdviLaw.Infrastructure\\Persistence\\AdviLawDBContext.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T18:43:02.821Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SpecializationRepository.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Repositories\\SpecializationRepository.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Infrastructure\\Repositories\\SpecializationRepository.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Repositories\\SpecializationRepository.cs",
+              "RelativeToolTip": "AdviLaw.Infrastructure\\Repositories\\SpecializationRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwAkAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T20:30:00.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\Program.cs",
+              "RelativeDocumentMoniker": "AdviLaw\\Program.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\Program.cs*",
+              "RelativeToolTip": "AdviLaw\\Program.cs*",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T18:23:20.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SpecializationsController.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\Controllers\\SpecializationsController.cs",
+              "RelativeDocumentMoniker": "AdviLaw\\Controllers\\SpecializationsController.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\Controllers\\SpecializationsController.cs*",
+              "RelativeToolTip": "AdviLaw\\Controllers\\SpecializationsController.cs*",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAwC0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T19:46:38.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdviLaw.http",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\AdviLaw.http",
+              "RelativeDocumentMoniker": "AdviLaw\\AdviLaw.http",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\AdviLaw.http",
+              "RelativeToolTip": "AdviLaw\\AdviLaw.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-05-30T16:04:47.096Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Specialization .cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\Entities\\Specialization .cs",
+              "RelativeDocumentMoniker": "AdviLaw.Domain\\Entities\\Specialization .cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\Entities\\Specialization .cs",
+              "RelativeToolTip": "AdviLaw.Domain\\Entities\\Specialization .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T19:42:16.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Extensions\\ServiceCollectionExtensions.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Extensions\\ServiceCollectionExtensions.cs*",
+              "RelativeToolTip": "AdviLaw.Application\\Extensions\\ServiceCollectionExtensions.cs*",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T21:19:54.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CreateSpeciallizationCommand.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpeciallizationCommand.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpeciallizationCommand.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpeciallizationCommand.cs",
+              "RelativeToolTip": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpeciallizationCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T15:52:25.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CreateSpecializationDtoValidator.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializationDtoValidator.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializationDtoValidator.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializationDtoValidator.cs*",
+              "RelativeToolTip": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializationDtoValidator.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T14:58:32.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CreateSpecializtionHandler.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializtionHandler.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializtionHandler.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializtionHandler.cs*",
+              "RelativeToolTip": "AdviLaw.Application\\Specializations\\Command\\CreateSpecialization\\CreateSpecializtionHandler.cs*",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABgAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T15:53:11.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SpecializationProfile.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Dtos\\SpecializationProfile.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Specializations\\Dtos\\SpecializationProfile.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Dtos\\SpecializationProfile.cs*",
+              "RelativeToolTip": "AdviLaw.Application\\Specializations\\Dtos\\SpecializationProfile.cs*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T11:36:06.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SpecializationDto.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Dtos\\SpecializationDto.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\Specializations\\Dtos\\SpecializationDto.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\Specializations\\Dtos\\SpecializationDto.cs",
+              "RelativeToolTip": "AdviLaw.Application\\Specializations\\Dtos\\SpecializationDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-30T09:22:24.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AdviLaw.Infrastructure",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj",
+              "RelativeToolTip": "AdviLaw.Infrastructure\\AdviLaw.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-29T18:42:14.16Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AdviLaw.Application",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\AdviLaw.Application.csproj",
+              "RelativeDocumentMoniker": "AdviLaw.Application\\AdviLaw.Application.csproj",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Application\\AdviLaw.Application.csproj*",
+              "RelativeToolTip": "AdviLaw.Application\\AdviLaw.Application.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-29T19:51:40.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AdviLaw.Domain",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\AdviLaw.Domain.csproj",
+              "RelativeDocumentMoniker": "AdviLaw.Domain\\AdviLaw.Domain.csproj",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Domain\\AdviLaw.Domain.csproj",
+              "RelativeToolTip": "AdviLaw.Domain\\AdviLaw.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-29T18:38:35.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs*",
+              "RelativeToolTip": "AdviLaw.Infrastructure\\Extensions\\ServiceCollectionExtensions.cs*",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwBgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T19:12:30.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "AdviLaw\\appsettings.Development.json",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\appsettings.Development.json",
+              "RelativeToolTip": "AdviLaw\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-29T19:18:42.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\appsettings.json",
+              "RelativeDocumentMoniker": "AdviLaw\\appsettings.json",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\appsettings.json",
+              "RelativeToolTip": "AdviLaw\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-29T19:18:34.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AdviLaw",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw\\AdviLaw.csproj",
+              "RelativeDocumentMoniker": "AdviLaw\\AdviLaw.csproj",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw\\AdviLaw.csproj",
+              "RelativeToolTip": "AdviLaw\\AdviLaw.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-29T19:16:47.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "20250529213950_addfiled.cs",
+              "DocumentMoniker": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Migrations\\20250529213950_addfiled.cs",
+              "RelativeDocumentMoniker": "AdviLaw.Infrastructure\\Migrations\\20250529213950_addfiled.cs",
+              "ToolTip": "D:\\Repos\\AdviLaw\\AdviLaw.Infrastructure\\Migrations\\20250529213950_addfiled.cs",
+              "RelativeToolTip": "AdviLaw.Infrastructure\\Migrations\\20250529213950_addfiled.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T21:39:50.853Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
