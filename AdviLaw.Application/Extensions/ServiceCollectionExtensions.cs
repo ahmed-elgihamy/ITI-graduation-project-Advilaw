@@ -26,6 +26,8 @@ namespace AdviLaw.Application.Extensions
             services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly)
                 .AddFluentValidationAutoValidation();
 
+
+
         }
     }
 }
