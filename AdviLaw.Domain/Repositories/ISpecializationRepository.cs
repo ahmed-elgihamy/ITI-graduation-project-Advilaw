@@ -1,4 +1,4 @@
-﻿using AdviLaw.Domain.Entities;
+﻿using AdviLaw.Domain.Entites;
 
 namespace AdviLaw.Domain.Repositories;
 

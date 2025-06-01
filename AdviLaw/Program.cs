@@ -1,4 +1,6 @@
 using AdviLaw.Application.Extensions;
+using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Extensions;
 using AdviLaw.Infrastructure.Extensions;
 
 namespace AdviLaw
@@ -9,18 +11,24 @@ namespace AdviLaw
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
-      
-      
+    
             builder.Services.AddAuthorization();
-            builder.Services.AddApplication();
-            
+            builder.AddPresentation();
+            builder.Services.AddApplication();            
             builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
+            if (app.Environment.IsDevelopment())
+            {
 
-           
+                app.UseSwagger();
+                app.UseSwaggerUI();
 
+            }
+
+            app.MapGroup("api/identity")
+                .WithTags("Identity")
+                .MapIdentityApi<User>(); 
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
