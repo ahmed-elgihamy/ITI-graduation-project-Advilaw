@@ -1,5 +1,5 @@
 ﻿using AdviLaw.Application.Specializations.Command.CreateSpecialization;
-using AdviLaw.Domain.Entities;
+using AdviLaw.Domain.Entites;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

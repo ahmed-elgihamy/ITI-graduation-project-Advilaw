@@ -1,4 +1,4 @@
-﻿using AdviLaw.Domain.Entities;
+﻿using AdviLaw.Domain.Entites;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

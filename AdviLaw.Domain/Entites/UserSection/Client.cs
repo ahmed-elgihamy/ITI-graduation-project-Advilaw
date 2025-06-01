@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AdviLaw.Domain.Entites.JobSection;
+using AdviLaw.Domain.Entites.SessionSection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,13 @@ namespace AdviLaw.Domain.Entities.UserSection
         //                       FK to User                       //
         public int UserId { get; set; }
         public User User { get; set; } = null!;
+
+        //Job Section
+        public List<Job> Jobs { get; set; } = new();
+
+        //Session Section
+        public List<Session> Sessions { get; set; } = new();
+
 
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace AdviLaw.Domain.Entities;
+﻿namespace AdviLaw.Domain.Entites;
 
 public class Specialization
 {

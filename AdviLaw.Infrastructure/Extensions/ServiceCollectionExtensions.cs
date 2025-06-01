@@ -1,4 +1,5 @@
 ﻿using AdviLaw.Domain.Entities;
+using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
@@ -21,6 +22,11 @@ public static  class ServiceCollectionExtensions
            var connection = conf.GetConnectionString("AdviLawDB");
             services.AddDbContext<AdviLawDBContext>(options=>options.UseSqlServer(connection));
             services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+
+
+
+            services.AddIdentityApiEndpoints<User>()
+                .AddEntityFrameworkStores<AdviLawDBContext>();
         
         }
     }
