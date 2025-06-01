@@ -1,5 +1,6 @@
 using AdviLaw.Application.Extensions;
 using AdviLaw.Infrastructure.Extensions;
+using AdviLaw.MiddleWare;
 
 namespace AdviLaw
 {
@@ -19,7 +20,7 @@ namespace AdviLaw
 
             var app = builder.Build();
 
-           
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseAuthorization();
             app.MapControllers();
