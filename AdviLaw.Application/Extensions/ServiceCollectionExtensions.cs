@@ -1,7 +1,9 @@
-﻿using AdviLaw.Application.Specializations;
+﻿using AdviLaw.Application.Behaviors;
+using AdviLaw.Application.Specializations;
 using AdviLaw.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,7 @@ namespace AdviLaw.Application.Extensions
                 .AddFluentValidationAutoValidation();
 
 
+           services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         }
     }

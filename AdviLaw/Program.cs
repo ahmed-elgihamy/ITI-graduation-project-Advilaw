@@ -2,6 +2,7 @@ using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Extensions;
 using AdviLaw.Infrastructure.Extensions;
+using AdviLaw.MiddleWare;
 
 namespace AdviLaw
 {
@@ -21,8 +22,12 @@ namespace AdviLaw
             if (app.Environment.IsDevelopment())
             {
 
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
 
             }
 
