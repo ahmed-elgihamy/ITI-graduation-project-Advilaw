@@ -19,7 +19,7 @@ namespace AdviLaw.Infrastructure.Persistence
     {
         public AdviLawDBContext(DbContextOptions<AdviLawDBContext> options) : base(options) { }
 
-        public DbSet<Specialization> specializations { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Lawyer> Lawyers { get; set; }
@@ -46,6 +46,8 @@ namespace AdviLaw.Infrastructure.Persistence
             // ********* Composition ********** //
 
             // Lawyer
+
+
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Lawyer)
                 .WithOne(l => l.User)
@@ -110,10 +112,7 @@ namespace AdviLaw.Infrastructure.Persistence
 
 
             // ..............................Lawyer Relations............................
-            //Lawyer Fields
-            modelBuilder.Entity<Lawyer>()
-                .HasMany(l => l.Fields)
-                .WithOne(f => f.Lawyer);
+         
 
             //Jobs
             modelBuilder.Entity<Lawyer>()
@@ -163,19 +162,24 @@ namespace AdviLaw.Infrastructure.Persistence
 
             //EscrowTransactions
             modelBuilder.Entity<Session>()
-                .HasOne(s => s.EscrowTransaction)
-                .WithOne(e => e.Session);
+            .HasOne(s => s.EscrowTransaction)
+             .WithOne(e => e.Session)
+            .HasForeignKey<EscrowTransaction>(e => e.SessionId);  //  FK
+
 
             //Payments
             modelBuilder.Entity<Session>()
-                .HasOne(s => s.Payment)
-                .WithOne(p => p.Session);
+            .HasOne(s => s.Payment)
+            .WithOne(p => p.Session)
+            .HasForeignKey<Payment>(p => p.SessionId);
 
             //One To Many
             //Messages
             modelBuilder.Entity<Session>()
                 .HasMany(s => s.Messages)
                 .WithOne(m => m.Session);
+
+
 
             //Reviews
             modelBuilder.Entity<Session>()
@@ -197,8 +201,16 @@ namespace AdviLaw.Infrastructure.Persistence
 
             //Escrow
             modelBuilder.Entity<Job>()
-                .HasOne(j => j.EscrowTransaction)
-                .WithOne(e => e.Job);
+           .HasOne(j => j.EscrowTransaction)
+           .WithOne(et => et.Job)
+           .HasForeignKey<EscrowTransaction>(et => et.JobId);
+
+
+            modelBuilder.Entity<Job>()
+             .HasOne(j => j.Session)
+             .WithOne(s => s.Job)
+             .HasForeignKey<Session>(s => s.JobId);  
+
 
             //One to Many
             //JobFields
@@ -207,14 +219,15 @@ namespace AdviLaw.Infrastructure.Persistence
                 .WithMany(l => l.Jobs);
 
             // ..............................Payment Relations............................
-
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.EscrowTransaction)
-                .WithOne(e => e.Payment);
+                .WithOne(e => e.Payment)
+                .HasForeignKey<EscrowTransaction>(e => e.PaymentId);
 
-            modelBuilder.Entity<Payment>()
-                .HasOne(p => p.UserSubscription)
-                .WithOne(us => us.Payment);
+            modelBuilder.Entity<UserSubscription>()
+             .HasOne(us => us.Payment)
+              .WithOne(p => p.UserSubscription)
+              .HasForeignKey<UserSubscription>(us => us.PaymentId);
 
             // ..............................JobField Relations............................
             modelBuilder.Entity<JobField>()
@@ -229,6 +242,34 @@ namespace AdviLaw.Infrastructure.Persistence
             modelBuilder.Entity<PlatformSubscription>()
                 .HasMany(ps => ps.Details)
                 .WithOne(d => d.PlatformSubscription);
+
+
+            modelBuilder.Entity<LawyerJobField>()
+            .HasKey(lj => new { lj.LawyerId, lj.JobFieldId });
+
+
+            modelBuilder.Entity<UserSubscription>()
+           .HasOne(us => us.Lawyer)
+            .WithMany(l => l.UserSubscriptions)
+            .HasForeignKey(us => us.LawyerId);
+
+            modelBuilder.Entity<UserSubscription>()
+                .HasOne(us => us.SubscriptionType)
+                .WithMany(ps => ps.UsersSubscriptions)
+                .HasForeignKey(us => us.SubscriptionTypeId);
+
+            modelBuilder.Entity<UserSubscription>()
+                .HasOne(us => us.Payment)
+                .WithOne(p => p.UserSubscription)
+                .HasForeignKey<UserSubscription>(us => us.PaymentId);
+
+
+            modelBuilder.Entity<EscrowTransaction>()
+              .HasOne(e => e.Payment)
+              .WithOne(p => p.EscrowTransaction)
+             .HasForeignKey<EscrowTransaction>(e => e.PaymentId);
+
         }
     }
 }
+
