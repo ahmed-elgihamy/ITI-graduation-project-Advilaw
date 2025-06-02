@@ -13,20 +13,20 @@ namespace AdviLaw.Infrastructure.Repositories
 
         public async Task<int> Create(Specialization specialization)
         {
-            _dbContext.specializations.Add(specialization);
+            _dbContext.Specializations.Add(specialization);
            await _dbContext.SaveChangesAsync();
             return specialization.Id;
         }
 
         public async Task<IEnumerable<Specialization>> GetAllAsync()
         {
-            var specializations = await _dbContext.specializations.ToListAsync();
+            var specializations = await _dbContext.Specializations.ToListAsync();
             return specializations;
         }
 
         public async Task<Specialization?> GetByIdAsync(int id)
         {
-            var specialization = await _dbContext.specializations.FirstOrDefaultAsync(x => x.Id == id);
+            var specialization = await _dbContext.Specializations.FirstOrDefaultAsync(x => x.Id == id);
             return specialization;
         }
     }

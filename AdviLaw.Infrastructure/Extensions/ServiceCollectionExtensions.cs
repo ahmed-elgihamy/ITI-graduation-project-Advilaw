@@ -19,7 +19,7 @@ public static  class ServiceCollectionExtensions
 
         public static void AddInfrastructure(this IServiceCollection services , IConfiguration conf)
         {
-           var connection = conf.GetConnectionString("AdviLawDB");
+            var connection = conf.GetConnectionString("AdviLawDB");
             services.AddDbContext<AdviLawDBContext>(options=>options.UseSqlServer(connection));
             services.AddScoped<ISpecializationRepository, SpecializationRepository>();
 

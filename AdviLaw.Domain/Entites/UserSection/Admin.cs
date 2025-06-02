@@ -12,7 +12,7 @@ namespace AdviLaw.Domain.Entities.UserSection
         public int Id { get; set; }
 
         //                       FK to User                       //
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; } = null!;
 
     }
