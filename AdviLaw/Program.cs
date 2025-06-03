@@ -21,10 +21,12 @@ namespace AdviLaw
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
+
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
             }
 
             app.MapGroup("api/identity")
