@@ -1,15 +1,17 @@
-﻿using AdviLaw.Application.Behaviors;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AdviLaw.Application.Basics;
+using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Specializations;
 using AdviLaw.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace AdviLaw.Application.Extensions
 {
@@ -30,6 +32,11 @@ namespace AdviLaw.Application.Extensions
 
 
            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+
+           //register ResponseHandler in this AddApplication() method
+           services.AddScoped<ResponseHandler>();
+
 
         }
     }
