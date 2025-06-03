@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdviLaw.Domain\AdviLaw.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Specializations\Command\Delete\" />
+    <Folder Include="Specializations\Command\Update\" />
+    <Folder Include="Specializations\query\Getall\" />
+    <Folder Include="Specializations\query\getbyid\" />
+  </ItemGroup>
+
+</Project>
