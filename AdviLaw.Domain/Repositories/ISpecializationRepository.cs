@@ -1,11 +1,9 @@
 ﻿using AdviLaw.Domain.Entites;
+using AdviLaw.Domain.IGenericRepo;
 
 namespace AdviLaw.Domain.Repositories;
 
-public interface ISpecializationRepository
+public  interface ISpecializationRepository : IGenericRepository<Specialization>
 {
-    Task<IEnumerable<Specialization>> GetAllAsync();
-    Task<Specialization?> GetByIdAsync(int id);
-    Task<int> Create(Specialization specialization);
-
+   
 }

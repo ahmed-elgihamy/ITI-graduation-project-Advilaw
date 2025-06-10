@@ -1,85 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace AdviLaw.Application.Basics
 {
-   public class ResponseHandler
+    public class ResponseHandler
     {
         public ResponseHandler()
         {
+        }
 
-        }
-        public Response<T> Deleted<T>()
+        public Response<object> Deleted()
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                StatusCode = System.Net.HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Deleted Successfully"
+                Message = "Deleted successfully"
             };
         }
-        public Response<T> Success<T>(T entity, object Meta = null)
+
+        public Response<object> Success(object data, object meta = null)
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                Data = entity,
-                StatusCode = System.Net.HttpStatusCode.OK,
+                Data = data,
+                StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Added Successfully",
-                Meta = Meta
+                Message = "Operation successful",
+                Meta = new { timestamp = DateTime.UtcNow }
             };
         }
-        public Response<T> Unauthorized<T>()
+
+        public Response<object> Unauthorized(string message = null)
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                StatusCode = System.Net.HttpStatusCode.Unauthorized,
-                Succeeded = true,
-                Message = "UnAuthorized"
-            };
-        }
-        public Response<T> BadRequest<T>(string Message = null)
-        {
-            return new Response<T>()
-            {
-                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                StatusCode = HttpStatusCode.Unauthorized,
                 Succeeded = false,
-                Message = Message == null ? "Bad Request" : Message
+                Message = message ?? "Unauthorized"
             };
         }
 
-        public Response<T> UnprocessableEntity<T>(string Message = null)
+        public Response<object> BadRequest(string message = null)
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                StatusCode = System.Net.HttpStatusCode.UnprocessableEntity,
+                StatusCode = HttpStatusCode.BadRequest,
                 Succeeded = false,
-                Message = Message == null ? "UnprocessableEntity" : Message
+                Message = message ?? "Bad request"
             };
         }
 
-        public Response<T> NotFound<T>(string message = null)
+        public Response<object> UnprocessableEntity(string message = null)
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                StatusCode = System.Net.HttpStatusCode.NotFound,
+                StatusCode = HttpStatusCode.UnprocessableEntity,
                 Succeeded = false,
-                Message = message == null ? "Not Found" : message
+                Message = message ?? "Unprocessable entity"
             };
         }
 
-        public Response<T> Created<T>(T entity, object Meta = null)
+        public Response<object> NotFound(string message = null)
         {
-            return new Response<T>()
+            return new Response<object>
             {
-                Data = entity,
-                StatusCode = System.Net.HttpStatusCode.Created,
+                StatusCode = HttpStatusCode.NotFound,
+                Succeeded = false,
+                Message = message ?? "Not found"
+            };
+        }
+
+        public Response<object> Created(object data, object meta = null)
+        {
+            return new Response<object>
+            {
+                Data = data,
+                StatusCode = HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Fail",
-                Meta = Meta
+                Message = "Created successfully",
+                Meta = new { timestamp = DateTime.UtcNow }
             };
         }
     }

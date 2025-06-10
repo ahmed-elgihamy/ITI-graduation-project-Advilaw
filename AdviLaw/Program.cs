@@ -1,7 +1,9 @@
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Domain.UnitOfWork;
 using AdviLaw.Extensions;
 using AdviLaw.Infrastructure.Extensions;
+using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
 
 namespace AdviLaw
@@ -17,6 +19,7 @@ namespace AdviLaw
             builder.AddPresentation();
             builder.Services.AddApplication();            
             builder.Services.AddInfrastructure(builder.Configuration);
+           
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())

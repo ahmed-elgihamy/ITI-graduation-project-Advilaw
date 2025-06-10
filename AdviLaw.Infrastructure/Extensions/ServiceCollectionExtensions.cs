@@ -1,6 +1,8 @@
 ﻿using AdviLaw.Domain.Entities;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
+using AdviLaw.Domain.UnitOfWork;
+using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,20 +16,19 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Infrastructure.Extensions
 {
-public static  class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
-
-        public static void AddInfrastructure(this IServiceCollection services , IConfiguration conf)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration conf)
         {
             var connection = conf.GetConnectionString("AdviLawDB");
-            services.AddDbContext<AdviLawDBContext>(options=>options.UseSqlServer(connection));
+            services.AddDbContext<AdviLawDBContext>(options => options.UseSqlServer(connection));
             services.AddScoped<ISpecializationRepository, SpecializationRepository>();
-
-
 
             services.AddIdentityApiEndpoints<User>()
                 .AddEntityFrameworkStores<AdviLawDBContext>();
-        
+
+           
+            services.AddScoped<IUnitOfWork, AdviLaw.Infrastructure.UnitOfWork.UnitOfWork>();
         }
     }
 }
