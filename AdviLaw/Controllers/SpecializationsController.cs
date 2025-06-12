@@ -38,9 +38,10 @@ namespace AdviLaw.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateSpecialization([FromBody] CreateSpeciallizationCommand command)
         {
-            var id = await _mediator.Send(command);
+           
             // CreatedAtAction(nameof(GetById), new { id }, null);
-            return Ok();
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
 
     }

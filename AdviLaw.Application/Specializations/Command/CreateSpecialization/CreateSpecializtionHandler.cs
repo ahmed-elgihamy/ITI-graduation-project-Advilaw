@@ -1,5 +1,7 @@
-﻿using AdviLaw.Domain.Entites;
+﻿using AdviLaw.Application.Basics;
+using AdviLaw.Domain.Entites;
 using AdviLaw.Domain.Repositories;
+using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,20 +14,35 @@ using System.Threading.Tasks;
 namespace AdviLaw.Application.Specializations.Command.CreateSpecialization
 {
 
-    public class CreateSpecializtionHandler(
-         ILogger<CreateSpecializtionHandler> _logger,
-         IMapper _mapper,
-         ISpecializationRepository specializationRepository) : IRequestHandler<CreateSpeciallizationCommand, int>
+    public class CreateSpecializtionHandler : IRequestHandler<CreateSpeciallizationCommand, Response<object>>
     {
-        public async Task<int> Handle(CreateSpeciallizationCommand request, CancellationToken cancellationToken)
+        private readonly ILogger<CreateSpecializtionHandler> _logger;
+        private readonly IMapper _mapper;
+        private readonly ResponseHandler _responseHandler;
+        private readonly IUnitOfWork _unitOfWork;
+      
+        public CreateSpecializtionHandler(
+            ILogger<CreateSpecializtionHandler> logger,
+            IMapper mapper,
+            ResponseHandler responseHandler,
+            IUnitOfWork unitOfWork)
         {
-            _logger.LogInformation("Create new specialization...");
-
-
-            var specializationDto = _mapper.Map<Specialization>(request);
-            int id = await specializationRepository.Create(specializationDto);
-            return id;
+            _logger = logger;
+            _mapper = mapper;
+            _responseHandler = responseHandler;
+            _unitOfWork = unitOfWork;
         }
 
+        public async Task<Response<object>> Handle(CreateSpeciallizationCommand request, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Creating a new specialization...");
+
+
+            var specialization = _mapper.Map<Specialization>(request);
+            var Added =await _unitOfWork.Specializations.AddAsync(specialization);
+            await _unitOfWork.SaveChangesAsync();
+
+            return _responseHandler.Created(Added);
+        }
     }
 }
