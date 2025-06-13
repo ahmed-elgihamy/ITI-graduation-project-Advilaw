@@ -38,7 +38,7 @@ namespace AdviLaw.Application.Extensions
             var type = typeof(ServiceCollectionExtensions).Assembly;
 
 
-          
+            //Scan this assembly for any class that inherits from Profile (like CreateUserMappingProfile) and register its mapping rules.
             services.AddAutoMapper(type);
             //  services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(type));
