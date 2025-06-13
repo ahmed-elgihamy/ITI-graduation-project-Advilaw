@@ -39,6 +39,13 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
                 return _responseHandler.BadRequest("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
+            //validate the role
+            var role=request.Role;
+            var validRoles = new[] { "Lawyer", "Client","Admin" };
+            if (!validRoles.Contains(role))
+                throw new Exception("Invalid role selected.");
+
+
             return _responseHandler.Success(new { userId = user.Id, email = user.Email }, new { timestamp = DateTime.UtcNow });
         }
     }

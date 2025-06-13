@@ -24,5 +24,8 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
         [Required]
         [StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
+
+        [Required]
+        public string Role { get; set; } //Let the caller pass "Lawyer" or "Client" from frontEnd
     }
 }

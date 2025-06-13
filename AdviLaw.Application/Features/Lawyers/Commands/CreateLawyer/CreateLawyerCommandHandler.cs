@@ -1,11 +1,13 @@
+using System.Threading;
+using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using AdviLaw.Application.DTOs.Lawyer;
 
 namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
 {
@@ -14,19 +16,35 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ResponseHandler _responseHandler;
+        private readonly UserManager<User> _userManager;
 
 
-        public CreateLawyerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ResponseHandler responseHandler)
+        public CreateLawyerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ResponseHandler responseHandler, UserManager<User> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _responseHandler = responseHandler;
+            _userManager = userManager;
         }
 
         public async Task<Response<object>> Handle(CreateLawyerCommand request, CancellationToken cancellationToken)
         {
+            //check user existence
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user == null)
+                return _responseHandler.NotFound("User not found");
+
+
+            //if lawyer already exists
+            var existingLawyer = await  _unitOfWork.GenericLawyers.FindFirstAsync(l => l.UserId == request.UserId);
+            if (existingLawyer != null)
+                return _responseHandler.BadRequest("Lawyer profile already exists for this user");
+
+
+
             //mapping the request to the Lawyer entity
             var lawyer = _mapper.Map<Lawyer>(request);
+            lawyer.IsApproved = false; // must be approved by admin
 
             var result = await _unitOfWork.GenericLawyers.AddAsync(lawyer);
             await _unitOfWork.SaveChangesAsync();
@@ -35,7 +53,10 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
                return _responseHandler.BadRequest("Lawyer creation failed. Please try again.");
             }
 
-            return _responseHandler.Created(result);
+
+            //return dto to avoid circular reference issues
+            var lawyerDto = _mapper.Map<CreateLawyerDto>(result);
+            return _responseHandler.Created(lawyerDto);
 
         }
     }

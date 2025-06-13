@@ -52,5 +52,7 @@ namespace AdviLaw.Domain.Entities.UserSection
         public Lawyer? Lawyer { get; set; }
         public Client? Client { get; set; }
         public Admin? Admin { get; set; }
+
+        public string Role {get; set; }  // This can be "Lawyer", "Client", or "Admin"
     }
 }

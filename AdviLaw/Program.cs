@@ -10,7 +10,7 @@ namespace AdviLaw
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,7 @@ namespace AdviLaw
                 app.UseSwaggerUI();
 
             }
+
 
             // Redirect root URL to Swagger UI
             app.MapGet("/", context =>
