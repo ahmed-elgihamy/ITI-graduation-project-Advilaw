@@ -37,12 +37,10 @@ namespace AdviLaw.Application.Specializations.Command.CreateSpecialization
         {
             _logger.LogInformation("Creating a new specialization...");
 
-
             var specialization = _mapper.Map<Specialization>(request);
-            var Added =await _unitOfWork.Specializations.AddAsync(specialization);
+            var addedSpecialization = await _unitOfWork.Specializations.AddAsync(specialization);
             await _unitOfWork.SaveChangesAsync();
-
-            return _responseHandler.Created(Added);
+            return _responseHandler.Created<object>(addedSpecialization);
         }
     }
 }

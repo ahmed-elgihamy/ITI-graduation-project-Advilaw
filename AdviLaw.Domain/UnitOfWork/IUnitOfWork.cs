@@ -10,6 +10,7 @@ namespace AdviLaw.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         ISpecializationRepository Specializations { get; }
+        IJobFieldRepository JobFields { get; }
         Task<int> SaveChangesAsync();
     }
 }
