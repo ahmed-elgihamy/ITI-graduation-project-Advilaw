@@ -25,18 +25,17 @@ namespace AdviLaw
             if (app.Environment.IsDevelopment())
             {
 
-
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
 
             }
 
             app.MapGroup("api/identity")
                 .WithTags("Identity")
                 .MapIdentityApi<User>(); 
+
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
