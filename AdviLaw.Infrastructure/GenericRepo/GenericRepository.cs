@@ -39,6 +39,10 @@ namespace AdviLaw.Infrastructure.GenericRepo
         public IQueryable<T> GetTableNoTracking() => _dbContext.Set<T>().AsNoTracking();
 
         public IQueryable<T> GetTableAsTracking() => _dbContext.Set<T>();
+        public async Task<T?> FindFirstAsync(System.Linq.Expressions.Expression<System.Func<T, bool>> predicate)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
 
+        }
     }
 }

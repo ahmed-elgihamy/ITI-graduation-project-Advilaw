@@ -1,14 +1,19 @@
-﻿using AdviLaw.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdviLaw.Domain.Entites;
+using AdviLaw.Domain.IGenericRepo;
+using AdviLaw.Domain.Repositories;
+using AdviLaw.Domain.Entities.UserSection;
+
+
 
 namespace AdviLaw.Domain.UnitOfWork
 {
     public interface IUnitOfWork
     {
+        // Generic repositories
+        IGenericRepository<Specialization> GenericSpecializations { get; }
+        IGenericRepository<Lawyer> GenericLawyers { get; }
+
+        // Specific repositories
         ISpecializationRepository Specializations { get; }
         IJobFieldRepository JobFields { get; }
         Task<int> SaveChangesAsync();
