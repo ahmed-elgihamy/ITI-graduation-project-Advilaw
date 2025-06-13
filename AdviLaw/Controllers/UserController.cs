@@ -24,9 +24,11 @@ namespace AdviLaw.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<object>> Register([FromBody] CreateUserCommand command)
         {
+
             //re-validate
             if (!Enum.IsDefined(typeof(Roles), command.Role))
                 return _responseHandler.BadRequest("Invalid role.");
+
 
 
 
