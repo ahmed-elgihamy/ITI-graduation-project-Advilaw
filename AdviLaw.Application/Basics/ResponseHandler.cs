@@ -1,68 +1,53 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace AdviLaw.Application.Basics
 {
     public class ResponseHandler
     {
-        public ResponseHandler()
-        {
-        }
+        public ResponseHandler() { }
 
-        public Response<object> Deleted()
+       
+        public Response<T> Success<T>(T data, object? meta = null)
         {
-            return new Response<object>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Succeeded = true,
-                Message = "Deleted successfully"
-            };
-        }
-
-        public Response<object> Success(object data, object meta = null)
-        {
-            return new Response<object>
+            return new Response<T>
             {
                 Data = data,
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
                 Message = "Operation successful",
-                Meta = new { timestamp = DateTime.UtcNow }
+                Meta = meta ?? new { timestamp = DateTime.UtcNow }
             };
         }
 
-        public Response<object> Unauthorized(string message = null)
+   
+        public Response<T> Created<T>(T data, object? meta = null)
         {
-            return new Response<object>
+            return new Response<T>
             {
-                StatusCode = HttpStatusCode.Unauthorized,
-                Succeeded = false,
-                Message = message ?? "Unauthorized"
+                Data = data,
+                StatusCode = HttpStatusCode.Created,
+                Succeeded = true,
+                Message = "Created successfully",
+                Meta = meta ?? new { timestamp = DateTime.UtcNow }
             };
         }
 
-        public Response<object> BadRequest(string message = null)
+     
+        public Response<T> Deleted<T>()
         {
-            return new Response<object>
+            return new Response<T>
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                Succeeded = false,
-                Message = message ?? "Bad request"
+                StatusCode = HttpStatusCode.NoContent,
+                Succeeded = true,
+                Message = "Deleted successfully"
             };
         }
 
-        public Response<object> UnprocessableEntity(string message = null)
+       
+        public Response<T> NotFound<T>(string? message = null)
         {
-            return new Response<object>
-            {
-                StatusCode = HttpStatusCode.UnprocessableEntity,
-                Succeeded = false,
-                Message = message ?? "Unprocessable entity"
-            };
-        }
-
-        public Response<object> NotFound(string message = null)
-        {
-            return new Response<object>
+            return new Response<T>
             {
                 StatusCode = HttpStatusCode.NotFound,
                 Succeeded = false,
@@ -70,15 +55,36 @@ namespace AdviLaw.Application.Basics
             };
         }
 
-        public Response<object> Created(object data, object meta = null)
+      
+        public Response<T> BadRequest<T>(string? message = null)
         {
-            return new Response<object>
+            return new Response<T>
             {
-                Data = data,
-                StatusCode = HttpStatusCode.Created,
-                Succeeded = true,
-                Message = "Created successfully",
-                Meta = new { timestamp = DateTime.UtcNow }
+                StatusCode = HttpStatusCode.BadRequest,
+                Succeeded = false,
+                Message = message ?? "Bad request"
+            };
+        }
+
+     
+        public Response<T> Unauthorized<T>(string? message = null)
+        {
+            return new Response<T>
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Succeeded = false,
+                Message = message ?? "Unauthorized"
+            };
+        }
+
+      
+        public Response<T> UnprocessableEntity<T>(string? message = null)
+        {
+            return new Response<T>
+            {
+                StatusCode = HttpStatusCode.UnprocessableEntity,
+                Succeeded = false,
+                Message = message ?? "Unprocessable entity"
             };
         }
     }
