@@ -22,11 +22,10 @@ namespace AdviLaw.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<object>> Register([FromBody] CreateUserCommand command)
         {
-            //re-validate
+            // re-validate
             var allowedRoles = new[] { "Client", "Lawyer", "Admin" };
             if (!allowedRoles.Contains(command.Role))
-                return _responseHandler.BadRequest("Invalid role specified.");
-
+                return _responseHandler.BadRequest<object>("Invalid role specified.");
 
             var userId = await _mediator.Send(command);
             return _responseHandler.Success(userId, new { timestamp = DateTime.UtcNow });

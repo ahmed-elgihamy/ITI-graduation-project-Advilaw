@@ -32,19 +32,17 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
             var user = _mapper.Map<User>(request);
             user.UserName = request.Email; // Using email as username since username is required
 
-
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                return _responseHandler.BadRequest("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+                return _responseHandler.BadRequest<object>("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
-            //validate the role
-            var role=request.Role;
-            var validRoles = new[] { "Lawyer", "Client","Admin" };
+            // Validate the role
+            var role = request.Role;
+            var validRoles = new[] { "Lawyer", "Client", "Admin" };
             if (!validRoles.Contains(role))
                 throw new Exception("Invalid role selected.");
-
 
             return _responseHandler.Success(new { userId = user.Id, email = user.Email }, new { timestamp = DateTime.UtcNow });
         }
