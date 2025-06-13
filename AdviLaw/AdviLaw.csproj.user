@@ -4,6 +4,12 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
+
     <ActiveDebugProfile>http</ActiveDebugProfile>
+
+    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
+    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+
   </PropertyGroup>
 </Project>

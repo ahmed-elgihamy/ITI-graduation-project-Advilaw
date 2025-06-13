@@ -15,6 +15,7 @@ namespace AdviLaw.Domain.UnitOfWork
 
         // Specific repositories
         ISpecializationRepository Specializations { get; }
+        IJobFieldRepository JobFields { get; }
         Task<int> SaveChangesAsync();
     }
 }
