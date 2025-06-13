@@ -1,5 +1,6 @@
 using AdviLaw.Application.Basics;
 using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Domain.Enums;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
@@ -40,10 +41,9 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
             }
 
             //validate the role
-            var role=request.Role;
-            var validRoles = new[] { "Lawyer", "Client","Admin" };
-            if (!validRoles.Contains(role))
-                throw new Exception("Invalid role selected.");
+            if (!Enum.IsDefined(typeof(Roles), request.Role))
+                return _responseHandler.BadRequest("Invalid role Selected.");
+
 
 
             return _responseHandler.Success(new { userId = user.Id, email = user.Email }, new { timestamp = DateTime.UtcNow });

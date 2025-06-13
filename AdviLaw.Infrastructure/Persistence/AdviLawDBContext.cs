@@ -338,6 +338,11 @@ namespace AdviLaw.Infrastructure.Persistence
 
 
 
+            //To store them as strings more readable in DB
+            modelBuilder.Entity<User>()
+              .Property(u => u.Role)
+              .HasConversion<string>();
+
         }
     }
 }

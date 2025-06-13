@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.Users.Commands.CreateUser;
+using AdviLaw.Domain.Enums;
+using Azure.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Controllers
 {
@@ -23,9 +25,10 @@ namespace AdviLaw.Controllers
         public async Task<ActionResult<object>> Register([FromBody] CreateUserCommand command)
         {
             //re-validate
-            var allowedRoles = new[] { "Client", "Lawyer", "Admin" };
-            if (!allowedRoles.Contains(command.Role))
-                return _responseHandler.BadRequest("Invalid role specified.");
+            if (!Enum.IsDefined(typeof(Roles), command.Role))
+                return _responseHandler.BadRequest("Invalid role.");
+
+
 
 
             var userId = await _mediator.Send(command);

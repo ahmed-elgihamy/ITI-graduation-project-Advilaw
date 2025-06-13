@@ -1,3 +1,4 @@
+using AdviLaw.Domain.Enums;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,6 +27,6 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
         public string Password { get; set; }
 
         [Required]
-        public string Role { get; set; } //Let the caller pass "Lawyer" or "Client" from frontEnd
+        public Roles Role { get; set; } //Let the caller pass "Lawyer" or "Client" from frontEnd
     }
 }

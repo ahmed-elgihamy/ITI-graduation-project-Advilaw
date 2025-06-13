@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
@@ -19,7 +20,15 @@ namespace AdviLaw
             builder.AddPresentation();
             builder.Services.AddApplication();            
             builder.Services.AddInfrastructure(builder.Configuration);
-           
+
+            //serialize and deserialize enums as strings instead of integers.
+            builder.Services.AddControllers()
+                    .AddJsonOptions(options =>
+                    {
+                      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                     });
+
+
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
