@@ -20,6 +20,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         private readonly AdviLawDBContext _dbContext;
 
         public ISpecializationRepository Specializations { get; }
+        public IJobFieldRepository JobFields { get; }
 
         public IGenericRepository<Specialization> GenericSpecializations { get; }
         public IGenericRepository<Lawyer> GenericLawyers { get; }
@@ -29,8 +30,13 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         {
             _dbContext = dbContext;
             Specializations = new SpecializationRepository(_dbContext);
+
             GenericSpecializations = new GenericRepository<Specialization>(_dbContext);
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
+
+            JobFields = new JobFieldRepository(_dbContext);
+
+
         }
         public async Task<int> SaveChangesAsync()
         {
