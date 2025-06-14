@@ -9,7 +9,9 @@ using FluentValidation;
 
 namespace AdviLaw.Application.Features.RegisterUsers.Commands
 {
+
     public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
+
     {
         public RegisterUserValidator()
         {

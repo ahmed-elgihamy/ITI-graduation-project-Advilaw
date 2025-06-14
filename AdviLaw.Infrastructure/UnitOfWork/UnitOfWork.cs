@@ -19,24 +19,28 @@ namespace AdviLaw.Infrastructure.UnitOfWork
     {
         private readonly AdviLawDBContext _dbContext;
 
-        public ISpecializationRepository Specializations { get; }
+
         public IJobFieldRepository JobFields { get; }
 
-        public IGenericRepository<Specialization> GenericSpecializations { get; }
+   
         public IGenericRepository<Lawyer> GenericLawyers { get; }
+        public IRefreshTokenRepository RefreshTokens { get; }
 
         public IGenericRepository<Client> GenericClients { get; }
 
+       
         public UnitOfWork(AdviLawDBContext dbContext)
         {
             _dbContext = dbContext;
-            Specializations = new SpecializationRepository(_dbContext);
-
-            GenericSpecializations = new GenericRepository<Specialization>(_dbContext);
+          
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
             GenericClients = new GenericRepository<Client>(_dbContext);
 
             JobFields = new JobFieldRepository(_dbContext);
+            RefreshTokens = new RefreshTokenRepository(_dbContext);
+        }
+
+
 
         }
         public async Task<int> SaveChangesAsync()
@@ -47,5 +51,10 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         {
             _dbContext.Dispose();
         }
+
+      
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+            => _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

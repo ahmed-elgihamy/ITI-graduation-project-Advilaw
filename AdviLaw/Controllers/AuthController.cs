@@ -1,6 +1,8 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.DTOs.Users;
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
+using AdviLaw.Application.Features.LoginUser;
+using AdviLaw.Application.Features.RefreshToken;
 using AdviLaw.Application.Features.RegisterUsers;
 using AdviLaw.Application.Features.RegisterUsers.Commands;
 using AdviLaw.Domain.Entities.UserSection;
@@ -51,6 +53,20 @@ namespace AdviLaw.Controllers
         }
 
 
-          
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return result.Succeeded ? Ok(result) : Unauthorized(result);
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return result.Succeeded ? Ok(result) : Unauthorized(result);
+        }
+
+
     }
 }

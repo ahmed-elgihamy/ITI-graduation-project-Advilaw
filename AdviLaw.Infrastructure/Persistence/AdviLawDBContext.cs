@@ -12,6 +12,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using AdviLaw.Domain.Entites.RefreshToken;
 
 namespace AdviLaw.Infrastructure.Persistence
 {
@@ -19,7 +20,8 @@ namespace AdviLaw.Infrastructure.Persistence
     {
         public AdviLawDBContext(DbContextOptions<AdviLawDBContext> options) : base(options) { }
 
-        public DbSet<Specialization> Specializations { get; set; }
+        //public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Lawyer> Lawyers { get; set; }
@@ -38,6 +40,8 @@ namespace AdviLaw.Infrastructure.Persistence
         public DbSet<PlatformSubscription> PlatformSubscriptions { get; set; }
         public DbSet<UserSubscription> UserSubscriptions { get; set; }
         public DbSet<SubscriptionPoint> SubscriptionPoints { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
