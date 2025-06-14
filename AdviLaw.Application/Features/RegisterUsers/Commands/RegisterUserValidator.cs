@@ -8,7 +8,7 @@ using FluentValidation;
 
 namespace AdviLaw.Application.Features.RegisterUsers.Commands
 {
-    internal class RegisterUserValidator:AbstractValidator<RegisterUserCommand>
+  public class RegisterUserValidator:AbstractValidator<RegisterUserCommand>
     {
         public RegisterUserValidator()
         {

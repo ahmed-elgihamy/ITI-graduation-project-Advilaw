@@ -11,8 +11,9 @@ namespace AdviLaw.Application.Job.Dtos
     {
         public string Header { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public int Budget { get; set; }
+        public int budget { get; set; }
         public string JobFieldName { get; set; } = string.Empty;
-        public bool IsAnonymous { get; set; }
+        public bool IsAnonymus { get; set; } = false;
+        public int? LawyerId { get; set; } 
     }
 }

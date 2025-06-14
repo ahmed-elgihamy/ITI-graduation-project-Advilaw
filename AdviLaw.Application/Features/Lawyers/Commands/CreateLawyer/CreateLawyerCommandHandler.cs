@@ -1,13 +1,14 @@
-using System.Threading;
-using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
+using AdviLaw.Application.DTOs.Lawyer;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using AdviLaw.Application.DTOs.Lawyer;
+using Microsoft.Kiota.Abstractions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
 {
@@ -17,7 +18,7 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
         private readonly IMapper _mapper;
         private readonly ResponseHandler _responseHandler;
         private readonly UserManager<User> _userManager;
-
+        
 
         public CreateLawyerCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ResponseHandler responseHandler, UserManager<User> userManager)
         {
