@@ -45,7 +45,14 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             RuleFor(x => x.Dto.Country)
                 .NotEmpty().WithMessage("Country is required.");
 
-            // Lawyer-specific (if role is Lawyer)  
+
+
+            RuleFor(x => x.Dto.NationalityId)
+                    .NotEmpty().WithMessage("National ID is required.")
+                    .InclusiveBetween(10000000000000, 99999999999999).WithMessage("National ID must be exactly 14 digits.");
+
+
+            // Lawyer-specific (if role is Lawyer)
             When(x => x.Dto.Role == Roles.Lawyer, () =>
             {
                 RuleFor(x => x.Dto.ProfileHeader)
