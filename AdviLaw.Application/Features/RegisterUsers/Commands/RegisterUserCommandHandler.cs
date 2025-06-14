@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
+using AdviLaw.Application.Features.Clients.Commands.CreateClient;
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
@@ -38,12 +39,6 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             //check Email
             if (await _userManager.FindByEmailAsync(dto.Email) is not null)
                 return _responseHandler.BadRequest<object>("Email already exists.");
-            //check email format
-            if (string.IsNullOrWhiteSpace(dto.Email) || !dto.Email.Contains("@") || !dto.Email.Contains("."))
-                return _responseHandler.BadRequest<object>("Invalid email format.");
-
-            if (!Enum.IsDefined(typeof(Roles), dto.Role))
-                return _responseHandler.BadRequest<object>("Invalid role Selected.");
 
 
             //Create User 1st
@@ -64,7 +59,9 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             }
             else if (dto.Role == Roles.Client)
             {
-                //not handeled yet
+                var command = _mapper.Map<CreateClientCommand>(dto);
+                command.UserId = user.Id;
+                await _mediator.Send(command);
             }
             else
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdviLaw.Domain.Entities.UserSection
+namespace AdviLaw.Domain.Enums
 {
     public enum Gender
     {

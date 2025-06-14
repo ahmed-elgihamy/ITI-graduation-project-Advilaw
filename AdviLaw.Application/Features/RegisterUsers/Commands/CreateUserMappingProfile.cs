@@ -10,8 +10,8 @@ namespace AdviLaw.Application.Features.Users.Commands.CreateUser
         public CreateUserMappingProfile()
         {
             CreateMap<UserRegisterDto, User>()
-             .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email))
-             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
+             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+             .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber));
 
         }
     }
