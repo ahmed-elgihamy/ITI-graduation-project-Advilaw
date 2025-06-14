@@ -26,6 +26,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IGenericRepository<Lawyer> GenericLawyers { get; }
         public IRefreshTokenRepository RefreshTokens { get; }
 
+        public IGenericRepository<Client> GenericClients { get; }
 
        
         public UnitOfWork(AdviLawDBContext dbContext)
@@ -33,13 +34,15 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             _dbContext = dbContext;
           
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
+            GenericClients = new GenericRepository<Client>(_dbContext);
 
             JobFields = new JobFieldRepository(_dbContext);
             RefreshTokens = new RefreshTokenRepository(_dbContext);
         }
 
 
-        
+
+        }
         public async Task<int> SaveChangesAsync()
         {
             return await _dbContext.SaveChangesAsync();

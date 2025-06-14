@@ -12,6 +12,7 @@ namespace AdviLaw.Domain.UnitOfWork
         // Generic repositories
       
         IGenericRepository<Lawyer> GenericLawyers { get; }
+        IGenericRepository<Client> GenericClients { get; }
 
         // Specific repositories
      
