@@ -42,7 +42,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
 
 
 
-        }
+        
         public async Task<int> SaveChangesAsync()
         {
             return await _dbContext.SaveChangesAsync();

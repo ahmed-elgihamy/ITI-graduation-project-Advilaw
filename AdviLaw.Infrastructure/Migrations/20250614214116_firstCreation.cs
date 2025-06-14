@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoleToUser : Migration
+    public partial class firstCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

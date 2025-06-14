@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250614183419_AddRoleToUser")]
-    partial class AddRoleToUser
+    [Migration("20250614214116_firstCreation")]
+    partial class firstCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

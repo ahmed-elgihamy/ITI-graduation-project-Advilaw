@@ -347,6 +347,12 @@ namespace AdviLaw.Infrastructure.Persistence
               .Property(u => u.Role)
               .HasConversion<string>();
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.NationalityId)
+                      .HasColumnType("bigint"); // Forces SQL Server to use BIGINT
+            });
+
         }
     }
 }
