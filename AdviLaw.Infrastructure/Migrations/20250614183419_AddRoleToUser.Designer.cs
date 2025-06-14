@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250613170416_addcusd")]
-    partial class addcusd
+    [Migration("20250614183419_AddRoleToUser")]
+    partial class AddRoleToUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,6 +260,38 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.ToTable("Proposals");
                 });
 
+            modelBuilder.Entity("AdviLaw.Domain.Entites.RefreshToken.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -456,23 +488,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("SessionId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("AdviLaw.Domain.Entites.Specialization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SubscriptionSection.PlatformSubscription", b =>
@@ -677,9 +692,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -697,8 +711,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("NationalityId")
-                        .HasColumnType("int");
+                    b.Property<long>("NationalityId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -718,6 +732,10 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -896,7 +914,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Sender")
                         .WithMany("EscrowTransactions")
                         .HasForeignKey("SenderId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
@@ -929,7 +947,8 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.Lawyer", "Lawyer")
                         .WithMany("Jobs")
-                        .HasForeignKey("LawyerId");
+                        .HasForeignKey("LawyerId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Client");
 
@@ -949,7 +968,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.Lawyer", "Lawyer")
                         .WithMany("Fields")
                         .HasForeignKey("LawyerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("JobField");
@@ -961,12 +980,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Receiver")
                         .WithMany("ReceivedPayments")
-                        .HasForeignKey("ReceiverId1");
+                        .HasForeignKey("ReceiverId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Sender")
                         .WithMany("SentPayments")
                         .HasForeignKey("SenderId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
@@ -998,6 +1018,17 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("Job");
 
                     b.Navigation("Lawyer");
+                });
+
+            modelBuilder.Entity("AdviLaw.Domain.Entites.RefreshToken.RefreshToken", b =>
+                {
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>
@@ -1067,12 +1098,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Receiver")
                         .WithMany("ReceivedReports")
-                        .HasForeignKey("ReceiverId1");
+                        .HasForeignKey("ReceiverId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Sender")
                         .WithMany("SentReports")
                         .HasForeignKey("SenderId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
@@ -1092,12 +1124,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewee")
                         .WithMany("ReceivedReviews")
-                        .HasForeignKey("RevieweeId1");
+                        .HasForeignKey("RevieweeId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewer")
                         .WithMany("SentReviews")
                         .HasForeignKey("ReviewerId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
@@ -1156,7 +1189,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
                         .WithOne("Admin")
                         .HasForeignKey("AdviLaw.Domain.Entities.UserSection.Admin", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1167,7 +1200,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
                         .WithOne("Client")
                         .HasForeignKey("AdviLaw.Domain.Entities.UserSection.Client", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1178,7 +1211,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
                         .WithOne("Lawyer")
                         .HasForeignKey("AdviLaw.Domain.Entities.UserSection.Lawyer", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");

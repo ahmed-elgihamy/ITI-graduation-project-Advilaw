@@ -96,6 +96,9 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Budget")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
@@ -126,9 +129,6 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<int>("budget")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -708,8 +708,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("NationalityId")
-                        .HasColumnType("int");
+                    b.Property<long>("NationalityId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
