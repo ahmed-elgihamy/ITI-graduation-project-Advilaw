@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdviLaw.Application.Job.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -39,6 +40,8 @@ namespace AdviLaw.Application.Basics
         public List<string> Errors { get; set; }
        
         public T Data { get; set; }
+
+        
     }
 }
 

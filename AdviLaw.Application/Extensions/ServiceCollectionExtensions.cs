@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.Behaviors;
 ﻿using AdviLaw.Application.Behaviors;
-
-using AdviLaw.Application.Specializations;
 using AdviLaw.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
