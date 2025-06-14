@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
@@ -6,6 +7,7 @@ using AdviLaw.Extensions;
 using AdviLaw.Infrastructure.Extensions;
 using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
+using MediatR;
 
 namespace AdviLaw
 {
@@ -48,6 +50,9 @@ namespace AdviLaw
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
+
+
+
 
             //app.MapGroup("api/identity")
             //    .WithTags("Identity")
