@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
@@ -5,6 +7,7 @@ using AdviLaw.Extensions;
 using AdviLaw.Infrastructure.Extensions;
 using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
+using MediatR;
 
 namespace AdviLaw
 {
@@ -19,7 +22,15 @@ namespace AdviLaw
             builder.AddPresentation();
             builder.Services.AddApplication();            
             builder.Services.AddInfrastructure(builder.Configuration);
-           
+
+            //serialize and deserialize enums as strings instead of integers.
+            builder.Services.AddControllers()
+                    .AddJsonOptions(options =>
+                    {
+                      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                     });
+
+
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
@@ -39,6 +50,9 @@ namespace AdviLaw
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
+
+
+
 
             //app.MapGroup("api/identity")
             //    .WithTags("Identity")
