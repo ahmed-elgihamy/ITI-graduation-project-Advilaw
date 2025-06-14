@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AdviLaw.Application.Basics;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Application.Specializations.Command.CreateSpecialization
 {
-   public class CreateSpeciallizationCommand:IRequest<int>
+   public class CreateSpeciallizationCommand : IRequest<Response<object>>
     {
         public string Name { get; set; }
     }

@@ -3,6 +3,7 @@ using AdviLaw.Domain.Entites.PaymentSection;
 using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
+using AdviLaw.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Entities.UserSection
 {
-   public  class User : IdentityUser
+    public class User : IdentityUser
     {
-      //  public string Id { get; set; }
+
         public string City { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public string CountryCode { get; set; } = string.Empty;
@@ -32,7 +33,6 @@ namespace AdviLaw.Domain.Entities.UserSection
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
-
 
         //Navigation Properties
 
@@ -57,5 +57,7 @@ namespace AdviLaw.Domain.Entities.UserSection
         public Lawyer? Lawyer { get; set; }
         public Client? Client { get; set; }
         public Admin? Admin { get; set; }
+
+        public Roles Role { get; set; }  // This can be "Lawyer", "Client", or "Admin"
     }
 }

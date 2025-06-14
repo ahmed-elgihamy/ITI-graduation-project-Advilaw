@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.IGenericRepo
@@ -10,11 +11,9 @@ namespace AdviLaw.Domain.IGenericRepo
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);
         Task UpdateAsync(T entity);
-        Task UpdateRangeAsync(ICollection<T> entities);
         Task DeleteAsync(T entity);
-        Task DeleteRangeAsync(ICollection<T> entities);
+        Task<T?> FindFirstAsync(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetTableNoTracking();
         IQueryable<T> GetTableAsTracking();
-        Task SaveChangesAsync();
     }
 }
