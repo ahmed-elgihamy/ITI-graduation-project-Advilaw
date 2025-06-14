@@ -10,10 +10,12 @@ using AdviLaw.Domain.UnitOfWork;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
 using AdviLaw.Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AdviLaw.Infrastructure.Extensions
 {
@@ -24,20 +26,37 @@ namespace AdviLaw.Infrastructure.Extensions
         {
             var connection = conf.GetConnectionString("AdviLawDB");
             services.AddDbContext<AdviLawDBContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+       
+            services.AddScoped<ITokenService, TokenService>();
+
 
             //services.AddIdentityApiEndpoints<User>()
             //    .AddEntityFrameworkStores<AdviLawDBContext>();
+            services.AddIdentity<User, IdentityRole>()
+                 .AddEntityFrameworkStores<AdviLawDBContext>()
+                 .AddDefaultTokenProviders();
 
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddAuthentication(options =>
             {
-                //  Password rules..
-                options.Password.RequireDigit = true;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                  .AddEntityFrameworkStores<AdviLawDBContext>()
-                  .AddDefaultTokenProviders();
+ .AddJwtBearer(options =>
+ {
+     var jwtKey = conf["Jwt:Key"];
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = conf["Jwt:Issuer"],
+         ValidAudience = conf["Jwt:Audience"],
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+ });
 
-             
+
 
             services.AddScoped<IUnitOfWork, AdviLaw.Infrastructure.UnitOfWork.UnitOfWork>();
         }

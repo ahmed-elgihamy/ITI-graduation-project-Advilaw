@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250608223529_Initial")]
-    partial class Initial
+    [Migration("20250614174614_sdfetd")]
+    partial class sdfetd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,6 +260,38 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.ToTable("Proposals");
                 });
 
+            modelBuilder.Entity("AdviLaw.Domain.Entites.RefreshToken.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>
                 {
                     b.Property<int>("Id")
@@ -456,23 +488,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("SessionId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("AdviLaw.Domain.Entites.Specialization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SubscriptionSection.PlatformSubscription", b =>
@@ -717,6 +732,10 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -999,6 +1018,17 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("Job");
 
                     b.Navigation("Lawyer");
+                });
+
+            modelBuilder.Entity("AdviLaw.Domain.Entites.RefreshToken.RefreshToken", b =>
+                {
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>

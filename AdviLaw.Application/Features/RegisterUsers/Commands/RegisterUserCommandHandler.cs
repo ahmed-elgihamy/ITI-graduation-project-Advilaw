@@ -36,15 +36,7 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
 
             var dto= request.Dto;
             //check Email
-            if (await _userManager.FindByEmailAsync(dto.Email) is not null)
-                return _responseHandler.BadRequest<object>("Email already exists.");
-            //check email format
-            if (string.IsNullOrWhiteSpace(dto.Email) || !dto.Email.Contains("@") || !dto.Email.Contains("."))
-                return _responseHandler.BadRequest<object>("Invalid email format.");
-
-            if (!Enum.IsDefined(typeof(Roles), dto.Role))
-                return _responseHandler.BadRequest<object>("Invalid role Selected.");
-
+    
 
             //Create User 1st
             var user = _mapper.Map<User>(dto);

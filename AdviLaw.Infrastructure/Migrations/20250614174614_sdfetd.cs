@@ -5,7 +5,7 @@
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedRoleEnum : Migration
+    public partial class sdfetd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

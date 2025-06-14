@@ -10,12 +10,15 @@ namespace AdviLaw.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         // Generic repositories
-        IGenericRepository<Specialization> GenericSpecializations { get; }
+      
         IGenericRepository<Lawyer> GenericLawyers { get; }
 
         // Specific repositories
-        ISpecializationRepository Specializations { get; }
+     
         IJobFieldRepository JobFields { get; }
+      
         Task<int> SaveChangesAsync();
+        IRefreshTokenRepository RefreshTokens { get; }
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -16,6 +16,7 @@ namespace AdviLaw.Domain.Entities.UserSection
 {
     public class User : IdentityUser
     {
+
         public string City { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public string CountryCode { get; set; } = string.Empty;
