@@ -12,6 +12,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using AdviLaw.Domain.Entites.Auth;
 
 namespace AdviLaw.Infrastructure.Persistence
 {
@@ -20,6 +21,8 @@ namespace AdviLaw.Infrastructure.Persistence
         public AdviLawDBContext(DbContextOptions<AdviLawDBContext> options) : base(options) { }
 
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Lawyer> Lawyers { get; set; }
@@ -38,6 +41,8 @@ namespace AdviLaw.Infrastructure.Persistence
         public DbSet<PlatformSubscription> PlatformSubscriptions { get; set; }
         public DbSet<UserSubscription> UserSubscriptions { get; set; }
         public DbSet<SubscriptionPoint> SubscriptionPoints { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -112,7 +117,7 @@ namespace AdviLaw.Infrastructure.Persistence
 
 
             // ..............................Lawyer Relations............................
-         
+
 
             //Jobs
             modelBuilder.Entity<Lawyer>()
@@ -122,22 +127,25 @@ namespace AdviLaw.Infrastructure.Persistence
             //Proposals
             modelBuilder.Entity<Lawyer>()
                 .HasMany(l => l.Proposals)
-                .WithOne(p => p.Lawyer);
+                .WithOne(p => p.Lawyer)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             //Sessions
             modelBuilder.Entity<Lawyer>()
                 .HasMany(l => l.Sessions)
-                .WithOne(s => s.Lawyer);
+                .WithOne(s => s.Lawyer)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             //JobField
             modelBuilder.Entity<Lawyer>()
                 .HasMany(l => l.Fields)
-                .WithOne(f => f.Lawyer);
+                .WithOne(f => f.Lawyer);    
 
             //Subscription
             modelBuilder.Entity<Lawyer>()
                 .HasMany(u => u.UserSubscriptions)
-                .WithOne(m => m.Lawyer);
+                .WithOne(m => m.Lawyer)
+                 .OnDelete(DeleteBehavior.Restrict);
 
 
             // ..............................Client Relations............................
@@ -145,12 +153,14 @@ namespace AdviLaw.Infrastructure.Persistence
             //Jobs
             modelBuilder.Entity<Client>()
                 .HasMany(l => l.Jobs)
-                .WithOne(j => j.Client);
+                .WithOne(j => j.Client)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             //Sessions
             modelBuilder.Entity<Client>()
                 .HasMany(l => l.Sessions)
-                .WithOne(s => s.Client);
+                .WithOne(s => s.Client)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             // ..............................Session Relations............................
 
@@ -158,38 +168,44 @@ namespace AdviLaw.Infrastructure.Persistence
             //Jobs
             modelBuilder.Entity<Session>()
                 .HasOne(s => s.Job)
-                .WithOne(j => j.Session);
+                .WithOne(j => j.Session)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             //EscrowTransactions
             modelBuilder.Entity<Session>()
             .HasOne(s => s.EscrowTransaction)
              .WithOne(e => e.Session)
-            .HasForeignKey<EscrowTransaction>(e => e.SessionId);  //  FK
+            .HasForeignKey<EscrowTransaction>(e => e.SessionId)
+             .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
             //Payments
             modelBuilder.Entity<Session>()
             .HasOne(s => s.Payment)
             .WithOne(p => p.Session)
-            .HasForeignKey<Payment>(p => p.SessionId);
+            .HasForeignKey<Payment>(p => p.SessionId)
+             .OnDelete(DeleteBehavior.Restrict); // ✅
 
             //One To Many
             //Messages
             modelBuilder.Entity<Session>()
                 .HasMany(s => s.Messages)
-                .WithOne(m => m.Session);
+                .WithOne(m => m.Session)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
 
             //Reviews
             modelBuilder.Entity<Session>()
                 .HasMany(s => s.Reviews)
-                .WithOne(m => m.Session);
+                .WithOne(m => m.Session)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             //Reports
             modelBuilder.Entity<Session>()
                 .HasMany(s => s.Reports)
-                .WithOne(m => m.Session);
+                .WithOne(m => m.Session)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             // ..............................Job Relations............................
 
@@ -197,51 +213,60 @@ namespace AdviLaw.Infrastructure.Persistence
             //Proposal
             modelBuilder.Entity<Job>()
                 .HasMany(j => j.Proposals)
-                .WithOne(p => p.Job);
+                .WithOne(p => p.Job)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             //Escrow
             modelBuilder.Entity<Job>()
            .HasOne(j => j.EscrowTransaction)
            .WithOne(et => et.Job)
-           .HasForeignKey<EscrowTransaction>(et => et.JobId);
+           .HasForeignKey<EscrowTransaction>(et => et.JobId)
+            .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
             modelBuilder.Entity<Job>()
              .HasOne(j => j.Session)
              .WithOne(s => s.Job)
-             .HasForeignKey<Session>(s => s.JobId);  
+             .HasForeignKey<Session>(s => s.JobId)
+              .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
             //One to Many
             //JobFields
             modelBuilder.Entity<Job>()
                 .HasOne(j => j.JobField)
-                .WithMany(l => l.Jobs);
+                .WithMany(l => l.Jobs)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             // ..............................Payment Relations............................
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.EscrowTransaction)
                 .WithOne(e => e.Payment)
-                .HasForeignKey<EscrowTransaction>(e => e.PaymentId);
+                .HasForeignKey<EscrowTransaction>(e => e.PaymentId)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             modelBuilder.Entity<UserSubscription>()
              .HasOne(us => us.Payment)
               .WithOne(p => p.UserSubscription)
-              .HasForeignKey<UserSubscription>(us => us.PaymentId);
+              .HasForeignKey<UserSubscription>(us => us.PaymentId)
+               .OnDelete(DeleteBehavior.Restrict); // ✅
 
             // ..............................JobField Relations............................
             modelBuilder.Entity<JobField>()
                 .HasMany(j => j.LawyerJobs)
-                .WithOne(lj => lj.JobField);
+                .WithOne(lj => lj.JobField)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             // ..............................Platform Subscription Relations............................
             modelBuilder.Entity<PlatformSubscription>()
                 .HasMany(ps => ps.UsersSubscriptions)
-                .WithOne(us => us.SubscriptionType);
+                .WithOne(us => us.SubscriptionType)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
             modelBuilder.Entity<PlatformSubscription>()
                 .HasMany(ps => ps.Details)
-                .WithOne(d => d.PlatformSubscription);
+                .WithOne(d => d.PlatformSubscription)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
             modelBuilder.Entity<LawyerJobField>()
@@ -251,23 +276,26 @@ namespace AdviLaw.Infrastructure.Persistence
             modelBuilder.Entity<UserSubscription>()
            .HasOne(us => us.Lawyer)
             .WithMany(l => l.UserSubscriptions)
-            .HasForeignKey(us => us.LawyerId);
+            .HasForeignKey(us => us.LawyerId)
+             .OnDelete(DeleteBehavior.Restrict); // ✅
 
             modelBuilder.Entity<UserSubscription>()
                 .HasOne(us => us.SubscriptionType)
                 .WithMany(ps => ps.UsersSubscriptions)
-                .HasForeignKey(us => us.SubscriptionTypeId);
+                .HasForeignKey(us => us.SubscriptionTypeId).OnDelete(DeleteBehavior.Restrict); // ✅
 
             modelBuilder.Entity<UserSubscription>()
                 .HasOne(us => us.Payment)
                 .WithOne(p => p.UserSubscription)
-                .HasForeignKey<UserSubscription>(us => us.PaymentId);
+                .HasForeignKey<UserSubscription>(us => us.PaymentId)
+                 .OnDelete(DeleteBehavior.Restrict); // ✅
 
 
             modelBuilder.Entity<EscrowTransaction>()
               .HasOne(e => e.Payment)
               .WithOne(p => p.EscrowTransaction)
-             .HasForeignKey<EscrowTransaction>(e => e.PaymentId);
+             .HasForeignKey<EscrowTransaction>(e => e.PaymentId)
+              .OnDelete(DeleteBehavior.Restrict); // ✅
 
         }
     }

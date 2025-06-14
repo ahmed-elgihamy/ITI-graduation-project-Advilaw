@@ -3,9 +3,12 @@ using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +28,34 @@ public static  class ServiceCollectionExtensions
 
 
 
-            services.AddIdentityApiEndpoints<User>()
-                .AddEntityFrameworkStores<AdviLawDBContext>();
-        
+            //services.AddIdentityApiEndpoints<User>()
+            //    .AddEntityFrameworkStores<AdviLawDBContext>();
+
+            services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<AdviLawDBContext>()
+        .AddDefaultTokenProviders();
+
+           services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+.AddJwtBearer(options =>
+{
+    var jwtKey = conf["Jwt:Key"];
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = conf["Jwt:Issuer"],
+        ValidAudience = conf["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
+
+
         }
     }
 }

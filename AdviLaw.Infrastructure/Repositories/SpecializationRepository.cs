@@ -13,7 +13,7 @@ namespace AdviLaw.Infrastructure.Repositories
 
         public async Task<int> Create(Specialization specialization)
         {
-            _dbContext.Specializations.Add(specialization);
+           _dbContext.Specializations.Add(specialization);
            await _dbContext.SaveChangesAsync();
             return specialization.Id;
         }
