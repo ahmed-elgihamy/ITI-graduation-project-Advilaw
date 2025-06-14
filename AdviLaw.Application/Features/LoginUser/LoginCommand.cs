@@ -11,11 +11,7 @@ namespace AdviLaw.Application.Features.LoginUser
   public class LoginCommand:IRequest<AuthResponse>
     {
 
-        public UserLoginDto Dto { get; set; }
-
-        public LoginCommand( UserLoginDto dto)
-        {
-            Dto = dto;
-        }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

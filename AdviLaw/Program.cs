@@ -16,11 +16,11 @@ namespace AdviLaw
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+      
 
-    
             builder.Services.AddAuthorization();
             builder.AddPresentation();
-            builder.Services.AddApplication();            
+            builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
             //serialize and deserialize enums as strings instead of integers.
@@ -33,6 +33,7 @@ namespace AdviLaw
 
 
             var app = builder.Build();
+
             if (app.Environment.IsDevelopment())
             {
 
@@ -42,6 +43,9 @@ namespace AdviLaw
                 app.UseSwaggerUI();
 
             }
+            //app.MapGroup("api/identity")
+            //    .WithTags("Identity")
+            //    .MapIdentityApi<User>(); 
 
 
             // Redirect root URL to Swagger UI
@@ -59,6 +63,7 @@ namespace AdviLaw
             //    .MapIdentityApi<User>(); 
 
             app.UseAuthorization();
+
             app.MapControllers();
             app.Run();
         }

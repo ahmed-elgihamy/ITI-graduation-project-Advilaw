@@ -41,6 +41,8 @@ namespace AdviLaw.Infrastructure.Persistence
         public DbSet<UserSubscription> UserSubscriptions { get; set; }
         public DbSet<SubscriptionPoint> SubscriptionPoints { get; set; }
 
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

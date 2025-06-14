@@ -6,26 +6,19 @@ using AdviLaw.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
+public class LoginCommandHandler(
+    UserManager<User> userManager,
+    ITokenService tokenService,
+    IUnitOfWork unitOfWork) : IRequestHandler<LoginCommand, AuthResponse>
 {
-    private readonly UserManager<User> _userManager;
-    private readonly ITokenService _tokenService;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public LoginCommandHandler(
-        UserManager<User> userManager,
-        ITokenService tokenService,
-        IUnitOfWork unitOfWork)
-    {
-        _userManager = userManager;
-        _tokenService = tokenService;
-        _unitOfWork = unitOfWork;
-    }
+    private readonly UserManager<User> _userManager = userManager;
+    private readonly ITokenService _tokenService = tokenService;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindByEmailAsync(request.Dto.Email);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, request.Dto.Email))
+        var user = await _userManager.FindByEmailAsync(request.Email);
+        if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             return AuthResponse.Failure("Invalid email or password");
 
         var accessToken = _tokenService.GenerateAccessToken(user);
