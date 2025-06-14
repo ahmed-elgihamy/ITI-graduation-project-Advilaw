@@ -34,10 +34,12 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
             if (user == null)
                 return _responseHandler.NotFound<object>("User not found");
 
+
             //if lawyer already exists
             var existingLawyer = await _unitOfWork.GenericLawyers.FindFirstAsync(l => l.UserId == request.UserId);
             if (existingLawyer != null)
                 return _responseHandler.BadRequest<object>("Lawyer profile already exists for this user");
+
 
             //mapping the request to the Lawyer entity
             var lawyer = _mapper.Map<Lawyer>(request);
@@ -45,14 +47,22 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
 
             var result = await _unitOfWork.GenericLawyers.AddAsync(lawyer);
             await _unitOfWork.SaveChangesAsync();
+
+            if(result==null)
+             
+               return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
+
             if (result == null)
             {
                 return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
+
             }
 
             //return dto to avoid circular reference issues
-            var lawyerDto = _mapper.Map<CreateLawyerDto>(result);
+
+            var lawyerDto = _mapper.Map<LawyerResponseDto>(result);
             return _responseHandler.Created<object>(lawyerDto);
+
         }
     }
 } 

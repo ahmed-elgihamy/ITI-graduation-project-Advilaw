@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AdviLaw.Application.DTOs.Lawyer
 {
-    public class CreateLawyerDto
+    public class LawyerResponseDto
     {
         [Required]
         public string UserId { get; set; }

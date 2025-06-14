@@ -3,6 +3,7 @@ using AdviLaw.Domain.Entites.PaymentSection;
 using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
+using AdviLaw.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,6 @@ namespace AdviLaw.Domain.Entities.UserSection
         public Client? Client { get; set; }
         public Admin? Admin { get; set; }
 
-        public string Role {get; set; }  // This can be "Lawyer", "Client", or "Admin"
+        public Roles Role { get; set; }  // This can be "Lawyer", "Client", or "Admin"
     }
 }
