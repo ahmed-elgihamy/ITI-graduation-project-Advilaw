@@ -47,7 +47,7 @@ namespace AdviLaw.Application.Features.RefreshToken.Handlers
             await _unitOfWork.RefreshTokens.AddAsync(newRefreshToken);
             await _unitOfWork.SaveChangesAsync();
 
-            return AuthResponse.Success(newAccessToken, newRefreshToken.Token);
+            return AuthResponse.Success(newAccessToken, newRefreshToken.Token,user.Role.ToString());
         }
     }
 }

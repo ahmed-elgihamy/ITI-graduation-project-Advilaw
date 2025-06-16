@@ -1,4 +1,5 @@
-﻿using AdviLaw.Domain.Entites.RefreshToken;
+﻿using System.Linq.Expressions;
+using AdviLaw.Domain.Entites.RefreshToken;
 using AdviLaw.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,5 +22,16 @@ public class RefreshTokenRepository : IRefreshTokenRepository
     public async Task AddAsync(RefreshToken token, CancellationToken cancellationToken = default)
     {
         await _context.RefreshTokens.AddAsync(token, cancellationToken);
+    }
+
+    public async Task<RefreshToken?> FindFirstAsync(Expression<Func<RefreshToken, bool>> predicate)
+    {
+        return await _context.RefreshTokens.FirstOrDefaultAsync(predicate);
+    }
+
+    public void Update(RefreshToken token, CancellationToken cancellationToken = default)
+    {
+        _context.RefreshTokens.Update(token);
+
     }
 }
