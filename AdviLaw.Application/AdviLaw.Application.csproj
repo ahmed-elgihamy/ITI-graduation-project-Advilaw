@@ -19,11 +19,4 @@
     <ProjectReference Include="..\AdviLaw.Domain\AdviLaw.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Specializations\Command\Delete\" />
-    <Folder Include="Specializations\Command\Update\" />
-    <Folder Include="Specializations\query\Getall\" />
-    <Folder Include="Specializations\query\getbyid\" />
-  </ItemGroup>
-
 </Project>

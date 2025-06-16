@@ -8,10 +8,8 @@ using FluentValidation;
 
 
 namespace AdviLaw.Application.Features.RegisterUsers.Commands
-{
-
-    public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
-
+{ 
+   public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
     {
         public RegisterUserValidator()
         {
@@ -22,8 +20,7 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             RuleFor(x => x.Dto.Role)
                 .IsInEnum().WithMessage("Invalid role selected.");
 
-
-            // Password (at least 6 characters, including upper, lower, number, and special character)
+            // Password (at least 6 characters, including upper, lower, number, and special character)  
             RuleFor(x => x.Dto.Password)
                 .NotEmpty().WithMessage("Password is required.")
                 .MinimumLength(6).WithMessage("Password must be at least 6 characters.")
@@ -31,22 +28,23 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                 .Matches(@"\d").WithMessage("Password must contain at least one number.")
                 .Matches(@"[\@\!\?\*\.]").WithMessage("Password must contain at least one special character (@!?*.).");
 
-            // Username
+            // Username  
             RuleFor(x => x.Dto.UserName)
                 .NotEmpty().WithMessage("Username is required.")
                 .MaximumLength(20).WithMessage("Username must not exceed 20 characters.");
 
-            // Phone Number
+            // Phone Number  
             RuleFor(x => x.Dto.PhoneNumber)
                 .NotEmpty().WithMessage("Phone number is required.")
                 .Matches(@"^01[012]\d{8}$").WithMessage("Phone number must be a valid Egyptian number (e.g., 01012345678).");
 
-            // Address Fields
+            // Address Fields  
             RuleFor(x => x.Dto.City)
                 .NotEmpty().WithMessage("City is required.");
 
             RuleFor(x => x.Dto.Country)
                 .NotEmpty().WithMessage("Country is required.");
+
 
 
             RuleFor(x => x.Dto.NationalityId)
@@ -61,7 +59,7 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                     .NotEmpty().WithMessage("Profile header is required.");
 
                 RuleFor(x => x.Dto.ProfileAbout)
-                    .NotEmpty().WithMessage("Profile about is required .")
+                    .NotEmpty().WithMessage("Profile about is required.")
                     .MaximumLength(1000).WithMessage("Profile about must not exceed 1000 characters.");
 
                 RuleFor(x => x.Dto.LawyerCardID)
@@ -79,7 +77,6 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                     .NotNull().WithMessage("Bar association card number is required for lawyers.")
                     .GreaterThan(0).WithMessage("Bar association card number must be greater than 0.");
             });
-            
         }
     }
 }
