@@ -2,9 +2,11 @@
 using AdviLaw.Application.DTOs.Users;
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
 using AdviLaw.Application.Features.LoginUser;
+using AdviLaw.Application.Features.LogoutUser;
 using AdviLaw.Application.Features.RefreshToken;
 using AdviLaw.Application.Features.RegisterUsers;
 using AdviLaw.Application.Features.RegisterUsers.Commands;
+using AdviLaw.Application.Features.VerifyEmail;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
 using AutoMapper;
@@ -67,6 +69,19 @@ namespace AdviLaw.Controllers
             return result.Succeeded ? Ok(result) : Unauthorized(result);
         }
 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody] LogoutUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return result ? Ok(new { message = "Logged out successfully" }) : BadRequest(new { message = "Invalid refresh token or user" });
+        }
 
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail([FromQuery] string userId, [FromQuery] string token)
+        {
+            var command = new VerifyEmailCommand(userId, token);
+            var result = await _mediator.Send(command);
+            return result.Succeeded ? Ok(result) : BadRequest(result);
+        }
     }
 }

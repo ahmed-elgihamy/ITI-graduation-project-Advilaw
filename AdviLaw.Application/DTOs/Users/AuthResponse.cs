@@ -12,12 +12,14 @@ namespace AdviLaw.Application.DTOs.Users
         public string Token { get; set; }
         public string RefreshToken { get; set; }
         public string Error { get; set; }
+        public string Role { get; set; }
 
-        public static AuthResponse Success(string token, string refreshToken) => new AuthResponse
+        public static AuthResponse Success(string token, string refreshToken, string role) => new AuthResponse
         {
             Succeeded = true,
             Token = token,
-            RefreshToken = refreshToken
+            RefreshToken = refreshToken,
+            Role = role
         };
 
         public static AuthResponse Failure(string error) => new AuthResponse

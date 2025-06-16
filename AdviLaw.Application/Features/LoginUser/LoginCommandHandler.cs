@@ -28,6 +28,6 @@ public class LoginCommandHandler(
         await _unitOfWork.RefreshTokens.AddAsync(refreshToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return AuthResponse.Success(accessToken, refreshToken.Token);
+        return AuthResponse.Success(accessToken, refreshToken.Token,user.Role.ToString());
     }
 }

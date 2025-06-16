@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using AdviLaw.Infrastructure.Repositories;
 
 namespace AdviLaw.Infrastructure.Extensions
 {
@@ -58,7 +59,8 @@ namespace AdviLaw.Infrastructure.Extensions
 
 
 
-            services.AddScoped<IUnitOfWork, AdviLaw.Infrastructure.UnitOfWork.UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+            services.AddScoped<IEmailService, EmailService>();
         }
     }
 }

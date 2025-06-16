@@ -8,6 +8,7 @@ using AdviLaw.Application.Features.Clients.Commands.CreateClient;
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
+using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
@@ -22,13 +23,15 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
         private readonly IMapper _mapper;
         private readonly ResponseHandler _responseHandler;
         private readonly IMediator _mediator;
-        public RegisterUserCommandHandler(IMediator mediator ,UserManager<User> userManager, IUnitOfWork unitOfWork, IMapper mapper, ResponseHandler responseHandler)
+        private readonly IEmailService _emailService; 
+        public RegisterUserCommandHandler(IMediator mediator ,UserManager<User> userManager, IUnitOfWork unitOfWork, IMapper mapper, ResponseHandler responseHandler,IEmailService emailService)
         {
             _userManager = userManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _responseHandler = responseHandler;
             _mediator = mediator;
+            _emailService = emailService;
 
         }
 
@@ -50,6 +53,12 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                 return _responseHandler.BadRequest<object>("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
 
+           // generate to the user's email
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            // Send confirmation email
+            await _emailService.SendEmailConfirmationAsync(user.Email, user.Id, token);
+      
+
             //map from Registerdto to Lawyercommand
             if (dto.Role == Roles.Lawyer)
             {
@@ -67,7 +76,11 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             {
                 return _responseHandler.BadRequest<object>("Invalid role selected.");
             }
-            return _responseHandler.Success<object>(new { userId = user.Id, email = user.Email, role = dto.Role }, new { timestamp = DateTime.UtcNow });
+            return _responseHandler.Success<object>(new { userId = user.Id, 
+            email = user.Email, 
+            role = dto.Role,
+            // emailConfirmationToken = token 
+            }, new { timestamp = DateTime.UtcNow });
 
         }
     }
