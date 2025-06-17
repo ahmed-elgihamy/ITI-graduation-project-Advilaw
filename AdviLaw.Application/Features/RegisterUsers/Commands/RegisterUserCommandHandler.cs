@@ -81,7 +81,6 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             role = dto.Role,
             // emailConfirmationToken = token 
             }, new { timestamp = DateTime.UtcNow });
-
         }
     }
 }

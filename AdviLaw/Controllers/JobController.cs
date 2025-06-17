@@ -1,43 +1,81 @@
-﻿using AdviLaw.Application.Basics;
-using AdviLaw.Application.Job.Command;
-using AdviLaw.Application.Job.Dtos;
+﻿using AdviLaw.Application.Features.JobSection.Commands.CreateJob;
+using AdviLaw.Application.Features.JobSection.DTOs;
+using AdviLaw.Application.Features.JobSection.Queries.GetPagedJobs;
+using AdviLaw.Application.Features.Shared.DTOs;
+using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobController : ControllerBase
+    public class JobController(IMediator mediator, IMapper mapper) : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator = mediator;
+        private readonly IMapper _mapper = mapper;
 
-        public JobController(IMediator mediator)
+        [HttpGet("")]
+        public async Task<IActionResult> GetAllAsync([FromQuery] SearchQueryDTO query)
         {
-            _mediator = mediator;
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Client")]
-        [ProducesResponseType(typeof(Response<JobDto>), (int)HttpStatusCode.Created)]
-        [ProducesResponseType(typeof(Response<JobDto>), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateJob([FromBody] CreateJobDto jobDto)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (string.IsNullOrEmpty(userId))
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            if (userRole == "Lawyer")
             {
-                return Unauthorized(new Response<JobDto>("User ID not found in token"));
+                var requestDTO = _mapper.Map<GetPagedJobForLawyerQuery>(query);
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
             }
-
-            var command = new CreateJobCommand(jobDto, userId);
-            var result = await _mediator.Send(command);
-
-            return StatusCode((int)result.StatusCode, result);
+            else
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (userId == null)
+                {
+                    return Unauthorized("User ID not found in claims.");
+                }
+                var requestDTO = _mapper.Map<GetPagedJobForClientQuery>(query);
+                requestDTO.ClientId = int.TryParse(userId, out var clientId) ? clientId : default;
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
+            }
         }
+
+        //[Authorize(Roles = "Client")]
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateJobAsync([FromBody] CreateJobDTO createJobDTO)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("User ID not found in claims.");
+            }
+            //command.ClientId = int.TryParse(userId, out var clientId) ? clientId : (int?)null;
+            CreateJobCommand command = _mapper.Map<CreateJobCommand>(createJobDTO);
+            command.ClientId = 1;
+            var result = await _mediator.Send(command);
+            //return CreatedAtAction(nameof(GetAllAsync), new { id = result.Id }, result);
+            return Ok(result);
+        }
+
+        //[HttpPost]
+        //[Authorize(Roles = "Client")]
+        //[ProducesResponseType(typeof(Response<JobDto>), (int)HttpStatusCode.Created)]
+        //[ProducesResponseType(typeof(Response<JobDto>), (int)HttpStatusCode.BadRequest)]
+        //public async Task<IActionResult> CreateJob([FromBody] CreateJobDto jobDto)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        return Unauthorized(new Response<JobDto>("User ID not found in token"));
+        //    }
+
+        //    var command = new CreateJobCommand(jobDto, userId);
+        //    var result = await _mediator.Send(command);
+
+        //    return StatusCode((int)result.StatusCode, result);
+        //}
+
+
     }
 }

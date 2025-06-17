@@ -5,15 +5,15 @@ using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using AdviLaw.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Entities.UserSection
 {
+    public enum UserRole
+    {
+        Client = 0,
+        Lawyer,
+        Admin
+    }
     public class User : IdentityUser
     {
 

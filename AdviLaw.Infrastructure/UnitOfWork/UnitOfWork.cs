@@ -30,6 +30,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             GenericClients = new GenericRepository<Client>(_dbContext);
             JobFields = new JobFieldRepository(_dbContext);
             Jobs = new JobRepository(_dbContext);
+            Lawyers = new LawyerRepository(_dbContext);
             RefreshTokens = new RefreshTokenRepository(_dbContext);
         }
 

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\AdviLaw.Domain\AdviLaw.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\LawyerSection\Commands\" />
+  </ItemGroup>
+
 </Project>

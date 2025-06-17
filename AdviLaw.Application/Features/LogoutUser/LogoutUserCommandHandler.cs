@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdviLaw.Domain.Entities.UserSection;
-using AdviLaw.Domain.Repositories;
-using AdviLaw.Domain.UnitOfWork;
+﻿using AdviLaw.Domain.UnitOfWork;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity;
 
 namespace AdviLaw.Application.Features.LogoutUser
 {

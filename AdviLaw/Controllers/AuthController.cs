@@ -1,18 +1,12 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.DTOs.Users;
-using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
 using AdviLaw.Application.Features.LoginUser;
 using AdviLaw.Application.Features.LogoutUser;
 using AdviLaw.Application.Features.RefreshToken;
-using AdviLaw.Application.Features.RegisterUsers;
 using AdviLaw.Application.Features.RegisterUsers.Commands;
 using AdviLaw.Application.Features.VerifyEmail;
-using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
-using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdviLaw.Controllers
@@ -22,7 +16,7 @@ namespace AdviLaw.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ResponseHandler _responseHandler ;
+        private readonly ResponseHandler _responseHandler;
 
 
 
