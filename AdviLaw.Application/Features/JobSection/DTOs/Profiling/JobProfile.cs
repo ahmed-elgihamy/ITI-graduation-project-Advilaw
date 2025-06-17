@@ -23,6 +23,22 @@ namespace AdviLaw.Application.Features.JobSection.DTOs.Profiling
             CreateMap<Job, CreatedJobDTO>();
             CreateMap<CreateJobCommand, Job>();
             CreateMap<CreateJobDTO, CreateJobCommand>();
+
+            //GetJobByIdClientHandler
+            CreateMap<Job, JobDetailsForClientDTO>()
+                .ForMember(dest => dest.LawyerName, opt => opt.MapFrom(src => src.Lawyer!.User.UserName))
+                .ForMember(dest => dest.LawyerProfilePictureUrl, opt => opt.MapFrom(src => src.Lawyer!.User.ImageUrl))
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.UserName))
+                .ForMember(dest => dest.ClientProfilePictureUrl, opt => opt.MapFrom(src => src.Client.User.ImageUrl))
+                .ForMember(dest => dest.JobFieldName, opt => opt.MapFrom(src => src.JobField.Name))
+                .ReverseMap();
+
+            //GetJobByIdLawyerHandler
+            CreateMap<Job, JobDetailsForLawyerDTO>()
+                .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.User.UserName))
+                .ForMember(dest => dest.ClientProfilePictureUrl, opt => opt.MapFrom(src => src.Client.User.ImageUrl))
+                .ForMember(dest => dest.JobFieldName, opt => opt.MapFrom(src => src.JobField.Name))
+                .ReverseMap();
         }
     }
 }

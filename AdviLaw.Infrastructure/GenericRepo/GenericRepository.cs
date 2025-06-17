@@ -17,6 +17,32 @@ namespace AdviLaw.Infrastructure.GenericRepo
             _dbContext = dbContext;
         }
 
+        public async Task<T?> GetByIdIncludesAsync(
+            int id,
+            Expression<Func<T, bool>>? filter = null,
+            List<Expression<Func<T, object>>>? includes = null
+        )
+        {
+            IQueryable<T> query = _dbContext.Set<T>().Where(e => EF.Property<int>(e, "Id") == id);
+
+            // Apply includes
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            // Apply filter
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         public async Task<IQueryable<T>> GetAllAsync(
             Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,

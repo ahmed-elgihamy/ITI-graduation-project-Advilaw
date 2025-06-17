@@ -1,5 +1,7 @@
 ﻿using AdviLaw.Application.Features.JobSection.Commands.CreateJob;
 using AdviLaw.Application.Features.JobSection.DTOs;
+using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForLawyer;
+using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient;
 using AdviLaw.Application.Features.JobSection.Queries.GetPagedJobs;
 using AdviLaw.Application.Features.Shared.DTOs;
 using AutoMapper;
@@ -37,6 +39,33 @@ namespace AdviLaw.Controllers
                 requestDTO.ClientId = int.TryParse(userId, out var clientId) ? clientId : default;
                 var result = await _mediator.Send(requestDTO);
                 return Ok(result);
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            if (userRole == "Lawyer")
+            {
+                var requestDTO = new GetJobByIdLawyerQuery(id);
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
+            }
+            else if (userRole == "Client")
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (userId == null)
+                {
+                    return Unauthorized("User ID not found in claims.");
+                }
+                var requestDTO = new GetJobByIdClientQuery(id);
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest("Invalid user role. Only 'Lawyer' and 'Client' roles are allowed.");
             }
         }
 

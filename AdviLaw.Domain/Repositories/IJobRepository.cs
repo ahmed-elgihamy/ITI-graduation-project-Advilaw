@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Repositories
 {
- public interface IJobRepository : IGenericRepository<Job>
+    public interface IJobRepository : IGenericRepository<Job>
     {
+        Task<IQueryable<Job>> GetAllActivePublishedJobs();
+        Task<Job?> GetJobByIdForClient(int jobId);
+        Task<Job?> GetJobByIdForLawyer(int jobId);
+        Task<int> GetJobProposalCount(int jobId);
     }
 }

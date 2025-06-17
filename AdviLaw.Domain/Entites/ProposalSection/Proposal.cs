@@ -1,6 +1,4 @@
-﻿
-
-using AdviLaw.Domain.Entites.JobSection;
+﻿using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entities.UserSection;
 
 namespace AdviLaw.Domain.Entites.ProposalSection
