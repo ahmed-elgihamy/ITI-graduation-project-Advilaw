@@ -1,11 +1,15 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.DTOs.Users;
+
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
 using AdviLaw.Application.Features.LoginUser;
 using AdviLaw.Application.Features.LogoutUser;
 using AdviLaw.Application.Features.RefreshToken;
 using AdviLaw.Application.Features.RegisterUsers;
 using AdviLaw.Application.Features.RegisterUsers.Commands;
+using AdviLaw.Application.Features.ResendReset;
+using AdviLaw.Application.Features.ResetPassword;
+using AdviLaw.Application.Features.SendResetCode;
 using AdviLaw.Application.Features.VerifyEmail;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
@@ -83,5 +87,31 @@ namespace AdviLaw.Controllers
             var result = await _mediator.Send(command);
             return result.Succeeded ? Ok(result) : BadRequest(result);
         }
+
+        [HttpPost("auth/send-reset-code")]
+        public async Task<IActionResult> SendResetCode([FromBody] SendResetCodeCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return StatusCode((int)result.StatusCode, result);
+        }
+
+        [HttpPost("auth/resend-reset-code")]
+        public async Task<IActionResult> ResendResetCode([FromBody] ResendResetCodeCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return StatusCode((int)result.StatusCode, result);
+        }
+
+        [HttpPost("auth/reset-password")]
+     
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return StatusCode((int)result.StatusCode, result);
+        }
+
+
+
+
     }
 }

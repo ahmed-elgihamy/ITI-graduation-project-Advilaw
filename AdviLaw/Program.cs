@@ -43,9 +43,6 @@ namespace AdviLaw
                 app.UseSwaggerUI();
 
             }
-            //app.MapGroup("api/identity")
-            //    .WithTags("Identity")
-            //    .MapIdentityApi<User>(); 
 
 
             // Redirect root URL to Swagger UI
@@ -58,9 +55,6 @@ namespace AdviLaw
 
 
 
-            //app.MapGroup("api/identity")
-            //    .WithTags("Identity")
-            //    .MapIdentityApi<User>(); 
 
             app.UseAuthorization();
 

@@ -29,10 +29,11 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddDbContext<AdviLawDBContext>(options => options.UseSqlServer(connection));
        
             services.AddScoped<ITokenService, TokenService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
 
-            //services.AddIdentityApiEndpoints<User>()
-            //    .AddEntityFrameworkStores<AdviLawDBContext>();
             services.AddIdentity<User, IdentityRole>()
                  .AddEntityFrameworkStores<AdviLawDBContext>()
                  .AddDefaultTokenProviders();
@@ -42,7 +43,7 @@ namespace AdviLaw.Infrastructure.Extensions
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
- .AddJwtBearer(options =>
+            .AddJwtBearer(options =>
  {
      var jwtKey = conf["Jwt:Key"];
      options.TokenValidationParameters = new TokenValidationParameters
@@ -58,9 +59,7 @@ namespace AdviLaw.Infrastructure.Extensions
  });
 
 
-
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
-            services.AddScoped<IEmailService, EmailService>();
+           
         }
     }
 }

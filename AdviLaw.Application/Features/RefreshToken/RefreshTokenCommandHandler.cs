@@ -9,21 +9,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AdviLaw.Application.Features.RefreshToken.Handlers
 {
-    public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, AuthResponse>
+    public class RefreshTokenCommandHandler(
+        IUnitOfWork unitOfWork,
+        UserManager<User> userManager,
+        ITokenService tokenService) : IRequestHandler<RefreshTokenCommand, AuthResponse>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<User> _userManager;
-        private readonly ITokenService _tokenService;
-
-        public RefreshTokenCommandHandler(
-            IUnitOfWork unitOfWork,
-            UserManager<User> userManager,
-            ITokenService tokenService)
-        {
-            _unitOfWork = unitOfWork;
-            _userManager = userManager;
-            _tokenService = tokenService;
-        }
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly UserManager<User> _userManager = userManager;
+        private readonly ITokenService _tokenService = tokenService;
 
         public async Task<AuthResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
         {
