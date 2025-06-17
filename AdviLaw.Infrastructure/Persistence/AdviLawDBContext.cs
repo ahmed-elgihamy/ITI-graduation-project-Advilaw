@@ -13,6 +13,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using AdviLaw.Domain.Entites.RefreshToken;
+using AdviLaw.Domain.Entites.Auth;
 
 namespace AdviLaw.Infrastructure.Persistence
 {
@@ -21,6 +22,8 @@ namespace AdviLaw.Infrastructure.Persistence
         public AdviLawDBContext(DbContextOptions<AdviLawDBContext> options) : base(options) { }
 
         //public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
+
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }

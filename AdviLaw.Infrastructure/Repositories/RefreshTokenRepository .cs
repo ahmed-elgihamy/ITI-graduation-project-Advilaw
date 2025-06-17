@@ -34,4 +34,10 @@ public class RefreshTokenRepository : IRefreshTokenRepository
         _context.RefreshTokens.Update(token);
 
     }
+
+    public async Task DeleteAllAsync(Expression<Func<RefreshToken, bool>> predicate)
+    {
+        var tokens = await _context.RefreshTokens.Where(predicate).ToListAsync();
+        _context.RefreshTokens.RemoveRange(tokens);
+    }
 }
