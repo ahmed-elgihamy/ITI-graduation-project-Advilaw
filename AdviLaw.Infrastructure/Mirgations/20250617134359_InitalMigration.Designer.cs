@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-<<<<<<<< HEAD:AdviLaw.Infrastructure/Migrations/20250617134359_InitalMigration.Designer.cs
     [Migration("20250617134359_InitalMigration")]
     partial class InitalMigration
-========
-    [Migration("20250616211200_allstruc")]
-    partial class allstruc
->>>>>>>> a9cd0256916f72935696c6587dc9f3f5a55de04d:AdviLaw.Infrastructure/Migrations/20250616211200_allstruc.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,33 +24,6 @@ namespace AdviLaw.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AdviLaw.Domain.Entites.Auth.PasswordResetCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Expiry")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Used")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PasswordResetCodes");
-                });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.EscrowTransactionSection.EscrowTransaction", b =>
                 {

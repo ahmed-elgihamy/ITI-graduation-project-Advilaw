@@ -22,11 +22,10 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddDbContext<AdviLawDBContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
 
+            //services.AddIdentityApiEndpoints<User>()
+            //    .AddEntityFrameworkStores<AdviLawDBContext>();
             services.AddIdentity<User, IdentityRole>()
                  .AddEntityFrameworkStores<AdviLawDBContext>()
                  .AddDefaultTokenProviders();
@@ -36,7 +35,6 @@ namespace AdviLaw.Infrastructure.Extensions
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-<<<<<<< HEAD
              .AddJwtBearer(options =>
              {
                  var jwtKey = conf["Jwt:Key"];
@@ -52,27 +50,11 @@ namespace AdviLaw.Infrastructure.Extensions
                  };
              });
 
+
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
             services.AddScoped<IEmailService, EmailService>();
-=======
-            .AddJwtBearer(options =>
- {
-     var jwtKey = conf["Jwt:Key"];
-     options.TokenValidationParameters = new TokenValidationParameters
-     {
-         ValidateIssuer = true,
-         ValidateAudience = true,
-         ValidateLifetime = true,
-         ValidateIssuerSigningKey = true,
-         ValidIssuer = conf["Jwt:Issuer"],
-         ValidAudience = conf["Jwt:Audience"],
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-     };
- });
+            services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
 
-
-           
->>>>>>> a9cd0256916f72935696c6587dc9f3f5a55de04d
         }
     }
 }
