@@ -45,7 +45,7 @@ namespace AdviLaw.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            var userRole = User.FindFirstValue(ClaimTypes.Role);
             if (userRole == "Lawyer")
             {
                 var requestDTO = new GetJobByIdLawyerQuery(id);
