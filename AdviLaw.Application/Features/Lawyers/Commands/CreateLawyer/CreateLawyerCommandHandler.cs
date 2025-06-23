@@ -1,14 +1,10 @@
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.DTOs.Lawyer;
 using AdviLaw.Domain.Entities.UserSection;
-using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Kiota.Abstractions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
 {

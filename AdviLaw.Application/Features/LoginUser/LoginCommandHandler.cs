@@ -34,11 +34,11 @@ public class LoginCommandHandler(
             return AuthResponse.Failure("Invalid email or password");
         }
 
-        if (!user.EmailConfirmed)
-        {
-            _logger.LogWarning("Login attempt with unconfirmed email: {Email}", request.Email);
-            return AuthResponse.Failure("Please confirm your email before logging in.");
-        }
+        //if (!user.EmailConfirmed)
+        //{
+        //    _logger.LogWarning("Login attempt with unconfirmed email: {Email}", request.Email);
+        //    return AuthResponse.Failure("Please confirm your email before logging in.");
+        //}
 
         //  delete old refresh tokens (single-device login behavior)
        await _unitOfWork.RefreshTokens.DeleteAllAsync(rt => rt.UserId == user.Id);
