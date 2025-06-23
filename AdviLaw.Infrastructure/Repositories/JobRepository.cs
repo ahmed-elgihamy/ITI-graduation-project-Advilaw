@@ -2,7 +2,6 @@
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Infrastructure.GenericRepo;
 using AdviLaw.Infrastructure.Persistence;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdviLaw.Infrastructure.Repositories

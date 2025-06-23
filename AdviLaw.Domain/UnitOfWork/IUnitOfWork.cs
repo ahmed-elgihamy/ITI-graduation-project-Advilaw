@@ -16,6 +16,9 @@ namespace AdviLaw.Domain.UnitOfWork
         IJobFieldRepository JobFields { get; }
         ILawyerRepository Lawyers { get; }
         IJobRepository Jobs { get; }
+        IPlatformSubscriptionRepository PlatformSubscriptions { get; }
+        ISubscriptionPointRepository SubscriptionPoints { get; }
+
 
         Task<int> SaveChangesAsync();
         IRefreshTokenRepository RefreshTokens { get; }

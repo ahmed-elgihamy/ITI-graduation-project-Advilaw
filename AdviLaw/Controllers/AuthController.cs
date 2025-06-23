@@ -50,7 +50,6 @@ namespace AdviLaw.Controllers
                 return _responseHandler.BadRequest<object>(result.Message);
             }
             return _responseHandler.Success(result.Data, new { timestamp = DateTime.UtcNow });
-
         }
 
 
@@ -98,7 +97,7 @@ namespace AdviLaw.Controllers
         }
 
         [HttpPost("auth/reset-password")]
-     
+
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {
             var result = await _mediator.Send(command);

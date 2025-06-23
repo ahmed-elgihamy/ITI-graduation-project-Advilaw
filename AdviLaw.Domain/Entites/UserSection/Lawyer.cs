@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Entities.UserSection
 {
-public class Lawyer
+    public class Lawyer
     {
         public int Id { get; set; }
 
@@ -22,10 +22,10 @@ public class Lawyer
         public string ProfileAbout { get; set; } = string.Empty;
         public int LawyerCardID { get; set; }
 
-       public string   Bio { get; set; }
-       public bool IsApproved { get; set; }
-      public string  barCardImagePath { get; set; }
-     public int  barAssociationCardNumber { get; set; }
+        public string Bio { get; set; }
+        public bool IsApproved { get; set; }
+        public string barCardImagePath { get; set; }
+        public int barAssociationCardNumber { get; set; }
 
         //Fields
         public List<LawyerJobField> Fields { get; set; } = new();
