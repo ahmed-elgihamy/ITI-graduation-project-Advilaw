@@ -9,8 +9,10 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MailKit" Version="4.12.1" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Graph.Core" Version="3.2.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Specializations\Command\Delete\" />
-    <Folder Include="Specializations\Command\Update\" />
-    <Folder Include="Specializations\query\Getall\" />
-    <Folder Include="Specializations\query\getbyid\" />
+    <Folder Include="Features\LawyerSection\Commands\" />
+    <Folder Include="Features\SubscriptionSection\" />
   </ItemGroup>
 
 </Project>

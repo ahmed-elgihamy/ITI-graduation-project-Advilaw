@@ -23,12 +23,12 @@ namespace AdviLaw.Domain.Entites.EscrowTransactionSection
         // Navigation Properties
 
         //User Section
-        public int? SenderId { get; set; }
-        public User Sender { get; set; } = default!;
+        public string? SenderId { get; set; }
+        public User? Sender { get; set; }
 
         //Job Section
         public int JobId { get; set; }
-        public Job Job { get; set; } = default!;
+        public Job Job { get; set; }
 
         //Session Section
         public int? SessionId { get; set; }  // Optional, for when the session is created
@@ -36,6 +36,6 @@ namespace AdviLaw.Domain.Entites.EscrowTransactionSection
 
         //Payment Section
         public int? PaymentId { get; set; }
-        public Payment? Payment { get; set; } = default!;
+        public Payment? Payment { get; set; }
     }
 }

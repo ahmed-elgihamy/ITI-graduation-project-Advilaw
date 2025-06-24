@@ -1,6 +1,4 @@
-﻿
-
-using AdviLaw.Domain.Entites.JobSection;
+﻿using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entities.UserSection;
 
 namespace AdviLaw.Domain.Entites.ProposalSection
@@ -15,7 +13,7 @@ namespace AdviLaw.Domain.Entites.ProposalSection
         //Navigation Properties
         public int JobId { get; set; }
         public Job Job { get; set; } = new();
-        public int LawyerId { get; set; }
-        public Lawyer Lawyer { get; set; } = new();
+        public int? LawyerId { get; set; }
+        public Lawyer? Lawyer { get; set; } = new();
     }
 }

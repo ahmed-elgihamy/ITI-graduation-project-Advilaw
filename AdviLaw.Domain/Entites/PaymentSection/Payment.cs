@@ -13,19 +13,19 @@ namespace AdviLaw.Domain.Entites.PaymentSection
         public PaymentType Type { get; set; }
 
         //Navigation Properties
-        public int SenderId { get; set; }
-        public User Sender { get; set; } = new();
+        public string? SenderId { get; set; }
+        public User? Sender { get; set; }
 
-        public int ReceiverId { get; set; }
-        public User Receiver { get; set; } = new();
+        public string? ReceiverId { get; set; }
+        public User? Receiver { get; set; }
 
         public int? EscrowTransactionId { get; set; }
-        public EscrowTransaction? EscrowTransaction { get; set; } = new();
+        public EscrowTransaction? EscrowTransaction { get; set; }
 
         public int? SessionId { get; set; }
-        public Session? Session { get; set; } = new();
+        public Session? Session { get; set; }
 
-        public int UserSubscriptionId { get; set; }
-        public UserSubscription UserSubscription { get; set; } = new();
+        public int? UserSubscriptionId { get; set; }
+        public UserSubscription? UserSubscription { get; set; }
     }
 }
