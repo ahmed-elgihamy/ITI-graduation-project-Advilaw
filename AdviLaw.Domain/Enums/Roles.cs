@@ -8,6 +8,7 @@ namespace AdviLaw.Domain.Enums
 {
     public enum Roles
     {
+        SuperAdmin,
         Admin,
         Lawyer,
         Client

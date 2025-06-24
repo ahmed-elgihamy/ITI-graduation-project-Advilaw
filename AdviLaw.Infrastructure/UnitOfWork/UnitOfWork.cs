@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AdviLaw.Domain.Entites;
-using AdviLaw.Domain.Entities.UserSection;
+﻿using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
@@ -21,17 +18,25 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public ILawyerRepository Lawyers { get; }
         public IJobRepository Jobs { get; }
         public IGenericRepository<Client> GenericClients { get; }
+        public IPlatformSubscriptionRepository PlatformSubscriptions { get; }
+        public ISubscriptionPointRepository SubscriptionPoints { get; }
+        public IUserSubscriptionRepository UserSubscriptions { get; }
+        public IPaymentRepository Payments { get; }
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
             _dbContext = dbContext;
 
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
-            GenericClients = new GenericRepository<Client>(_dbContext);
-            JobFields = new JobFieldRepository(_dbContext);
-            Jobs = new JobRepository(_dbContext);
-            Lawyers = new LawyerRepository(_dbContext);
             RefreshTokens = new RefreshTokenRepository(_dbContext);
+            JobFields = new JobFieldRepository(_dbContext);
+            Lawyers = new LawyerRepository(_dbContext);
+            Jobs = new JobRepository(_dbContext);
+            GenericClients = new GenericRepository<Client>(_dbContext);
+            PlatformSubscriptions = new PlatformSubscripitonRepository(_dbContext);
+            SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
+            UserSubscriptions = new UserSubscriptionRepository(_dbContext);
+            Payments = new PaymentRepository(_dbContext);
         }
 
 

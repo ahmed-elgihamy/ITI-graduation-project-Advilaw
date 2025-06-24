@@ -12,6 +12,6 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
     public class CreateClientCommand : IRequest<Response<object>>
     {
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
     }
 }

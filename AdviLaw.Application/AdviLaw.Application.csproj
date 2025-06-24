@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Features\LawyerSection\Commands\" />
+    <Folder Include="Features\SubscriptionSection\" />
   </ItemGroup>
 
 </Project>

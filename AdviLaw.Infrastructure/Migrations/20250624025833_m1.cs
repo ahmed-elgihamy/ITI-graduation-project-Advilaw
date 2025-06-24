@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitalMigration : Migration
+    public partial class m1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,44 +26,6 @@ namespace AdviLaw.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalityId = table.Column<long>(type: "bigint", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "JobFields",
                 columns: table => new
                 {
@@ -78,6 +40,42 @@ namespace AdviLaw.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Lawyers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileHeader = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfileAbout = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LawyerCardID = table.Column<int>(type: "int", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    barCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    barAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lawyers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordResetCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Expiry = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Used = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordResetCodes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PlatformSubscriptions",
                 columns: table => new
                 {
@@ -85,7 +83,8 @@ namespace AdviLaw.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false)
+                    Points = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,12 +113,103 @@ namespace AdviLaw.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CountryCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalityId = table.Column<long>(type: "bigint", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastLoginAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LawyerId = table.Column<int>(type: "int", nullable: true),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
+                    AdminId = table.Column<int>(type: "int", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Lawyers_LawyerId",
+                        column: x => x.LawyerId,
+                        principalTable: "Lawyers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LawyerJobFields",
+                columns: table => new
+                {
+                    LawyerId = table.Column<int>(type: "int", nullable: false),
+                    JobFieldId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LawyerJobFields", x => new { x.LawyerId, x.JobFieldId });
+                    table.ForeignKey(
+                        name: "FK_LawyerJobFields_JobFields_JobFieldId",
+                        column: x => x.JobFieldId,
+                        principalTable: "JobFields",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LawyerJobFields_Lawyers_LawyerId",
+                        column: x => x.LawyerId,
+                        principalTable: "Lawyers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubscriptionPoints",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Point = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PlatformSubscriptionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionPoints", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubscriptionPoints_PlatformSubscriptions_PlatformSubscriptionId",
+                        column: x => x.PlatformSubscriptionId,
+                        principalTable: "PlatformSubscriptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Admins",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,7 +313,7 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -237,39 +327,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lawyers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProfileHeader = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileAbout = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LawyerCardID = table.Column<int>(type: "int", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    barCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    barAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lawyers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Lawyers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RefreshTokens",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Expires = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Revoked = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -281,28 +345,7 @@ namespace AdviLaw.Infrastructure.Migrations
                         name: "FK_RefreshTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubscriptionPoints",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Point = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PlatformSubscriptionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubscriptionPoints", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubscriptionPoints_PlatformSubscriptions_PlatformSubscriptionId",
-                        column: x => x.PlatformSubscriptionId,
-                        principalTable: "PlatformSubscriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -319,7 +362,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     IsAnonymus = table.Column<bool>(type: "bit", nullable: false),
                     JobFieldId = table.Column<int>(type: "int", nullable: false),
                     LawyerId = table.Column<int>(type: "int", nullable: true),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: true),
                     EscrowTransactionId = table.Column<int>(type: "int", nullable: true),
                     SessionId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -347,30 +390,6 @@ namespace AdviLaw.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LawyerJobFields",
-                columns: table => new
-                {
-                    LawyerId = table.Column<int>(type: "int", nullable: false),
-                    JobFieldId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LawyerJobFields", x => new { x.LawyerId, x.JobFieldId });
-                    table.ForeignKey(
-                        name: "FK_LawyerJobFields_JobFields_JobFieldId",
-                        column: x => x.JobFieldId,
-                        principalTable: "JobFields",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_LawyerJobFields_Lawyers_LawyerId",
-                        column: x => x.LawyerId,
-                        principalTable: "Lawyers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Proposals",
                 columns: table => new
                 {
@@ -380,7 +399,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     Budget = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false),
-                    LawyerId = table.Column<int>(type: "int", nullable: false)
+                    LawyerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -466,25 +485,24 @@ namespace AdviLaw.Infrastructure.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    SenderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_ReceiverId1",
-                        column: x => x.ReceiverId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_SenderId1",
-                        column: x => x.SenderId1,
+                        name: "FK_Messages_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Messages_Sessions_SessionId",
                         column: x => x.SessionId,
@@ -500,26 +518,24 @@ namespace AdviLaw.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    SenderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EscrowTransactionId = table.Column<int>(type: "int", nullable: true),
                     SessionId = table.Column<int>(type: "int", nullable: true),
-                    UserSubscriptionId = table.Column<int>(type: "int", nullable: false)
+                    UserSubscriptionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_ReceiverId1",
-                        column: x => x.ReceiverId1,
+                        name: "FK_Payments_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_SenderId1",
-                        column: x => x.SenderId1,
+                        name: "FK_Payments_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -541,23 +557,21 @@ namespace AdviLaw.Infrastructure.Migrations
                     Rate = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    SenderId = table.Column<int>(type: "int", nullable: false),
-                    SenderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReceiverId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_AspNetUsers_ReceiverId1",
-                        column: x => x.ReceiverId1,
+                        name: "FK_Reports_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reports_AspNetUsers_SenderId1",
-                        column: x => x.SenderId1,
+                        name: "FK_Reports_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -579,23 +593,21 @@ namespace AdviLaw.Infrastructure.Migrations
                     Rate = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    ReviewerId = table.Column<int>(type: "int", nullable: false),
-                    ReviewerId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RevieweeId = table.Column<int>(type: "int", nullable: false),
-                    RevieweeId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ReviewerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RevieweeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_RevieweeId1",
-                        column: x => x.RevieweeId1,
+                        name: "FK_Reviews_AspNetUsers_RevieweeId",
+                        column: x => x.RevieweeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_ReviewerId1",
-                        column: x => x.ReviewerId1,
+                        name: "FK_Reviews_AspNetUsers_ReviewerId",
+                        column: x => x.ReviewerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -621,8 +633,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     TransferId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReleasedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SenderId = table.Column<int>(type: "int", nullable: true),
-                    SenderId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     JobId = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: true),
                     PaymentId = table.Column<int>(type: "int", nullable: true)
@@ -631,8 +642,8 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_EscrowTransactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EscrowTransactions_AspNetUsers_SenderId1",
-                        column: x => x.SenderId1,
+                        name: "FK_EscrowTransactions_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -663,7 +674,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LawyerId = table.Column<int>(type: "int", nullable: false),
                     SubscriptionTypeId = table.Column<int>(type: "int", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false)
@@ -695,7 +705,8 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "IX_Admins_UserId",
                 table: "Admins",
                 column: "UserId",
-                unique: true);
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -730,6 +741,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_LawyerId",
+                table: "AspNetUsers",
+                column: "LawyerId",
+                unique: true,
+                filter: "[LawyerId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -740,7 +758,8 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "IX_Clients_UserId",
                 table: "Clients",
                 column: "UserId",
-                unique: true);
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EscrowTransactions_JobId",
@@ -756,9 +775,9 @@ namespace AdviLaw.Infrastructure.Migrations
                 filter: "[PaymentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EscrowTransactions_SenderId1",
+                name: "IX_EscrowTransactions_SenderId",
                 table: "EscrowTransactions",
-                column: "SenderId1");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EscrowTransactions_SessionId",
@@ -788,20 +807,14 @@ namespace AdviLaw.Infrastructure.Migrations
                 column: "JobFieldId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lawyers_UserId",
-                table: "Lawyers",
-                column: "UserId",
-                unique: true);
+                name: "IX_Messages_ReceiverId",
+                table: "Messages",
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ReceiverId1",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "ReceiverId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_SenderId1",
-                table: "Messages",
-                column: "SenderId1");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SessionId",
@@ -809,14 +822,14 @@ namespace AdviLaw.Infrastructure.Migrations
                 column: "SessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_ReceiverId1",
+                name: "IX_Payments_ReceiverId",
                 table: "Payments",
-                column: "ReceiverId1");
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_SenderId1",
+                name: "IX_Payments_SenderId",
                 table: "Payments",
-                column: "SenderId1");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payments_SessionId",
@@ -841,14 +854,14 @@ namespace AdviLaw.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_ReceiverId1",
+                name: "IX_Reports_ReceiverId",
                 table: "Reports",
-                column: "ReceiverId1");
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reports_SenderId1",
+                name: "IX_Reports_SenderId",
                 table: "Reports",
-                column: "SenderId1");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_SessionId",
@@ -856,14 +869,14 @@ namespace AdviLaw.Infrastructure.Migrations
                 column: "SessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_RevieweeId1",
+                name: "IX_Reviews_RevieweeId",
                 table: "Reviews",
-                column: "RevieweeId1");
+                column: "RevieweeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ReviewerId1",
+                name: "IX_Reviews_ReviewerId",
                 table: "Reviews",
-                column: "ReviewerId1");
+                column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_SessionId",
@@ -944,6 +957,9 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "PasswordResetCodes");
+
+            migrationBuilder.DropTable(
                 name: "Proposals");
 
             migrationBuilder.DropTable(
@@ -986,10 +1002,10 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "JobFields");
 
             migrationBuilder.DropTable(
-                name: "Lawyers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Lawyers");
         }
     }
 }

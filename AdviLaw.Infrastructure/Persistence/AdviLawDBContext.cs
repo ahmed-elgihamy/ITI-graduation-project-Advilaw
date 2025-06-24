@@ -61,6 +61,11 @@ namespace AdviLaw.Infrastructure.Persistence
                 .HasForeignKey<Lawyer>(l => l.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Lawyer>()
+                .HasOne(l=>l.User)
+                .WithOne(u=>u.Lawyer)
+                .HasForeignKey<User>(u=>u.LawyerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Client
             modelBuilder.Entity<User>()
@@ -111,11 +116,14 @@ namespace AdviLaw.Infrastructure.Persistence
             //Messages
             modelBuilder.Entity<User>()
                 .HasMany(u => u.ReceivedMessages)
-                .WithOne(m => m.Receiver);
+                .WithOne(m => m.Receiver)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.SentMessages)
-                .WithOne(m => m.Sender);
+                .WithOne(m => m.Sender)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             //Payments
             modelBuilder.Entity<User>()

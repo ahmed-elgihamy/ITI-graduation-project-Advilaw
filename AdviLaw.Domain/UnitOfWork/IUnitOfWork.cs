@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using AdviLaw.Domain.Entites;
-using AdviLaw.Domain.Entities.UserSection;
+﻿using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.Repositories;
 
@@ -16,7 +14,10 @@ namespace AdviLaw.Domain.UnitOfWork
         IJobFieldRepository JobFields { get; }
         ILawyerRepository Lawyers { get; }
         IJobRepository Jobs { get; }
-
+        IPlatformSubscriptionRepository PlatformSubscriptions { get; }
+        ISubscriptionPointRepository SubscriptionPoints { get; }
+        IUserSubscriptionRepository UserSubscriptions { get; }
+        IPaymentRepository Payments { get; }
         Task<int> SaveChangesAsync();
         IRefreshTokenRepository RefreshTokens { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

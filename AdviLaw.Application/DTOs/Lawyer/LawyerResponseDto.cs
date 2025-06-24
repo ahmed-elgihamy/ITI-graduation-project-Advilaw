@@ -5,7 +5,7 @@ namespace AdviLaw.Application.DTOs.Lawyer
     public class LawyerResponseDto
     {
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [Required]
         [StringLength(200)]
