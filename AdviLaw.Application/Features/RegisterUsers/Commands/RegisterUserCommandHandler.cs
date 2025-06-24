@@ -54,9 +54,9 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             }
 
            // generate to the user's email
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             // Send confirmation email
-            await _emailService.SendEmailConfirmationAsync(user.Email, user.Id, token);
+            //await _emailService.SendEmailConfirmationAsync(user.Email, user.Id, token);
       
 
             //map from Registerdto to Lawyercommand

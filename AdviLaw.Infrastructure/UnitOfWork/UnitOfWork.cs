@@ -20,6 +20,8 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IGenericRepository<Client> GenericClients { get; }
         public IPlatformSubscriptionRepository PlatformSubscriptions { get; }
         public ISubscriptionPointRepository SubscriptionPoints { get; }
+        public IUserSubscriptionRepository UserSubscriptions { get; }
+        public IPaymentRepository Payments { get; }
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
@@ -33,6 +35,8 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             GenericClients = new GenericRepository<Client>(_dbContext);
             PlatformSubscriptions = new PlatformSubscripitonRepository(_dbContext);
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
+            UserSubscriptions = new UserSubscriptionRepository(_dbContext);
+            Payments = new PaymentRepository(_dbContext);
         }
 
 

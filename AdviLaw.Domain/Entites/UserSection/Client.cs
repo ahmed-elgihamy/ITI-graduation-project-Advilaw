@@ -13,8 +13,8 @@ namespace AdviLaw.Domain.Entities.UserSection
         public int Id { get; set; }
 
         //                       FK to User                       //
-        public string UserId { get; set; }
-        public User User { get; set; } = null!;
+        public string? UserId { get; set; }
+        public User? User { get; set; }
 
         //Job Section
         public List<Job> Jobs { get; set; } = new();

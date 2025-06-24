@@ -11,12 +11,12 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.Creat
         IUnitOfWork unitOfWork,
         ResponseHandler responseHandler,
         IMapper mapper
-    ) : IRequestHandler<CreatePlatformSubscriptionQuery, Response<PlatformSubscriptionDTO>>
+    ) : IRequestHandler<CreatePlatformSubscriptionCommand, Response<PlatformSubscriptionDTO>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly ResponseHandler _responseHandler = responseHandler;
         private readonly IMapper _mapper = mapper;
-        public async Task<Response<PlatformSubscriptionDTO>> Handle(CreatePlatformSubscriptionQuery request, CancellationToken cancellationToken)
+        public async Task<Response<PlatformSubscriptionDTO>> Handle(CreatePlatformSubscriptionCommand request, CancellationToken cancellationToken)
         {
             //var points = _mapper.Map<List<SubscriptionPoint>>(request.Details);
             //await _unitOfWork.SubscriptionPoints.AddRangeAsync(points);

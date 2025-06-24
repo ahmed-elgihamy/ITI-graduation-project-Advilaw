@@ -54,8 +54,11 @@ namespace AdviLaw.Domain.Entities.UserSection
         public List<Report> ReceivedReports { get; set; } = new();
 
         // Navigation Properties
+        public int? LawyerId { get; set; }
         public Lawyer? Lawyer { get; set; }
+        public int? ClientId { get; set; }
         public Client? Client { get; set; }
+        public int? AdminId { get; set; }
         public Admin? Admin { get; set; }
 
         public Roles Role { get; set; }  // This can be "Lawyer", "Client", or "Admin"

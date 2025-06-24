@@ -5,11 +5,12 @@ using MediatR;
 
 namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.CreatePlatformSubscription
 {
-    public class CreatePlatformSubscriptionQuery : IRequest<Response<PlatformSubscriptionDTO>>
+    public class CreatePlatformSubscriptionCommand : IRequest<Response<PlatformSubscriptionDTO>>
     {
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public int Points { get; set; } 
+        public int Points { get; set; }
+        //public int Duration { get; set; } = 30; //30 days Default
         public List<CreateSubscriptionPointDTO> Details { get; set; } = new();
     }
 }

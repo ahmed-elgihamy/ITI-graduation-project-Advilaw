@@ -15,16 +15,16 @@ namespace AdviLaw.Domain.Entities.UserSection
         public int Id { get; set; }
 
         //                       FK to User                       //
-        public string UserId { get; set; }
-        public User User { get; set; } = null!;
+        public string? UserId { get; set; }
+        public User? User { get; set; } 
 
         public string ProfileHeader { get; set; } = string.Empty;
         public string ProfileAbout { get; set; } = string.Empty;
         public int LawyerCardID { get; set; }
 
-        public string Bio { get; set; }
+        public string Bio { get; set; } = string.Empty;
         public bool IsApproved { get; set; }
-        public string barCardImagePath { get; set; }
+        public string barCardImagePath { get; set; } = string.Empty;
         public int barAssociationCardNumber { get; set; }
 
         //Fields

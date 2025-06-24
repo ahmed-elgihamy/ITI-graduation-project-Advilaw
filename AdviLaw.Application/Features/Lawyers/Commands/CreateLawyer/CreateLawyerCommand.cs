@@ -7,7 +7,7 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
     public class CreateLawyerCommand : IRequest<Response<object>>
     {
         [Required]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [Required]
         [StringLength(200)]

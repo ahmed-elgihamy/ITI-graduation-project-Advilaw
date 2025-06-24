@@ -22,8 +22,8 @@ namespace AdviLaw.Domain.Entites.JobSection
         public int? LawyerId { get; set; }
         public Lawyer? Lawyer { get; set; }  // لا تهيئة هنا
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; } = new();
+        public int? ClientId { get; set; }
+        public Client? Client { get; set; }
 
         public int? EscrowTransactionId { get; set; }
         public EscrowTransaction? EscrowTransaction { get; set; }  // لا تهيئة
@@ -31,6 +31,6 @@ namespace AdviLaw.Domain.Entites.JobSection
         public int? SessionId { get; set; }
         public Session? Session { get; set; }  // لا تهيئة
 
-        public List<Proposal>? Proposals { get; set; } = new();
+        public List<Proposal>? Proposals { get; set; }
     }
 }

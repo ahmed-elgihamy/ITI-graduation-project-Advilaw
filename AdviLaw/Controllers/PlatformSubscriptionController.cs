@@ -1,11 +1,12 @@
-﻿using AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.CreatePlatformSubscription;
+﻿using AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.BuyPlatformSubscription;
+using AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.CreatePlatformSubscription;
 using AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.DeletePlatformSubscription;
 using AdviLaw.Application.Features.PlatformSubscriptionSection.Queries.GetPlatformSubscriptionDetails;
 using AdviLaw.Application.Features.PlatformSubscriptionSection.Queries.GetPlatformSubscriptionPlan;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AdviLaw.Controllers
 {
@@ -43,15 +44,28 @@ namespace AdviLaw.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _mediator.Send(new DeletePlatformSubscriptionQuery() { Id = id });
+            var result = await _mediator.Send(new DeletePlatformSubscriptionCommand() { Id = id });
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost()]
-        public async Task<IActionResult> Create(CreatePlatformSubscriptionQuery createPlatformSubscriptionQuery)
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("")]
+        public async Task<IActionResult> Create(CreatePlatformSubscriptionCommand createPlatformSubscriptionQuery)
         {
             var result = await _mediator.Send(createPlatformSubscriptionQuery);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Lawyer")]
+        [HttpPost("{id}/buy")]
+        public async Task<IActionResult> Buy([FromRoute] int id)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var result = await _mediator.Send(new BuyPlatformSubscriptionCommand()
+            {
+                LawyerId = userId!,
+                SubscriptionTypeId = id,
+            });
             return Ok(result);
         }
     }

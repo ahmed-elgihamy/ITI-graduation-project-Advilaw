@@ -11,7 +11,7 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.DTOs.Profilin
             CreateMap<PlatformSubscription, PlatformSubscriptionDTO>().ReverseMap();
             CreateMap<PlatformSubscription, PlatformSubscriptionDetailsDTO>().ReverseMap();
             CreateMap<PlatformSubscription, CreatePlatformSubscriptionDTO>().ReverseMap();
-            CreateMap<PlatformSubscription, CreatePlatformSubscriptionQuery>().ReverseMap();
+            CreateMap<PlatformSubscription, CreatePlatformSubscriptionCommand>().ReverseMap();
         }
     }
 }

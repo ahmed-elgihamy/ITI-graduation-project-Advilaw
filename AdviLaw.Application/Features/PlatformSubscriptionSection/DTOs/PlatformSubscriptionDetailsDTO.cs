@@ -13,6 +13,6 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.DTOs
         public bool IsActive { get; set; }
 
         public List<SubscriptionPointDTO> Details { get; set; } = new();
-        public List<UserSubscriptionDTO> UsersSubscriptions { get; set; } = new();
+        public List<UserSubscriptionDetailsDTO> UsersSubscriptions { get; set; } = new();
     }
 }

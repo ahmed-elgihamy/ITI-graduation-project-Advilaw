@@ -2,7 +2,7 @@
 
 namespace AdviLaw.Application.Features.UserSubscriptionSection.DTOs
 {
-    public class UserSubscriptionDTO
+    public class UserSubscriptionDetailsDTO
     {
         public int Id { get; set; }
         public int LawyerId { get; set; }

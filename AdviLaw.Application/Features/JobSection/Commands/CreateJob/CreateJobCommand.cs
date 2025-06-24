@@ -17,5 +17,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
         public int JobFieldId { get; set; }
         public int? LawyerId { get; set; }
         public int? ClientId { get; set; }
+        public string? UserId { get; set; }
+
     }
 }

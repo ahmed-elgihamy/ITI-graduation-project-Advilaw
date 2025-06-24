@@ -16,15 +16,9 @@ namespace AdviLaw.Domain.Entites.SessionUtilities.ReviewSection
         public int SessionId { get; set; }
         public Session Session { get; set; } = new();
 
-        public int ReviewerId { get; set; }
-        public User Reviewer { get; set; } = new();
-        public int RevieweeId { get; set; }
-        public User Reviewee { get; set; } = new();
-
-        //كده كده الريفيو مفيهوش غير كلاينت و لويار
-        //public int ClientId{ get; set; } 
-        //public Client Client{ get; set; } = new();
-        //public int LawyerId { get; set; }
-        //public Lawyer Lawyer { get; set; } = new();
+        public string? ReviewerId { get; set; }
+        public User? Reviewer { get; set; }
+        public string? RevieweeId { get; set; }
+        public User? Reviewee { get; set; }
     }
 }
