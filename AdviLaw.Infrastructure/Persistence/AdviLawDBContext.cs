@@ -53,18 +53,10 @@ namespace AdviLaw.Infrastructure.Persistence
             // ********* Composition ********** //
 
             // Lawyer
-
-
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Lawyer)
                 .WithOne(l => l.User)
                 .HasForeignKey<Lawyer>(l => l.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Lawyer>()
-                .HasOne(l=>l.User)
-                .WithOne(u=>u.Lawyer)
-                .HasForeignKey<User>(u=>u.LawyerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Client
