@@ -26,6 +26,7 @@ namespace AdviLaw.Domain.Entities.UserSection
         public bool IsApproved { get; set; }
         public string barCardImagePath { get; set; } = string.Empty;
         public int barAssociationCardNumber { get; set; }
+        public int Experience { get; set; }
 
         //Fields
         public List<LawyerJobField> Fields { get; set; } = new();

@@ -1,0 +1,21 @@
+﻿using AdviLaw.Domain.Entities.UserSection;
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AdviLaw.Application.Features.LawyerProfile.DTOs.Profiling
+{
+    public class LawyerProfileMapping : Profile
+    {
+        public LawyerProfileMapping()
+        {
+            CreateMap<Lawyer, LawyerProfileDTO>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User!.UserName))
+                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.User!.ImageUrl));
+        }
+    }
+}
+
