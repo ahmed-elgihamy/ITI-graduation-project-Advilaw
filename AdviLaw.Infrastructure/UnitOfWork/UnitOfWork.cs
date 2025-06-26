@@ -22,7 +22,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public ISubscriptionPointRepository SubscriptionPoints { get; }
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
-
+        public IScheduleRepository Schedules { get; }
          public IReviewRepository Reviews { get; }
         public UnitOfWork(AdviLawDBContext dbContext)
         {
@@ -39,6 +39,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             UserSubscriptions = new UserSubscriptionRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
             Reviews = new ReviewRepository(_dbContext);
+            Schedules = new ScheduleRepository(_dbContext);
         }
 
 
