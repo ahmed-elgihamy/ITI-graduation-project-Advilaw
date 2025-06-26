@@ -18,6 +18,7 @@ namespace AdviLaw.Domain.UnitOfWork
         ISubscriptionPointRepository SubscriptionPoints { get; }
         IUserSubscriptionRepository UserSubscriptions { get; }
         IPaymentRepository Payments { get; }
+        IReviewRepository Reviews { get; }
         Task<int> SaveChangesAsync();
         IRefreshTokenRepository RefreshTokens { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
