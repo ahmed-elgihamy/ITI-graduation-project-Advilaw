@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Features\LawyerProfile\Commands\" />
     <Folder Include="Features\LawyerSection\Commands\" />
+    <Folder Include="Features\Schedule\Commands\" />
     <Folder Include="Features\SubscriptionSection\" />
   </ItemGroup>
 
