@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\LawyerProfile\Commands\" />
     <Folder Include="Features\LawyerSection\Commands\" />
+    <Folder Include="Features\Reviews\Queries\" />
     <Folder Include="Features\SubscriptionSection\" />
   </ItemGroup>
 
