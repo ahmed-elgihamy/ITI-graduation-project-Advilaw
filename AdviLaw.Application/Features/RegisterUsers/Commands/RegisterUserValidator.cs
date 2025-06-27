@@ -30,8 +30,8 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
 
             // Username  
             RuleFor(x => x.Dto.UserName)
-                .NotEmpty().WithMessage("Username is required.")
-                .MaximumLength(20).WithMessage("Username must not exceed 20 characters.");
+                .NotEmpty().WithMessage("Username is required.");
+                
 
             // Phone Number  
             RuleFor(x => x.Dto.PhoneNumber)
@@ -53,30 +53,30 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
 
 
             // Lawyer-specific (if role is Lawyer)
-            When(x => x.Dto.Role == Roles.Lawyer, () =>
-            {
-                RuleFor(x => x.Dto.ProfileHeader)
-                    .NotEmpty().WithMessage("Profile header is required.");
+            //When(x => x.Dto.Role == Roles.Lawyer, () =>
+            //{
+            //    RuleFor(x => x.Dto.ProfileHeader)
+            //        .NotEmpty().WithMessage("Profile header is required.");
 
-                RuleFor(x => x.Dto.ProfileAbout)
-                    .NotEmpty().WithMessage("Profile about is required.")
-                    .MaximumLength(1000).WithMessage("Profile about must not exceed 1000 characters.");
+            //    RuleFor(x => x.Dto.ProfileAbout)
+            //        .NotEmpty().WithMessage("Profile about is required.")
+            //        .MaximumLength(1000).WithMessage("Profile about must not exceed 1000 characters.");
 
-                RuleFor(x => x.Dto.LawyerCardID)
-                    .NotNull().WithMessage("Lawyer card ID is required for lawyers.")
-                    .GreaterThan(0).WithMessage("Lawyer card ID must be greater than 0.");
+            //    RuleFor(x => x.Dto.LawyerCardID)
+            //        .NotNull().WithMessage("Lawyer card ID is required for lawyers.")
+            //        .GreaterThan(0).WithMessage("Lawyer card ID must be greater than 0.");
 
-                RuleFor(x => x.Dto.Bio)
-                    .NotEmpty().WithMessage("Bio is required for lawyers.")
-                    .MaximumLength(500).WithMessage("Bio must not exceed 500 characters.");
+            //    RuleFor(x => x.Dto.Bio)
+            //        .NotEmpty().WithMessage("Bio is required for lawyers.")
+            //        .MaximumLength(500).WithMessage("Bio must not exceed 500 characters.");
 
-                RuleFor(x => x.Dto.BarCardImagePath)
-                    .NotEmpty().WithMessage("Bar card image path is required for lawyers.");
+            //    RuleFor(x => x.Dto.BarCardImagePath)
+            //        .NotEmpty().WithMessage("Bar card image path is required for lawyers.");
 
-                RuleFor(x => x.Dto.BarAssociationCardNumber)
-                    .NotNull().WithMessage("Bar association card number is required for lawyers.")
-                    .GreaterThan(0).WithMessage("Bar association card number must be greater than 0.");
-            });
+            //    RuleFor(x => x.Dto.BarAssociationCardNumber)
+            //        .NotNull().WithMessage("Bar association card number is required for lawyers.")
+            //        .GreaterThan(0).WithMessage("Bar association card number must be greater than 0.");
+            //});
         }
     }
 }

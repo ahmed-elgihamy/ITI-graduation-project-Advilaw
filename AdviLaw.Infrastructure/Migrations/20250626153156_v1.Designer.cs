@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250624025833_m1")]
-    partial class m1
+    [Migration("20250626153156_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -631,7 +631,7 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("barAssociationCardNumber")
                         .HasColumnType("int");
@@ -641,6 +641,10 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Lawyers");
                 });
@@ -752,10 +756,6 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LawyerId")
-                        .IsUnique()
-                        .HasFilter("[LawyerId] IS NOT NULL");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -1199,14 +1199,14 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("AdviLaw.Domain.Entities.UserSection.User", b =>
+            modelBuilder.Entity("AdviLaw.Domain.Entities.UserSection.Lawyer", b =>
                 {
-                    b.HasOne("AdviLaw.Domain.Entities.UserSection.Lawyer", "Lawyer")
-                        .WithOne("User")
-                        .HasForeignKey("AdviLaw.Domain.Entities.UserSection.User", "LawyerId")
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
+                        .WithOne("Lawyer")
+                        .HasForeignKey("AdviLaw.Domain.Entities.UserSection.Lawyer", "UserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("Lawyer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1321,8 +1321,6 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.Navigation("Sessions");
 
-                    b.Navigation("User");
-
                     b.Navigation("UserSubscriptions");
                 });
 
@@ -1333,6 +1331,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("EscrowTransactions");
+
+                    b.Navigation("Lawyer");
 
                     b.Navigation("ReceivedMessages");
 

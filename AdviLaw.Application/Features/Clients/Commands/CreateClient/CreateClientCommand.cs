@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
 {
@@ -13,5 +14,6 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
     {
         [Required]
         public string? UserId { get; set; }
+        public IFormFile NationalIDImage { get; set; } = null!;
     }
 }
