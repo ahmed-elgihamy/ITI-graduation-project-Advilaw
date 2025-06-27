@@ -19,13 +19,31 @@ namespace AdviLaw
             var builder = WebApplication.CreateBuilder(args);
 
 
-            builder.Services.AddAuthorization();
-            builder.AddPresentation();
-            builder.Services.AddApplication();
-            builder.Services.AddInfrastructure(builder.Configuration);
+            
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials(); 
+                });
+            });
 
-            //serialize and deserialize enums as strings instead of integers.
+           
+            builder.Services.AddAuthorization();
+            builder.AddPresentation();                 
+            builder.Services.AddApplication();           
+            builder.Services.AddInfrastructure(builder.Configuration); 
+
             builder.Services.AddControllers()
+
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+
                     .AddJsonOptions(options =>
                     {
                         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -38,27 +56,36 @@ namespace AdviLaw
             if (app.Environment.IsDevelopment())
             {
 
+
                 app.UseMiddleware<ErrorHandlerMiddleware>();
+
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
             }
 
-
-            // Redirect root URL to Swagger UI
+           
             app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 
+           
+            app.UseMiddleware<ErrorHandlerMiddleware>(); 
+            app.UseHttpsRedirection();
+
+          
+            app.UseCors("AllowAngularApp");
+
 
 
             app.UseCors("AllowAll");
+
             app.UseAuthorization();
             app.UseCors();
             app.MapControllers();
+
             app.Run();
         }
     }
