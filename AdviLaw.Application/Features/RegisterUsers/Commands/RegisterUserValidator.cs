@@ -34,9 +34,9 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                 
 
             // Phone Number  
-            RuleFor(x => x.Dto.PhoneNumber)
-                .NotEmpty().WithMessage("Phone number is required.")
-                .Matches(@"^01[012]\d{8}$").WithMessage("Phone number must be a valid Egyptian number (e.g., 01012345678).");
+            //RuleFor(x => x.Dto.PhoneNumber)
+            //    .NotEmpty().WithMessage("Phone number is required.")
+            //    .Matches(@"^01[012]\d{8}$").WithMessage("Phone number must be a valid Egyptian number (e.g., 01012345678).");
 
             // Address Fields  
             RuleFor(x => x.Dto.City)
