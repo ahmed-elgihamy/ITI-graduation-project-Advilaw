@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace AdviLaw.Application.Features.Schedule.Queries
 {
-    public class GetSchedulesByLawyerQuery : IRequest<Response<List<ScheduleDTO>>>
+    public class GetSchedulesByLawyerQuery : IRequest<Response<List<LawyerScheduleDTO>>>
     {
-        public int LawyerId { get; set; }
+        public int LawyerId { get; }
 
         public GetSchedulesByLawyerQuery(int lawyerId)
         {
@@ -15,3 +15,4 @@ namespace AdviLaw.Application.Features.Schedule.Queries
         }
     }
 }
+
