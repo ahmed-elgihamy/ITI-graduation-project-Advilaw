@@ -26,6 +26,7 @@ namespace AdviLaw.Domain.Entities.UserSection
 
         public string ImageUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
+
         public Gender Gender { get; set; }
 
 

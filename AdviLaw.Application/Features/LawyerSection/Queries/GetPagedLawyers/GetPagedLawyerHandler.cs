@@ -30,6 +30,11 @@ public class GetPagedLawyerHandler(
             query = query.Where(l => l.User.UserName!.ToLower().Contains(request.Search.ToLower()));
         }
 
+        if (request.IsApproved.HasValue)
+        {
+            query = query.Where(l => l.IsApproved == request.IsApproved.Value);
+        }
+
         var totalCount = await query.CountAsync(cancellationToken);
 
         var pagedData = await query

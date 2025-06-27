@@ -23,6 +23,14 @@ namespace AdviLaw
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowFrontend",
+            //        policy => policy.WithOrigins("http://localhost:4200")
+            //                        .AllowAnyHeader()
+            //                        .AllowAnyMethod());
+            //});
+
             //serialize and deserialize enums as strings instead of integers.
             builder.Services.AddControllers()
                     .AddJsonOptions(options =>
@@ -36,27 +44,24 @@ namespace AdviLaw
 
             if (app.Environment.IsDevelopment())
             {
-<<<<<<< HEAD
-=======
 
->>>>>>> 7dc05f55d380fb9c71aaf4a7fa29b27d6f4b886c
             app.UseMiddleware<ErrorHandlerMiddleware>();
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
-<<<<<<< HEAD
-            }
-
-            app.MapGroup("api/identity")
-                .WithTags("Identity")
-                .MapIdentityApi<User>(); 
-=======
 
             }
 
+            //app.MapGroup("api/identity")
+            //    .WithTags("Identity")
+            //    .MapIdentityApi<User>(); 
 
-            // Redirect root URL to Swagger UI
-            app.MapGet("/", context =>
+
+            //}
+
+
+        // Redirect root URL to Swagger UI
+        app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
@@ -65,7 +70,7 @@ namespace AdviLaw
 
 
 
->>>>>>> 7dc05f55d380fb9c71aaf4a7fa29b27d6f4b886c
+            //app.UseCors("AllowFrontend");
 
             app.UseAuthorization();
 

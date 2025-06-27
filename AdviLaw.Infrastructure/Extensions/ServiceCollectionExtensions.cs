@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
@@ -46,7 +47,8 @@ namespace AdviLaw.Infrastructure.Extensions
                      ValidateIssuerSigningKey = true,
                      ValidIssuer = conf["Jwt:Issuer"],
                      ValidAudience = conf["Jwt:Audience"],
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+                     RoleClaimType = ClaimTypes.Role 
                  };
              });
 

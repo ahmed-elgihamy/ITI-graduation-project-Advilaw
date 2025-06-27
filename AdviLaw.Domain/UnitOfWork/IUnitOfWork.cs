@@ -9,6 +9,7 @@ namespace AdviLaw.Domain.UnitOfWork
         // Generic repositories  
         IGenericRepository<Lawyer> GenericLawyers { get; }
         IGenericRepository<Client> GenericClients { get; }
+        IGenericRepository<Admin> GenericAdmins { get; }
 
         // Specialized repositories  
         IJobFieldRepository JobFields { get; }
@@ -19,6 +20,7 @@ namespace AdviLaw.Domain.UnitOfWork
         IUserSubscriptionRepository UserSubscriptions { get; }
         IPaymentRepository Payments { get; }
         Task<int> SaveChangesAsync();
+        void Update<T>(T entity) where T : class;
         IRefreshTokenRepository RefreshTokens { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

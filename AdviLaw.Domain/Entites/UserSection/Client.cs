@@ -11,6 +11,8 @@ namespace AdviLaw.Domain.Entities.UserSection
     public class Client
     {
         public int Id { get; set; }
+        public bool IsApproved { get; set; }
+
 
         //                       FK to User                       //
         public string? UserId { get; set; }

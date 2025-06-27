@@ -5,6 +5,7 @@ using AdviLaw.Domain.UnitOfWork;
 using AdviLaw.Infrastructure.GenericRepo;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdviLaw.Infrastructure.UnitOfWork
 {
@@ -22,6 +23,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public ISubscriptionPointRepository SubscriptionPoints { get; }
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
+        public IGenericRepository<Admin> GenericAdmins { get; }
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
@@ -37,6 +39,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
             UserSubscriptions = new UserSubscriptionRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
+            GenericAdmins = new GenericRepository<Admin>(_dbContext);
         }
 
 
@@ -52,5 +55,11 @@ namespace AdviLaw.Infrastructure.UnitOfWork
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
             => _dbContext.SaveChangesAsync(cancellationToken);
+
+
+        public void Update<T>(T entity) where T : class
+        {
+            _dbContext.Set<T>().Update(entity);
+        }
     }
 }
