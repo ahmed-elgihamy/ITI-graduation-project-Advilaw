@@ -8,6 +8,7 @@ using AdviLaw.Infrastructure.Extensions;
 using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace AdviLaw
 {
@@ -16,6 +17,7 @@ namespace AdviLaw
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
 
             
             builder.Services.AddCors(options =>
@@ -36,15 +38,28 @@ namespace AdviLaw
             builder.Services.AddInfrastructure(builder.Configuration); 
 
             builder.Services.AddControllers()
+
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
+                    .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    });
+
+
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
+
+
+                app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
@@ -63,8 +78,12 @@ namespace AdviLaw
           
             app.UseCors("AllowAngularApp");
 
-            app.UseAuthorization();
 
+
+            app.UseCors("AllowAll");
+
+            app.UseAuthorization();
+            app.UseCors();
             app.MapControllers();
 
             app.Run();
