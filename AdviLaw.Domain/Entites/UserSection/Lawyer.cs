@@ -2,6 +2,7 @@
 using AdviLaw.Domain.Entites.ProposalSection;
 using AdviLaw.Domain.Entites.SessionSection;
 using AdviLaw.Domain.Entites.SubscriptionSection;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,38 +11,35 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Entities.UserSection
 {
-    public class Lawyer
-    {
-        public int Id { get; set; }
 
-        //                       FK to User                       //
-        public string? UserId { get; set; }
-        public User? User { get; set; } 
+        public class Lawyer
+        {
+            public int Id { get; set; }
 
-        public string ProfileHeader { get; set; } = string.Empty;
-        public string ProfileAbout { get; set; } = string.Empty;
-        public int LawyerCardID { get; set; }
-
-        public string Bio { get; set; } = string.Empty;
-        public bool IsApproved { get; set; }
-        public string barCardImagePath { get; set; } = string.Empty;
-        public int barAssociationCardNumber { get; set; }
-        public int Experience { get; set; }
-
-        //Fields
-        public List<LawyerJobField> Fields { get; set; } = new();
-
-        //Job Section
-        public List<Job> Jobs { get; set; } = new();
-        public List<Proposal> Proposals { get; set; } = new();
+            public string? UserId { get; set; }
+            public User? User { get; set; }
 
 
-        //Session Section
-        public List<Session> Sessions { get; set; } = new();
+            public string ProfileHeader { get; set; } = string.Empty;
+            public string ProfileAbout { get; set; } = string.Empty;
+            public string? Bio { get; set; } = string.Empty;
+            public bool IsApproved { get; set; }
 
-        //UserSubscription
-        public List<UserSubscription> UserSubscriptions { get; set; } = new();
+  
+           public int Experience { get; set; }
+
+
+            public string BarCardImagePath { get; set; } = string.Empty;
+            public string NationalIDImagePath { get; set; } = string.Empty;
+            public int BarAssociationCardNumber { get; set; }
+
+            public List<LawyerJobField> Fields { get; set; } = new();
+            public List<Job> Jobs { get; set; } = new();
+            public List<Proposal> Proposals { get; set; } = new();
+            public List<Session> Sessions { get; set; } = new();
+            public List<UserSubscription> UserSubscriptions { get; set; } = new();
+        }
 
 
     }
-}
+

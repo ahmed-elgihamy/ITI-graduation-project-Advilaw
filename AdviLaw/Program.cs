@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
@@ -17,6 +17,7 @@ namespace AdviLaw
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
 
 
             
@@ -60,6 +61,7 @@ namespace AdviLaw
                 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
+
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
@@ -75,10 +77,7 @@ namespace AdviLaw
             app.UseMiddleware<ErrorHandlerMiddleware>(); 
             app.UseHttpsRedirection();
 
-          
-            app.UseCors("AllowAngularApp");
-
-
+      
 
             app.UseCors("AllowAll");
 

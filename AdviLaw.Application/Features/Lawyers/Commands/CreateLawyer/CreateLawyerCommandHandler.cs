@@ -38,9 +38,23 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
                 return _responseHandler.BadRequest<object>("Lawyer profile already exists for this user");
 
 
-            //mapping the request to the Lawyer entity
+
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+            Directory.CreateDirectory(uploadsPath);
+
+            var nationalIdImagePath = Path.Combine(uploadsPath, request.NationalIDImage.FileName);
+            var barCardImagePath = Path.Combine(uploadsPath, request.BarCardImage.FileName);
+
+            using (var stream = new FileStream(nationalIdImagePath, FileMode.Create))
+                await request.NationalIDImage.CopyToAsync(stream);
+
+            using (var stream = new FileStream(barCardImagePath, FileMode.Create))
+                await request.BarCardImage.CopyToAsync(stream);
+
             var lawyer = _mapper.Map<Lawyer>(request);
-            lawyer.IsApproved = false; // must be approved by admin
+            lawyer.IsApproved = false;
+            lawyer.BarCardImagePath = barCardImagePath;
+            lawyer.NationalIDImagePath = nationalIdImagePath;
 
             var result = await _unitOfWork.GenericLawyers.AddAsync(lawyer);
             await _unitOfWork.SaveChangesAsync();

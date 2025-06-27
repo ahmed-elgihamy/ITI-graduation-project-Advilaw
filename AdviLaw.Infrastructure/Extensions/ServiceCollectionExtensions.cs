@@ -30,6 +30,16 @@ namespace AdviLaw.Infrastructure.Extensions
                  .AddEntityFrameworkStores<AdviLawDBContext>()
                  .AddDefaultTokenProviders();
 
+
+            services.Configure<IdentityOptions>(options =>
+            {
+              
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+
+               
+            });
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
