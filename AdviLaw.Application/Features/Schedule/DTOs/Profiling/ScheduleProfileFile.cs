@@ -12,7 +12,7 @@ namespace AdviLaw.Application.Features.Schedule.DTOs.Profiling
     {
         public ScheduleProfileFile()
         {
-            CreateMap<Domain.Entites.ScheduleSection.Schedule, ScheduleDTO>()
+            CreateMap<AdviLaw.Domain.Entites.ScheduleSection.Schedule, ScheduleDTO>()
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
         }

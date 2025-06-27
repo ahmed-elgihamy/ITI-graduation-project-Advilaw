@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetAllLawyers;
+using AdviLaw.Application.Features.Reviews.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +28,13 @@ namespace AdviLaw.Controllers
         public async Task<IActionResult> GetLawyerProfile(int id)
         {
             var result = await _mediator.Send(new GetLawyerProfileQuery(id));
+            return Ok(result);
+        }
+
+        [HttpGet("{id}/reviews")]
+        public async Task<IActionResult> GetReviewsByLawyer(int id)
+        {
+            var result = await _mediator.Send(new GetReviewsByLawyerQuery(id));
             return Ok(result);
         }
     }
