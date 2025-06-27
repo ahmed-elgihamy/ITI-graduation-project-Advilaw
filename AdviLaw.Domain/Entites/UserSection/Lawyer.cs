@@ -19,10 +19,15 @@ namespace AdviLaw.Domain.Entities.UserSection
             public string? UserId { get; set; }
             public User? User { get; set; }
 
+
             public string ProfileHeader { get; set; } = string.Empty;
             public string ProfileAbout { get; set; } = string.Empty;
             public string? Bio { get; set; } = string.Empty;
             public bool IsApproved { get; set; }
+
+  
+           public int Experience { get; set; }
+
 
             public string BarCardImagePath { get; set; } = string.Empty;
             public string NationalIDImagePath { get; set; } = string.Empty;
