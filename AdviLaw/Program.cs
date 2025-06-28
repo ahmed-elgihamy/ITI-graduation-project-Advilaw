@@ -45,11 +45,6 @@ namespace AdviLaw
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-                    .AddJsonOptions(options =>
-                    {
-                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    });
-
 
 
             var app = builder.Build();

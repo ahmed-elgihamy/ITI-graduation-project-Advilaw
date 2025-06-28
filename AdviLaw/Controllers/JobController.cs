@@ -8,6 +8,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AdviLaw.Controllers
 {
@@ -19,9 +20,11 @@ namespace AdviLaw.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet("")]
+        //[Authorize]
         public async Task<IActionResult> GetAllAsync([FromQuery] SearchQueryDTO query)
         {
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+            var authHeader = Request.Headers["Authorization"].FirstOrDefault();
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
             if (userRole == "Lawyer")
             {
                 var requestDTO = _mapper.Map<GetPagedJobForLawyerQuery>(query);
@@ -30,11 +33,8 @@ namespace AdviLaw.Controllers
             }
             else
             {
-                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-                if (userId == null)
-                {
-                    return Unauthorized("User ID not found in claims.");
-                }
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                    ?? throw new UnauthorizedAccessException("User ID claim is missing");
                 var requestDTO = _mapper.Map<GetPagedJobForClientQuery>(query);
                 requestDTO.ClientId = int.TryParse(userId, out var clientId) ? clientId : default;
                 var result = await _mediator.Send(requestDTO);
