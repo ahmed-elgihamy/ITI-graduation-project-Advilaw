@@ -17,6 +17,12 @@ namespace AdviLaw.Application.Features.UserSubscriptionSection.DTOs.Profiling
 
             CreateMap<UserSubscription, BuyPlatformSubscriptionCommand>().ReverseMap();
 
+            CreateMap<UserSubscription, LawyerSubscriptionListDTO>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.SubscriptionType.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.SubscriptionType.Price))
+                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.SubscriptionType.Points))
+                .ReverseMap();
+
         }
     }
 }
