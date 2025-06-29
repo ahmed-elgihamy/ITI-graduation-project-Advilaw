@@ -11,7 +11,7 @@ namespace AdviLaw.Domain.Entites.SessionUtilities.ReviewSection
         public int Rate { get; set; }       // From 1 to 10
         public ReviewType Type { get; set; } = ReviewType.ClientToLawyer;
 
-
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         //Navigation Properties
         public int SessionId { get; set; }
         public Session Session { get; set; } = new();

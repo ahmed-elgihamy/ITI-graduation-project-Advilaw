@@ -244,7 +244,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,11 +267,12 @@ namespace AdviLaw.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProfileHeader = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProfileAbout = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LawyerCardID = table.Column<int>(type: "int", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    barCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    barAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
+                    Experience = table.Column<int>(type: "int", nullable: false),
+                    BarCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BarAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -426,6 +428,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false)
@@ -593,6 +598,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rate = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
                     ReviewerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     RevieweeId = table.Column<string>(type: "nvarchar(450)", nullable: true)

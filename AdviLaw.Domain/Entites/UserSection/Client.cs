@@ -17,6 +17,8 @@ namespace AdviLaw.Domain.Entities.UserSection
         //                       FK to User                       //
         public string? UserId { get; set; }
         public User? User { get; set; }
+        public string NationalIDImagePath { get; set; } = string.Empty;
+
 
         //Job Section
         public List<Job> Jobs { get; set; } = new();

@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
@@ -8,6 +8,7 @@ using AdviLaw.Infrastructure.Extensions;
 using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace AdviLaw
 {
@@ -16,27 +17,35 @@ namespace AdviLaw
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-      
+
+
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                });
+            });
+
 
             builder.Services.AddAuthorization();
             builder.AddPresentation();
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowFrontend",
-            //        policy => policy.WithOrigins("http://localhost:4200")
-            //                        .AllowAnyHeader()
-            //                        .AllowAnyMethod());
-            //});
-
             //serialize and deserialize enums as strings instead of integers.
             builder.Services.AddControllers()
-                    .AddJsonOptions(options =>
-                    {
-                      options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                     });
+
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                }); 
+
 
 
 
@@ -45,36 +54,34 @@ namespace AdviLaw
             if (app.Environment.IsDevelopment())
             {
 
-            app.UseMiddleware<ErrorHandlerMiddleware>();
+
+                app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
 
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
             }
 
-            //app.MapGroup("api/identity")
-            //    .WithTags("Identity")
-            //    .MapIdentityApi<User>(); 
 
-
-            //}
-
-
-        // Redirect root URL to Swagger UI
-        app.MapGet("/", context =>
+            // Redirect root URL to Swagger UI
+            app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 
+           
+            app.UseMiddleware<ErrorHandlerMiddleware>(); 
+            app.UseHttpsRedirection();
 
-
-
-            //app.UseCors("AllowFrontend");
+      
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
-
+            app.UseCors();
             app.MapControllers();
+
             app.Run();
         }
     }
