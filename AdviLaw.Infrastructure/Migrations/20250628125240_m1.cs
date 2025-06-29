@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class m1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -243,7 +243,9 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
+                    NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,12 +267,12 @@ namespace AdviLaw.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ProfileHeader = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProfileAbout = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LawyerCardID = table.Column<int>(type: "int", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
-                    barCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    barAssociationCardNumber = table.Column<int>(type: "int", nullable: false),
-                    Experience = table.Column<int>(type: "int", nullable: false)
+                    Experience = table.Column<int>(type: "int", nullable: false),
+                    BarCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BarAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

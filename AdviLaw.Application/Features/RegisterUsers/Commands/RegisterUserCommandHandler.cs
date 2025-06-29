@@ -52,12 +52,12 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
             {
                 return _responseHandler.BadRequest<object>("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
-
-           // generate to the user's email
+        
+            // generate to the user's email
             //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             // Send confirmation email
             //await _emailService.SendEmailConfirmationAsync(user.Email, user.Id, token);
-      
+
 
             //map from Registerdto to Lawyercommand
             if (dto.Role == Roles.Lawyer)

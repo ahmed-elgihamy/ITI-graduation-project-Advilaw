@@ -41,9 +41,20 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
             if (existingClient != null)
                 return _responseHandler.BadRequest<object>("Client profile already exists for this user");
 
-            //mapping to Client entity
-            var client= _mapper.Map<Client>(request);
-            //add to db
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+            Directory.CreateDirectory(uploadsPath);
+
+            var nationalIdImagePath = Path.Combine(uploadsPath, request.NationalIDImage.FileName);
+
+            using (var stream = new FileStream(nationalIdImagePath, FileMode.Create))
+                await request.NationalIDImage.CopyToAsync(stream);
+
+
+
+            var client = _mapper.Map<Client>(request);
+            client.IsApproved = false;
+            client.NationalIDImagePath = nationalIdImagePath;
+
             var result = await _unitOfWork.GenericClients.AddAsync(client);
 
             await _unitOfWork.SaveChangesAsync();

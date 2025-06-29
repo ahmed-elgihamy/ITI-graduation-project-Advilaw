@@ -31,16 +31,15 @@ namespace AdviLaw.Controllers
             _responseHandler = responseHandler;
 
         }
-
         [HttpPost("register")]
-        public async Task<ActionResult<object>> Register([FromBody] UserRegisterDto dto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<object>> Register([FromForm] UserRegisterDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //validate the role
             if (!Enum.IsDefined(typeof(Roles), dto.Role))
-                return _responseHandler.BadRequest<object>("Invalid role Selected.");
+                return _responseHandler.BadRequest<object>("Invalid role selected.");
 
             var command = new RegisterUserCommand(dto);
             var result = await _mediator.Send(command);
@@ -49,6 +48,7 @@ namespace AdviLaw.Controllers
             {
                 return _responseHandler.BadRequest<object>(result.Message);
             }
+
             return _responseHandler.Success(result.Data, new { timestamp = DateTime.UtcNow });
         }
 
@@ -82,21 +82,21 @@ namespace AdviLaw.Controllers
             return result.Succeeded ? Ok(result) : BadRequest(result);
         }
 
-        [HttpPost("auth/send-reset-code")]
+        [HttpPost("send-reset-code")]
         public async Task<IActionResult> SendResetCode([FromBody] SendResetCodeCommand command)
         {
             var result = await _mediator.Send(command);
             return StatusCode((int)result.StatusCode, result);
         }
 
-        [HttpPost("auth/resend-reset-code")]
+        [HttpPost("resend-reset-code")]
         public async Task<IActionResult> ResendResetCode([FromBody] ResendResetCodeCommand command)
         {
             var result = await _mediator.Send(command);
             return StatusCode((int)result.StatusCode, result);
         }
 
-        [HttpPost("auth/reset-password")]
+        [HttpPost("reset-password")]
 
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
         {

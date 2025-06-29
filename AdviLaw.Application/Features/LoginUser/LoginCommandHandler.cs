@@ -6,6 +6,7 @@ using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading;
@@ -27,7 +28,12 @@ public class LoginCommandHandler(
     {
         _logger.LogInformation("Login attempt for email: {Email}", request.Email);
 
-        var user = await _userManager.FindByEmailAsync(request.Email);
+        var user = await _userManager.Users
+            .Include(u => u.Lawyer)
+            .Include(u => u.Client)
+            .Include(u => u.Admin)
+            .FirstOrDefaultAsync(u => u.Email == request.Email);
+
         if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
         {
             _logger.LogWarning("Invalid login attempt for email: {Email}", request.Email);
@@ -41,7 +47,7 @@ public class LoginCommandHandler(
         //}
 
         //  delete old refresh tokens (single-device login behavior)
-       await _unitOfWork.RefreshTokens.DeleteAllAsync(rt => rt.UserId == user.Id);
+        await _unitOfWork.RefreshTokens.DeleteAllAsync(rt => rt.UserId == user.Id);
 
         var accessToken = _tokenService.GenerateAccessToken(user);
         var refreshToken = _tokenService.GenerateRefreshToken();

@@ -40,7 +40,7 @@ namespace AdviLaw.Application.Behaviors
                 {
                     var message = failures.Select(x => x.PropertyName + ": " + x.ErrorMessage).FirstOrDefault();
 
-                    throw new ValidationException(message);
+                  //  throw new ValidationException(message);
 
                 }
             }

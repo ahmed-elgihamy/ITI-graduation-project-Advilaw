@@ -1,9 +1,12 @@
 ﻿using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetAllLawyers;
-using AdviLaw.Application.Features.Reviews.Queries;
-using AdviLaw.Application.Features.Schedule.Queries;
+using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerPayments;
+using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerReviews;
+using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerSubscriptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AdviLaw.Controllers
 {
@@ -18,7 +21,7 @@ namespace AdviLaw.Controllers
             _mediator = mediator;
         }
 
-        
+
         [HttpGet("")]
         public async Task<IActionResult> GetAll([FromQuery] GetPagedLawyersQuery query)
         {
@@ -26,7 +29,7 @@ namespace AdviLaw.Controllers
             return Ok(result);
         }
 
-    
+
         [HttpGet("api/lawyers/{id}/profile")]
         public async Task<IActionResult> GetLawyerProfile(int id)
         {
@@ -34,9 +37,31 @@ namespace AdviLaw.Controllers
             return Ok(result);
         }
 
-       
-        
+        [Authorize(Roles = "Lawyer")]
+        [HttpGet("me/reviews")]
+        public async Task<IActionResult> GetLawyerReviews(string? Search, int? PageNumber, int? PageSize)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _mediator.Send(new GetLawyerReviewsQuery(userId, Search, PageNumber, PageSize));
+            return Ok(result);
+        }
 
-     
+        [Authorize(Roles = "Lawyer")]
+        [HttpGet("me/payments")]
+        public async Task<IActionResult> GetLawyerPayments(string? Search, int? PageNumber, int? PageSize)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _mediator.Send(new GetLawyerPaymentsQuery(userId, Search, PageNumber, PageSize));
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "Lawyer")]
+        [HttpGet("me/subscriptions")]
+        public async Task<IActionResult> GetLawyerSubscriptions()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _mediator.Send(new GetLawyerSubscriptionsQuery(userId));
+            return Ok(result);
+        }
     }
 }
