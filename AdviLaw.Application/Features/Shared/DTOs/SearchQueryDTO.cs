@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdviLaw.Application.Features.Shared.DTOs
+﻿namespace AdviLaw.Application.Features.Shared.DTOs
 {
     public class SearchQueryDTO
     {

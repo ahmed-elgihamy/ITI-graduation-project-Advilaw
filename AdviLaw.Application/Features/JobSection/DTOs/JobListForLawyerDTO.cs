@@ -1,11 +1,4 @@
-﻿using AdviLaw.Domain.Entites.JobSection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdviLaw.Application.Features.JobSection.DTOs
+﻿namespace AdviLaw.Application.Features.JobSection.DTOs
 {
     public class JobListForLawyerDTO
     {

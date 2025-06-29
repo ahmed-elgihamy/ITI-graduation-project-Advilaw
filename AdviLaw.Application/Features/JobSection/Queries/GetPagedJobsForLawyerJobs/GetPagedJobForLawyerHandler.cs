@@ -3,7 +3,6 @@ using AdviLaw.Application.Features.JobSection.DTOs;
 using AdviLaw.Application.Features.JobSection.Queries.GetPagedJobs;
 using AdviLaw.Application.Features.Shared.DTOs;
 using AdviLaw.Domain.Entites.JobSection;
-using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
@@ -29,7 +28,7 @@ public class GetPagedJobForLawyerHandler(
             }
         );
 
-        if (!string.IsNullOrWhiteSpace(request.Search))
+        if (!string.IsNullOrWhiteSpace(request.Search)) 
         {
             query = query.Where(j => EF.Functions.Like(j.Header, $"%{request.Search}%"));
         }
