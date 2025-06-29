@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Domain.Entites.RefreshToken;
 using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Domain.Enums;
 using AdviLaw.Domain.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,13 @@ public class TokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Role,user.Role.ToString())
+            new Claim(ClaimTypes.Role,user.Role.ToString()),
+            new Claim("userId",
+                (
+                    user.Role == Roles.Admin ? 
+                    user.Admin.Id : user.Role == Roles.Lawyer ?
+                    user.Lawyer.Id : user.Client.Id
+                ).ToString())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
