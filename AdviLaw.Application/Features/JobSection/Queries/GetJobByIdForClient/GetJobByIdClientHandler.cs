@@ -1,10 +1,12 @@
 ﻿
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.JobSection.DTOs;
+using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
@@ -13,7 +15,9 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
             IMapper mapper,
             IUnitOfWork unitOfWork,
             ResponseHandler responseHandler,
-            IHttpContextAccessor httpContextAccessor
+            IHttpContextAccessor httpContextAccessor,
+            UserManager<User> userManager
+
         )
         : IRequestHandler<GetJobByIdClientQuery, Response<JobDetailsForClientDTO>>
     {
@@ -21,6 +25,7 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
         private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         private readonly ResponseHandler _responseHandler = responseHandler ?? throw new ArgumentNullException(nameof(responseHandler));
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        private readonly UserManager<User> _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
 
         public async Task<Response<JobDetailsForClientDTO>> Handle(GetJobByIdClientQuery request, CancellationToken cancellationToken)
         {
@@ -35,7 +40,10 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
             {
                 return _responseHandler.NotFound<JobDetailsForClientDTO>("Job not found.");
             }
-            if (job.ClientId != int.Parse(userId!))
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (job.ClientId != user?.Client.Id)
             {
                 return _responseHandler.BadRequest<JobDetailsForClientDTO>("You do not have permission to view this job.");
             }
