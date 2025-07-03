@@ -1,5 +1,6 @@
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.DTOs.Lawyer;
+using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
@@ -55,6 +56,12 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
             lawyer.IsApproved = false;
             lawyer.BarCardImagePath = barCardImagePath;
             lawyer.NationalIDImagePath = nationalIdImagePath;
+                    lawyer.Fields = request.FieldIds
+                .Select(id => new LawyerJobField
+                {
+                    JobFieldId = id 
+                }).ToList();
+
 
             var result = await _unitOfWork.GenericLawyers.AddAsync(lawyer);
             await _unitOfWork.SaveChangesAsync();
