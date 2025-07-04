@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-<<<<<<<< HEAD:AdviLaw.Infrastructure/Migrations/20250627203352_initial create.Designer.cs
-    [Migration("20250627203352_initial create")]
+    [Migration("20250629175055_initial create")]
     partial class initialcreate
-========
-    [Migration("20250628125240_m1")]
-    partial class m1
->>>>>>>> 5dbe2f4fc7103367c63f490fb5262e7059ad62b0:AdviLaw.Infrastructure/Migrations/20250628125240_m1.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

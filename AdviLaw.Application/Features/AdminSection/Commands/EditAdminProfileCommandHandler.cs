@@ -11,7 +11,7 @@ using AdviLaw.Domain.Enums;
 
 namespace AdviLaw.Application.Features.AdminSection.Commands
 {
-    public class EditAdminProfileCommandHandler : IRequestHandler<EditAdminProfileCommand, Response<object>>
+    public class EditAdminProfileCommandHandler : IRequestHandler<EditAdminProfileCommand, Response<AdminListDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
@@ -26,18 +26,18 @@ namespace AdviLaw.Application.Features.AdminSection.Commands
             _responseHandler = responseHandler;
         }
 
-        public async Task<Response<object>> Handle(EditAdminProfileCommand request, CancellationToken cancellationToken)
+        public async Task<Response<AdminListDto>> Handle(EditAdminProfileCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.UserId);
             if (user == null || user.Role != Roles.Admin)
-                return _responseHandler.NotFound<object>("Admin user not found");
+                return _responseHandler.NotFound<AdminListDto>("Admin user not found");
                 
             //if email is changed, check if it is already in use
             if (request.Dto.Email != user.Email)
             {
                 var emailInUse = await _userManager.FindByEmailAsync(request.Dto.Email);
                 if (emailInUse != null)
-                    return _responseHandler.BadRequest<object>("Email already in use");
+                    return _responseHandler.BadRequest<AdminListDto>("Email already in use");
             }
 
             // Map fields from DTO to user
@@ -45,7 +45,8 @@ namespace AdviLaw.Application.Features.AdminSection.Commands
             await _userManager.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _responseHandler.Success<object>("Admin profile updated successfully");
+            var updatedAdminDto = _mapper.Map<AdminListDto>(user);
+            return new Response<AdminListDto>(updatedAdminDto, "Profile updated successfully");
         }
     }
 } 

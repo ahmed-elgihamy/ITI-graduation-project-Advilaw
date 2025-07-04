@@ -4,7 +4,7 @@ using AdviLaw.Application.Features.AdminSection.DTOs;
 
 namespace AdviLaw.Application.Features.AdminSection.Commands
 {
-    public class EditAdminProfileCommand : IRequest<Response<object>>
+    public class EditAdminProfileCommand : IRequest<Response<AdminListDto>>
     {
         public EditAdminProfileDto Dto { get; set; }
         public string UserId { get; set; } // The ID of the admin user to edit

@@ -26,6 +26,8 @@ namespace AdviLaw.Application.Features.Clients.Queries
                 UserId = c.UserId,
                 UserName = c.User.UserName,
                 Email = c.User.Email,
+                NationalityId = c.User.NationalityId.ToString(),
+                NationalIDImagePath = c.NationalIDImagePath,
                 IsApproved = c.IsApproved
             }).ToList();
             return clientList;

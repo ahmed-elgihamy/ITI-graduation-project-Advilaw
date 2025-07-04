@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:AdviLaw.Infrastructure/Migrations/20250627203352_initial create.cs
     public partial class initialcreate : Migration
-========
-    public partial class m1 : Migration
->>>>>>>> 5dbe2f4fc7103367c63f490fb5262e7059ad62b0:AdviLaw.Infrastructure/Migrations/20250628125240_m1.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -247,13 +243,8 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-<<<<<<<< HEAD:AdviLaw.Infrastructure/Migrations/20250627203352_initial create.cs
                     IsApproved = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-========
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsApproved = table.Column<bool>(type: "bit", nullable: false),
->>>>>>>> 5dbe2f4fc7103367c63f490fb5262e7059ad62b0:AdviLaw.Infrastructure/Migrations/20250628125240_m1.cs
                     NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

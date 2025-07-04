@@ -13,9 +13,9 @@ public class GetPagedLawyerHandler(
     IMapper mapper,
     ResponseHandler responseHandler,
     IUnitOfWork unitOfWork
-) : IRequestHandler<GetPagedLawyersQuery, Response<PagedResponse<LawyerListDTO>>>
+) : IRequestHandler<GetLawyerForAdminQuery, Response<PagedResponse<LawyerListDTO>>>
 {
-    public async Task<Response<PagedResponse<LawyerListDTO>>> Handle(GetPagedLawyersQuery request, CancellationToken cancellationToken)
+    public async Task<Response<PagedResponse<LawyerListDTO>>> Handle(GetLawyerForAdminQuery request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Fetching paged lawyers...");
 

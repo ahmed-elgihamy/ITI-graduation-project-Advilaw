@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AdviLaw.Application.Features.AdminSection.DTOs;
+using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
@@ -20,15 +22,14 @@ namespace AdviLaw.Application.Features.AdminSection.Queries
         }
         public async Task<List<AdminListDto>> Handle(GetAllAdminsQuery request, CancellationToken cancellationToken)
         {
-            var admins = await _unitOfWork.GenericAdmins.GetAllAsync(null, null, new List<System.Linq.Expressions.Expression<System.Func<AdviLaw.Domain.Entities.UserSection.Admin, object>>> { a => a.User });
+            var admins = await _unitOfWork.GenericAdmins.GetAllAsync(null, null, new List<Expression<System.Func<Admin, object>>> { a => a.User });
             var adminList = admins.Select(a => new AdminListDto
             {
-                Id = a.Id,
-                UserId = a.UserId,
+                Id = a.Id.ToString(),
+                UserId = a.User.Id,
                 UserName = a.User.UserName,
                 Email = a.User.Email,
                 Role = a.User.Role.ToString(),
-                IsActive = a.User.IsActive,
                 CreatedAt = a.User.CreatedAt
             }).ToList();
             return adminList;
