@@ -12,6 +12,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
     {
         private readonly AdviLawDBContext _dbContext;
 
+        public IAppointmentRepository Appointments { get; }
         public IGenericRepository<Lawyer> GenericLawyers { get; }
         public IRefreshTokenRepository RefreshTokens { get; }
         public IJobFieldRepository JobFields { get; }
@@ -29,6 +30,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         {
             _dbContext = dbContext;
 
+            Appointments = new AppointmentRepository(_dbContext);
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
             RefreshTokens = new RefreshTokenRepository(_dbContext);
             JobFields = new JobFieldRepository(_dbContext);

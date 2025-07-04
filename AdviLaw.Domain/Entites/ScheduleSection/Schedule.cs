@@ -1,5 +1,4 @@
-﻿
-using AdviLaw.Domain.Entites.JobSection;
+﻿using AdviLaw.Domain.Entites.JobSection;
 
 namespace AdviLaw.Domain.Entites.ScheduleSection
 {
