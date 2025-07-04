@@ -25,7 +25,7 @@ namespace AdviLaw.Controllers
 
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAll([FromQuery] GetPagedLawyersQuery query)
+        public async Task<IActionResult> GetAll([FromQuery] GetLawyerForAdminQuery query)
         {
             var result = await _mediator.Send(query);
             return Ok(result);

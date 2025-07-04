@@ -11,11 +11,12 @@ namespace AdviLaw.Domain.Entities.UserSection
     public class Client
     {
         public int Id { get; set; }
+        public bool IsApproved { get; set; }
+
 
         //                       FK to User                       //
         public string? UserId { get; set; }
         public User? User { get; set; }
-        public bool IsApproved { get; set; }
         public string NationalIDImagePath { get; set; } = string.Empty;
 
 
