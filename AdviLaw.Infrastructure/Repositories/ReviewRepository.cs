@@ -13,17 +13,21 @@ public class ReviewRepository : GenericRepository<Review>, IReviewRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Review>> GetReviewsByLawyerId(int lawyerId)
+    public async Task<List<Review>> GetReviewsByLawyerId(Guid lawyerId)
     {
+        var lawyerUserId = lawyerId.ToString();
+
         return await _dbContext.Reviews
             .Include(r => r.Reviewer)
             .Include(r => r.Reviewee)
             .Where(r =>
                 r.Reviewee != null &&
-                _dbContext.Lawyers.Any(l => l.Id == lawyerId && l.UserId == r.Reviewee.Id)
+                _dbContext.Lawyers.Any(l => l.UserId == lawyerUserId && l.UserId == r.Reviewee.Id)
             )
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
     }
+
+
 }
 

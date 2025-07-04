@@ -14,7 +14,7 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetScheduleByLawyerId(int id)
+    public async Task<IActionResult> GetScheduleByLawyerId(Guid id)
     {
         var result = await _mediator.Send(new GetSchedulesByLawyerQuery(id));
         return Ok(result);

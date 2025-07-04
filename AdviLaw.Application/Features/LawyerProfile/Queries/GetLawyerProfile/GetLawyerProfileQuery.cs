@@ -11,11 +11,13 @@ namespace AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile
 {
     public class GetLawyerProfileQuery : IRequest<Response<LawyerProfileDTO>>
     {
-        public int LawyerId { get; set; }
+        public string LawyerId { get; set; } 
 
-        public GetLawyerProfileQuery(int lawyerId)
+        public GetLawyerProfileQuery(string lawyerId)
         {
             LawyerId = lawyerId;
         }
     }
+
+
 }

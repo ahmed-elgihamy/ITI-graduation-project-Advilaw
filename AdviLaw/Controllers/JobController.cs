@@ -79,12 +79,9 @@ namespace AdviLaw.Controllers
                 return Unauthorized("User ID not found in claims.");
             }
 
-
-            //command.ClientId = int.TryParse(userId, out var clientId) ? clientId : (int?)null;
             CreateJobCommand command = _mapper.Map<CreateJobCommand>(createJobDTO);
             command.UserId = userId;
             var result = await _mediator.Send(command);
-            //return CreatedAtAction(nameof(GetAllAsync), new { id = result.Id }, result);
             return Ok(result);
         }
 

@@ -32,5 +32,7 @@ namespace AdviLaw.Domain.Entites.JobSection
         public Session? Session { get; set; }  // لا تهيئة
 
         public List<Proposal>? Proposals { get; set; }
+        public DateTime? AppointmentTime { get; set; }
+        public double? DurationHours { get; set; }
     }
 }

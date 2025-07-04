@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250628125240_m1")]
-    partial class m1
+    [Migration("20250704123019_addcolumn")]
+    partial class addcolumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,6 +122,9 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AppointmentTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Budget")
                         .HasColumnType("int");
 
@@ -131,6 +134,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("DurationHours")
+                        .HasColumnType("float");
 
                     b.Property<int?>("EscrowTransactionId")
                         .HasColumnType("int");
@@ -644,6 +650,9 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.Property<int>("Experience")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");

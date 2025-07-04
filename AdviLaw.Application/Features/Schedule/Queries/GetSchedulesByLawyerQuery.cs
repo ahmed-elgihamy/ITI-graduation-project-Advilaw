@@ -7,12 +7,13 @@ namespace AdviLaw.Application.Features.Schedule.Queries
 {
     public class GetSchedulesByLawyerQuery : IRequest<Response<List<LawyerScheduleDTO>>>
     {
-        public int LawyerId { get; }
+        public Guid LawyerId { get; }
 
-        public GetSchedulesByLawyerQuery(int lawyerId)
+        public GetSchedulesByLawyerQuery(Guid lawyerId)
         {
             LawyerId = lawyerId;
         }
     }
+
 }
 

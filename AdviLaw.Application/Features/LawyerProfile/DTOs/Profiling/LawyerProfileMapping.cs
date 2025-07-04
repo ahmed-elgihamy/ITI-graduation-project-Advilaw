@@ -13,8 +13,12 @@ namespace AdviLaw.Application.Features.LawyerProfile.DTOs.Profiling
         public LawyerProfileMapping()
         {
             CreateMap<Lawyer, LawyerProfileDTO>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User!.UserName))
-                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.User!.ImageUrl));
+  .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id)) 
+
+    .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate))
+    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User!.UserName))
+    .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.User!.ImageUrl));
+
         }
     }
 }

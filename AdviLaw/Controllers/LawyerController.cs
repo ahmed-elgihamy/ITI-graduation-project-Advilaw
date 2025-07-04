@@ -1,4 +1,5 @@
-﻿using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
+﻿
+using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetAllLawyers;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerPayments;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerReviews;
@@ -29,13 +30,6 @@ namespace AdviLaw.Controllers
             return Ok(result);
         }
 
-
-        [HttpGet("api/lawyers/{id}/profile")]
-        public async Task<IActionResult> GetLawyerProfile(int id)
-        {
-            var result = await _mediator.Send(new GetLawyerProfileQuery(id));
-            return Ok(result);
-        }
 
         [Authorize(Roles = "Lawyer")]
         [HttpGet("me/reviews")]
