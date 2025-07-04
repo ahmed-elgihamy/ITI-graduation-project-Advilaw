@@ -13,6 +13,7 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
         public IFormFile NationalIDImage { get; set; } = null!;
         public IFormFile BarCardImage { get; set; } = null!;
 
+        public List<int> FieldIds { get; set; } = new();
 
     }
 } 

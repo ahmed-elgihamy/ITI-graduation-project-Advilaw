@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Domain.Enums;
 using AdviLaw.Domain.IGenericRepo;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,7 @@ namespace AdviLaw.Domain.Repositories
 {
    public interface ILawyerRepository : IGenericRepository<Lawyer>
     {
+        Task<(IEnumerable<Lawyer>, int)> GetAllMatchingAsync(string? searchPhrase, int PageSize, int PageNumber);
+
     }
 }

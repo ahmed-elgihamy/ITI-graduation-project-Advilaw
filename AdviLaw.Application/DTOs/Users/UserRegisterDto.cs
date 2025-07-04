@@ -24,7 +24,8 @@ namespace AdviLaw.Application.DTOs.Users
         public string PostalCode { get; set; } = string.Empty;
         public long NationalityId { get; set; }
 
-       
+        public List<int>? FieldIds { get; set; }
+
         public IFormFile NationalIDImage { get; set; } = null!;
         public IFormFile? BarCardImage { get; set; } = null!;
 

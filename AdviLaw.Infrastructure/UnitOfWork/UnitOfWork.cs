@@ -24,10 +24,15 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
 
+
         public IGenericRepository<Admin> GenericAdmins { get; }
 
         public IScheduleRepository Schedules { get; }
          public IReviewRepository Reviews { get; }
+
+        public IProposalRepository Proposals { get; }
+        public IScheduleRepository Schedules { get; }
+        public IReviewRepository Reviews { get; }
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
@@ -40,6 +45,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             Jobs = new JobRepository(_dbContext);
             GenericClients = new GenericRepository<Client>(_dbContext);
             PlatformSubscriptions = new PlatformSubscripitonRepository(_dbContext);
+            Proposals = new ProposalRepository(_dbContext);
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
             UserSubscriptions = new UserSubscriptionRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);

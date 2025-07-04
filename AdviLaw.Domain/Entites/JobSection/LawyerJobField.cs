@@ -10,6 +10,6 @@ namespace AdviLaw.Domain.Entites.JobSection
 
         // Navigation Properties
         public Lawyer Lawyer { get; set; } = new();
-        public JobField JobField { get; set; } = new();
+        public JobField JobField { get; set; } 
     }
 }
