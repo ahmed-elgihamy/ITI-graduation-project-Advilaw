@@ -1,4 +1,4 @@
-using AdviLaw.Application.DTOs.Lawyer;
+﻿using AdviLaw.Application.DTOs.Lawyer;
 using AdviLaw.Application.DTOs.Users;
 using AdviLaw.Domain.Entities.UserSection;
 
@@ -10,11 +10,12 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
     {
         public CreateLawyerMappingProfile()
         {
-            CreateMap<CreateLawyerCommand, Lawyer>()
-
+          
             // wait for admin review to be approved
+               CreateMap<CreateLawyerCommand, Lawyer>()
                 .ForMember(dest => dest.IsApproved, opt => opt.MapFrom(src => false))
-                .ReverseMap();
+                .ForMember(dest => dest.Fields, opt => opt.Ignore()); // ✅
+
 
             CreateMap<Lawyer, LawyerResponseDto>();
             CreateMap<UserRegisterDto, CreateLawyerCommand>();

@@ -8,7 +8,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AdviLaw.Controllers
 {
@@ -33,7 +32,7 @@ namespace AdviLaw.Controllers
             }
             else
             {
-                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                var userId = User.FindFirst("userId")?.Value
                     ?? throw new UnauthorizedAccessException("User ID claim is missing");
                 var requestDTO = _mapper.Map<GetPagedJobForClientQuery>(query);
                 requestDTO.ClientId = int.TryParse(userId, out var clientId) ? clientId : default;

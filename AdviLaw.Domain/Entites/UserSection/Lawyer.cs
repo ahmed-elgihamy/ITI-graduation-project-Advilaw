@@ -2,12 +2,6 @@
 using AdviLaw.Domain.Entites.ProposalSection;
 using AdviLaw.Domain.Entites.SessionSection;
 using AdviLaw.Domain.Entites.SubscriptionSection;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Entities.UserSection
 {
@@ -33,7 +27,7 @@ namespace AdviLaw.Domain.Entities.UserSection
             public string NationalIDImagePath { get; set; } = string.Empty;
             public int BarAssociationCardNumber { get; set; }
 
-            public List<LawyerJobField> Fields { get; set; } = new();
+            public List<LawyerJobField> Fields { get; set; } 
             public List<Job> Jobs { get; set; } = new();
             public List<Proposal> Proposals { get; set; } = new();
             public List<Session> Sessions { get; set; } = new();

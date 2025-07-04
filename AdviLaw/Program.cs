@@ -20,7 +20,7 @@ namespace AdviLaw
 
 
 
-            
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngularApp", policy =>
@@ -28,22 +28,24 @@ namespace AdviLaw
                     policy.WithOrigins("http://localhost:4200")
                           .AllowAnyHeader()
                           .AllowAnyMethod()
-                          .AllowCredentials(); 
+                          .AllowCredentials();
                 });
             });
 
-           
-            builder.Services.AddAuthorization();
-            builder.AddPresentation();                 
-            builder.Services.AddApplication();           
-            builder.Services.AddInfrastructure(builder.Configuration); 
 
+            builder.Services.AddAuthorization();
+            builder.AddPresentation();
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
+
+            //serialize and deserialize enums as strings instead of integers.
             builder.Services.AddControllers()
 
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+                }); 
+
 
 
 
@@ -61,7 +63,8 @@ namespace AdviLaw
                 app.UseSwaggerUI();
             }
 
-           
+
+            // Redirect root URL to Swagger UI
             app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
@@ -73,7 +76,6 @@ namespace AdviLaw
             app.UseHttpsRedirection();
 
       
-
             app.UseCors("AllowAll");
 
             app.UseAuthorization();

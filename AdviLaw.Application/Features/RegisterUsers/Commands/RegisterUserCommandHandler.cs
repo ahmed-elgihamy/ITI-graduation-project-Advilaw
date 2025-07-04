@@ -72,6 +72,12 @@ namespace AdviLaw.Application.Features.RegisterUsers.Commands
                 command.UserId = user.Id;
                 await _mediator.Send(command);
             }
+            else if (dto.Role == Roles.Admin)
+            {
+                var admin = new Admin { UserId = user.Id };
+                await _unitOfWork.GenericAdmins.AddAsync(admin);
+                await _unitOfWork.SaveChangesAsync();
+            }
             else
             {
                 return _responseHandler.BadRequest<object>("Invalid role selected.");

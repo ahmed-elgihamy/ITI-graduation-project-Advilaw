@@ -7,8 +7,10 @@ namespace AdviLaw.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         // Generic repositories  
+        IAppointmentRepository Appointments { get; }
         IGenericRepository<Lawyer> GenericLawyers { get; }
         IGenericRepository<Client> GenericClients { get; }
+        IGenericRepository<Admin> GenericAdmins { get; }
 
         // Specialized repositories  
         IJobFieldRepository JobFields { get; }
@@ -18,10 +20,14 @@ namespace AdviLaw.Domain.UnitOfWork
         ISubscriptionPointRepository SubscriptionPoints { get; }
         IUserSubscriptionRepository UserSubscriptions { get; }
         IPaymentRepository Payments { get; }
+        IProposalRepository Proposals { get; }
         IReviewRepository Reviews { get; }
         IScheduleRepository Schedules { get; }
         Task<int> SaveChangesAsync();
+        void Update<T>(T entity) where T : class;
         IRefreshTokenRepository RefreshTokens { get; }
+   
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -13,9 +13,9 @@ public class GetPagedLawyerHandler(
     IMapper mapper,
     ResponseHandler responseHandler,
     IUnitOfWork unitOfWork
-) : IRequestHandler<GetPagedLawyersQuery, Response<PagedResponse<LawyerListDTO>>>
+) : IRequestHandler<GetLawyerForAdminQuery, Response<PagedResponse<LawyerListDTO>>>
 {
-    public async Task<Response<PagedResponse<LawyerListDTO>>> Handle(GetPagedLawyersQuery request, CancellationToken cancellationToken)
+    public async Task<Response<PagedResponse<LawyerListDTO>>> Handle(GetLawyerForAdminQuery request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Fetching paged lawyers...");
 
@@ -28,6 +28,11 @@ public class GetPagedLawyerHandler(
         if (!string.IsNullOrWhiteSpace(request.Search))
         {
             query = query.Where(l => l.User.UserName!.ToLower().Contains(request.Search.ToLower()));
+        }
+
+        if (request.IsApproved.HasValue)
+        {
+            query = query.Where(l => l.IsApproved == request.IsApproved.Value);
         }
 
         var totalCount = await query.CountAsync(cancellationToken);

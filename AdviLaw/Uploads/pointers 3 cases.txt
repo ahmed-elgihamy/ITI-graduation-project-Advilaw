@@ -1,0 +1,67 @@
+// taking input from user of array elements to have sum
+int main()
+{
+
+  int arr[10];
+  int* ptr;
+  ptr=arr;   // same as ptr ==&arr[0];
+  int i,sum=0;
+
+
+  for (i=0;i<10;i++)
+  {
+      scanf("%d",&arr[i]); // here i used & because arr[i] is a value not an address
+  }
+  for(i=0;i<10;i++)
+  {
+      sum+=arr[i];
+  }
+  printf("Sum is:%d",sum);
+
+//ORRRRRRRRRRRRRRRRRRRRRRRRR
+
+
+  for (i=0;i<10;i++)
+  {
+      scanf("%d",ptr+i);  // scanf takes address not content &arr[0]
+  }
+  for(i=0;i<10;i++)
+  {
+      sum+=*(ptr+i);  //or  sum+=*ptr;  ptr++
+  }
+  printf("Sum is:%d",sum);
+
+
+//ORRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+  for (i=0;i<10;i++)
+  {
+      scanf("%d",ptr);
+      ptr++;
+  }
+ptr=arr;               //Reset ptr to the beginning of the array
+
+  for(i=0;i<10;i++)
+  {
+      sum+=(*ptr);
+      ptr++;
+  }
+  printf("Sum is:%d",sum);
+
+//ORRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+  for (i=0;i<10;i++)
+  {
+      scanf("%d",ptr);
+      ptr++;
+  }                            //loop ended with ptr =&arr[10]
+
+  for(ptr--;ptr>=arr;ptr--)    // to start from end of arr which is ptr=9
+  {
+      sum+=*(ptr);
+  }
+ printf("Sum is:%d",sum);
+
+
+  return 0;
+}
