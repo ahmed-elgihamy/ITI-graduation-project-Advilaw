@@ -31,8 +31,8 @@ namespace AdviLaw.Infrastructure.UnitOfWork
          public IReviewRepository Reviews { get; }
 
         public IProposalRepository Proposals { get; }
-        public IScheduleRepository Schedules { get; }
-        public IReviewRepository Reviews { get; }
+
+
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
