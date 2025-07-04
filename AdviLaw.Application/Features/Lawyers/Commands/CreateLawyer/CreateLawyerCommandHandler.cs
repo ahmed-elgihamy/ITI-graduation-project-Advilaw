@@ -54,9 +54,9 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
 
             var lawyer = _mapper.Map<Lawyer>(request);
             lawyer.IsApproved = false;
-            lawyer.BarCardImagePath = barCardImagePath;
-            lawyer.NationalIDImagePath = nationalIdImagePath;
-                    lawyer.Fields = request.FieldIds
+            lawyer.BarCardImagePath = "/Uploads/" + request.BarCardImage.FileName;
+            lawyer.NationalIDImagePath = "/Uploads/" + request.NationalIDImage.FileName;
+            lawyer.Fields = request.FieldIds
                 .Select(id => new LawyerJobField
                 {
                     JobFieldId = id 
