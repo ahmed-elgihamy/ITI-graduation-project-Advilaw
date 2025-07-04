@@ -14,6 +14,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using AdviLaw.Domain.Entites.RefreshToken;
 using AdviLaw.Domain.Entites.Auth;
+using AdviLaw.Domain.Entites.AppointmentSection;
 
 namespace AdviLaw.Infrastructure.Persistence
 {
@@ -22,6 +23,7 @@ namespace AdviLaw.Infrastructure.Persistence
         public AdviLawDBContext(DbContextOptions<AdviLawDBContext> options) : base(options) { }
 
         //public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
         public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -266,7 +268,16 @@ namespace AdviLaw.Infrastructure.Persistence
              .HasForeignKey<Session>(s => s.JobId)
               .OnDelete(DeleteBehavior.Restrict);
 
+            //modelBuilder.Entity<Job>()
+            //    .HasMany(j => j.Schedules)
+            //    .WithOne(s => s.Job)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Job)
+                .WithMany(j => j.Appointments)
+                .HasForeignKey(j => j.JobId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //One to Many
             //JobFields

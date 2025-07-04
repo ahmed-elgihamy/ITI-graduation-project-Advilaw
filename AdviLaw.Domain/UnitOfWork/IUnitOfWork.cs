@@ -7,6 +7,7 @@ namespace AdviLaw.Domain.UnitOfWork
     public interface IUnitOfWork
     {
         // Generic repositories  
+        IAppointmentRepository Appointments { get; }
         IGenericRepository<Lawyer> GenericLawyers { get; }
         IGenericRepository<Client> GenericClients { get; }
         IGenericRepository<Admin> GenericAdmins { get; }
