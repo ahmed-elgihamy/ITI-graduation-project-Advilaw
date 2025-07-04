@@ -53,7 +53,7 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
 
             var client = _mapper.Map<Client>(request);
             client.IsApproved = false;
-            client.NationalIDImagePath = nationalIdImagePath;
+            client.NationalIDImagePath = "/Uploads/" + request.NationalIDImage.FileName;
 
             var result = await _unitOfWork.GenericClients.AddAsync(client);
 

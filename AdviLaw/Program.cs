@@ -9,6 +9,7 @@ using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.FileProviders;
 
 namespace AdviLaw
 {
@@ -80,6 +81,19 @@ namespace AdviLaw
 
             app.UseAuthorization();
             app.UseCors();
+
+            app.UseStaticFiles(); // For wwwroot
+
+            // For Uploads
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+                RequestPath = "/Uploads"
+            });
+
+            app.UseRouting();
+
             app.MapControllers();
 
             app.Run();
