@@ -46,7 +46,7 @@ namespace AdviLaw.Controllers
         }
    
         [HttpGet("api/lawyers/{id}/profile")]
-        public async Task<IActionResult> GetLawyerProfile(int id)
+        public async Task<IActionResult> GetLawyerProfile(string id)
         {
             var result = await _mediator.Send(new GetLawyerProfileQuery(id));
             return Ok(result);

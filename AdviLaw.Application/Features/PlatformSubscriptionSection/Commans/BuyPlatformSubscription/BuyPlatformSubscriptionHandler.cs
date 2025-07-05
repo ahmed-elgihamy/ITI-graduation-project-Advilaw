@@ -1,4 +1,5 @@
 ﻿using AdviLaw.Application.Basics;
+using AdviLaw.Application.Features.PlatformSubscriptionSection.DTOs;
 using AdviLaw.Domain.Entites.PaymentSection;
 using AdviLaw.Domain.Entites.SubscriptionSection;
 using AdviLaw.Domain.Entities.UserSection;
@@ -15,57 +16,55 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.BuyPl
         IMapper mapper,
         ResponseHandler responseHandler,
         UserManager<User> userManager
-    ) : IRequestHandler<BuyPlatformSubscriptionCommand, Response<bool>>
+    ) : IRequestHandler<BuyPlatformSubscriptionCommand, Response<CreatedSubscriptionResultDTO>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
         private readonly ResponseHandler _responseHandler = responseHandler;
         private readonly UserManager<User> _userManager = userManager;
-        public async Task<Response<bool>> Handle(BuyPlatformSubscriptionCommand request, CancellationToken cancellationToken)
+
+        public async Task<Response<CreatedSubscriptionResultDTO>> Handle(BuyPlatformSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.Users.Include(u=>u.Lawyer).FirstOrDefaultAsync(u=>u.Id == request.LawyerId);
+            var user = await _userManager.Users
+                .Include(u => u.Lawyer)
+                .FirstOrDefaultAsync(u => u.Id == request.LawyerId, cancellationToken);
             if (user == null)
-                return _responseHandler.BadRequest<bool>("Lawyer Not Found");
-            var lawyer = user.Lawyer;
-            //var lawyer = await _unitOfWork.Lawyers.FindFirstAsync(lawyer => lawyer.UserId == request.LawyerId);
+                return _responseHandler.BadRequest<CreatedSubscriptionResultDTO>("Lawyer Not Found");
 
-            var subscriptionPlan = await _unitOfWork.PlatformSubscriptions.GetByIdAsync(request.SubscriptionTypeId);
+            var subscriptionPlan = await _unitOfWork.PlatformSubscriptions
+                .GetByIdAsync(request.SubscriptionTypeId);
             if (subscriptionPlan == null)
-                return _responseHandler.BadRequest<bool>("Subscription Plan Not Found");
+                return _responseHandler.BadRequest<CreatedSubscriptionResultDTO>("Subscription Plan Not Found");
 
-            var superAdminQuery = await _userManager.GetUsersInRoleAsync("Admin");
-            var superAdmin = superAdminQuery.FirstOrDefault();
+            var superAdmin = (await _userManager.GetUsersInRoleAsync("Admin"))
+                .FirstOrDefault();
             if (superAdmin == null)
-                return _responseHandler.BadRequest<bool>("No Admin Found");
+                return _responseHandler.BadRequest<CreatedSubscriptionResultDTO>("No Admin Found");
 
-
-            var payment = new Payment()
+            var payment = new Payment
             {
                 Type = PaymentType.SubscriptionPayment,
                 SenderId = user.Id,
                 ReceiverId = superAdmin.Id
             };
+            await _unitOfWork.Payments.AddAsync(payment);
 
-            //var payment = new Payment()
-            //{
-            //    Type = PaymentType.SubscriptionPayment,
-            //    SenderId = request.LawyerId,
-            //    ReceiverId = "7a21401d-74bd-448c-8047-61afd6175f45"
-            //};
-
-            var paymentAdded = await _unitOfWork.Payments.AddAsync(payment);
-
-            var userSubscription = new UserSubscription()
+            var userSubscription = new UserSubscription
             {
-                LawyerId = lawyer.Id,
+                LawyerId = user.Lawyer.Id,
                 SubscriptionTypeId = request.SubscriptionTypeId,
-                Payment = payment,
+                Payment = payment
             };
-
             await _unitOfWork.UserSubscriptions.AddAsync(userSubscription);
-            await _unitOfWork.SaveChangesAsync();
 
-            return _responseHandler.Success(true);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return _responseHandler.Success(new CreatedSubscriptionResultDTO
+            {
+                SubscriptionTypeId = request.SubscriptionTypeId,
+                SubscriptionName = request.SubscriptionName,
+                CreatedAt = DateTime.UtcNow
+            });
         }
     }
 }
