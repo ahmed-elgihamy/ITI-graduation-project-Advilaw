@@ -8,6 +8,8 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using AdviLaw.Application.Features.JobSection.Queries.GetLawyerActiveJobs;
+using AdviLaw.Application.Features.JobSection.Queries.GetClientActiveJobs;
 
 namespace AdviLaw.Controllers
 {
@@ -38,6 +40,46 @@ namespace AdviLaw.Controllers
                 requestDTO.ClientId = int.TryParse(userId, out var clientId) ? clientId : default;
                 var result = await _mediator.Send(requestDTO);
                 return Ok(result);
+            }
+        }
+
+        [HttpGet("me/ActiveJobs")]
+        public async Task<IActionResult> GetMyActiveJobs([FromQuery] SearchQueryDTO query)
+        {
+            var userIdStringified = User.FindFirstValue("userId");
+            if (userIdStringified == null)
+            {
+                return Unauthorized("User ID not found in claims.");
+            }
+            int.TryParse(userIdStringified, out var userId);
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            if (role == "Lawyer")
+            {
+                var requestDTO = new GetLawyerActiveJobsQuery()
+                {
+                    LawyerId = userId,
+                    Search = query.Search,
+                    PageNumber = query.PageNumber,
+                    PageSize = query.PageSize
+                };
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
+            }
+            else if (role == "Client")
+            {
+                var requestDTO = new GetClientActiveJobsQuery()
+                {
+                    ClientId = userId,
+                    Search = query.Search,
+                    PageNumber = query.PageNumber,
+                    PageSize = query.PageSize
+                };
+                var result = await _mediator.Send(requestDTO);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest("Invalid user role. Only 'Lawyer' and 'Client' roles are allowed.");
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using AdviLaw.Application.Features.ProposalSection.DTOs;
+﻿using AdviLaw.Application.Features.AppointmentSection.DTOs;
+using AdviLaw.Application.Features.ProposalSection.DTOs;
+using AdviLaw.Domain.Entites.AppointmentSection;
 using AdviLaw.Domain.Entites.JobSection;
 
 namespace AdviLaw.Application.Features.JobSection.DTOs
@@ -27,6 +29,7 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
 
         public int? SessionId { get; set; }
 
-        public List<ProposalListDTO>? Proposals { get; set; } = new();
+        public List<ProposalListDTO>? Proposals { get; set; }
+        public List<AppointmentDetailsDTO>? Appointments { get; set; }
     }
 }

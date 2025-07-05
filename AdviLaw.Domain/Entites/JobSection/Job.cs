@@ -18,7 +18,7 @@ namespace AdviLaw.Domain.Entites.JobSection
 
         //Navigation Properties
         public int JobFieldId { get; set; }
-        public JobField JobField { get; set; } = new();
+        public JobField JobField { get; set; }
 
         public int? LawyerId { get; set; }
         public Lawyer? Lawyer { get; set; }  // لا تهيئة هنا

@@ -13,7 +13,7 @@ namespace AdviLaw.Infrastructure.Repositories
         {
             return await _dbContext.Appointments
                 .Where(a => a.JobId == jobId)
-                .OrderByDescending(a => a.Date)
+                .OrderByDescending(a => a.Id)
                 .FirstOrDefaultAsync();
         }
     }

@@ -9,7 +9,9 @@ namespace AdviLaw.Application.Features.AppointmentSection.DTOs
         public AppointmentProfile()
         {
             CreateMap<Appointment, AppointmentDetailsDTO>().ReverseMap();
-            CreateMap<CreateAppointmentCommand, Appointment>();
+            CreateMap<CreateAppointmentCommand, Appointment>()
+                .ForMember(dest => dest.ScheduleId, opt => opt.MapFrom(src => src.ScheduleId == 0 ? null : src.ScheduleId));
+
         }
     }
 }
