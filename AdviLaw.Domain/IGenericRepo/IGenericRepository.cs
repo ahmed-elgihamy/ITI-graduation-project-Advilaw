@@ -23,8 +23,15 @@ namespace AdviLaw.Domain.IGenericRepo
         Task AddRangeAsync(ICollection<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
-        Task<T?> FindFirstAsync(Expression<Func<T, bool>> predicate);
+     
         IQueryable<T> GetTableNoTracking();
         IQueryable<T> GetTableAsTracking();
+
+
+        Task<T?> FindFirstAsync(
+       Expression<Func<T, bool>> predicate,
+       List<Expression<Func<T, object>>>? includes = null
+   );
+
     }
 }

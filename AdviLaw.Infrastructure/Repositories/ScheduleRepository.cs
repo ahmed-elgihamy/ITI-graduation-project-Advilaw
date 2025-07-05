@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Infrastructure.Repositories
 {
-   public class ScheduleRepository : GenericRepository<Schedule>, IScheduleRepository
+    public class ScheduleRepository : GenericRepository<Schedule>, IScheduleRepository
     {
         private readonly AdviLawDBContext _dbContext;
 
@@ -20,14 +20,25 @@ namespace AdviLaw.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Schedule>> GetSchedulesByLawyerId(int lawyerId)
+        public async Task<List<Schedule>> GetSchedulesByLawyerId(Guid lawyerUserId)
+
         {
-            return await _dbContext.Schedules
+            var lawyerUserIdStr = lawyerUserId.ToString();
+
+            var lawyer = await _dbContext.Lawyers
+                .FirstOrDefaultAsync(l => l.UserId == lawyerUserIdStr);
+
+            if (lawyer == null)
+                return new List<Schedule>();
+
+           return await _dbContext.Schedules
                 .Include(s => s.Job)
-                .Where(s => s.Job.LawyerId == lawyerId)
+                .Where(s => s.Job.LawyerId == lawyer.Id)
                 .OrderByDescending(s => s.Id)
                 .ToListAsync();
         }
+
+
     }
 }
 

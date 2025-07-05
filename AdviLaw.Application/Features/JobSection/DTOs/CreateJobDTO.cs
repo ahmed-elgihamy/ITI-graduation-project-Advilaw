@@ -13,5 +13,8 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         //Navigation Properties
         public int JobFieldId { get; set; }
         public int? LawyerId { get; set; }
+
+        public DateTime? AppointmentTime { get; set; }
+        public double? DurationHours { get; set; }
     }
 }

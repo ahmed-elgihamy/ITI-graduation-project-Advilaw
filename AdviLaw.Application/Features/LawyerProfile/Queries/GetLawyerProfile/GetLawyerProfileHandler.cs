@@ -29,19 +29,24 @@ namespace AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile
         public async Task<Response<LawyerProfileDTO>> Handle(GetLawyerProfileQuery request, CancellationToken cancellationToken)
         {
             var includes = new List<Expression<Func<Lawyer, object>>>
-            {
-                l => l.User
-            };
+{
+    l => l.User
+};
+            var lawyer = await _unitOfWork.Lawyers.FindFirstAsync(
+    l => l.UserId == request.LawyerId,
+    includes
+);
 
-            var lawyer = await _unitOfWork.Lawyers
-                .GetByIdIncludesAsync(request.LawyerId, null, includes);
+
 
             if (lawyer == null)
                 return _responseHandler.NotFound<LawyerProfileDTO>("Lawyer not found");
 
+            // If you need the User data in the DTO, ensure AutoMapper is configured to fetch it from navigation properties (if lazy loading is enabled)
             var dto = _mapper.Map<LawyerProfileDTO>(lawyer);
             return _responseHandler.Success(dto);
         }
+
 
     }
 }

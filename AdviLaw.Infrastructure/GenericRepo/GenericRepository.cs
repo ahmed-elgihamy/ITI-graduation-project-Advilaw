@@ -96,10 +96,23 @@ namespace AdviLaw.Infrastructure.GenericRepo
         public IQueryable<T> GetTableNoTracking() => _dbContext.Set<T>().AsNoTracking();
 
         public IQueryable<T> GetTableAsTracking() => _dbContext.Set<T>();
-        public async Task<T?> FindFirstAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T?> FindFirstAsync(
+     Expression<Func<T, bool>> predicate,
+     List<Expression<Func<T, object>>>? includes = null
+ )
         {
-            return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
+            IQueryable<T> query = _dbContext.Set<T>();
 
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync(predicate);
         }
+
     }
 }

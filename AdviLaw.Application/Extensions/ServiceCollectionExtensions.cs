@@ -9,6 +9,7 @@ using AdviLaw.Application.Behaviors;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.Behaviors;
+using AdviLaw.Domain.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -36,10 +37,16 @@ namespace AdviLaw.Application.Extensions
 
             services.AddScoped<ResponseHandler>();
 
+           
+            //register ResponseHandler in this AddApplication() method
+            //services.AddScoped<ResponseHandler>();
+
+
 
 
            //register ResponseHandler in this AddApplication() method
            services.AddScoped<ResponseHandler>();
+
 
 
 

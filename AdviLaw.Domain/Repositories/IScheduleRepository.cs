@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Repositories
 {
-  public interface IScheduleRepository : IGenericRepository<Schedule>
+    public interface IScheduleRepository : IGenericRepository<Schedule>
     {
-        Task<List<Schedule>> GetSchedulesByLawyerId(int lawyerId);
+        Task<List<Schedule>> GetSchedulesByLawyerId(Guid lawyerId);
     }
+
 }

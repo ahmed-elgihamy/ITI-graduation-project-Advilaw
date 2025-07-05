@@ -19,7 +19,7 @@ namespace AdviLaw.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetReviewsByLawyer(int id)
+        public async Task<IActionResult> GetReviewsByLawyer(Guid id)
         {
             var result = await _mediator.Send(new GetReviewsByLawyerQuery(id));
             return Ok(result);
