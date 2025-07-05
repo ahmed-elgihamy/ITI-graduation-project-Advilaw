@@ -10,7 +10,7 @@ namespace AdviLaw.Domain.Entites.AppointmentSection
         public ScheduleType Type { get; set; }
         public ScheduleStatus Status { get; set; } = ScheduleStatus.None;
         public int JobId { get; set; }
-        public Job Job { get; set; } = new();
+        public Job Job { get; set; } 
         public int? ScheduleId { get; set; }
         public Schedule? Schedule { get; set; }
     }

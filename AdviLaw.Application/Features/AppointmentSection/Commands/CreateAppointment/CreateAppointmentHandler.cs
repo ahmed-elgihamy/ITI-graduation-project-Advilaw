@@ -31,7 +31,9 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedul
                 return _responseHandler.NotFound<AppointmentDetailsDTO>("Job not found.");
             }
 
-            if (job.Status != JobStatus.WaitingAppointment)
+            if (job.Status != JobStatus.WaitingAppointment &&
+                job.Status != JobStatus.LawyerRequestedAppointment &&
+                job.Status != JobStatus.ClientRequestedAppointment)
             {
                 return _responseHandler.BadRequest<AppointmentDetailsDTO>("Job is not in a valid state to create an appointment.");
             }
@@ -48,11 +50,10 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedul
                     return _responseHandler.BadRequest<AppointmentDetailsDTO>("User cannot create Two Consequence Appointments.");
                 }
             }
-            if(lastAppointment == null && request.UserRole == UserRole.Lawyer)
+            if (lastAppointment == null && request.UserRole == UserRole.Lawyer)
             {
                 return _responseHandler.BadRequest<AppointmentDetailsDTO>("Lawyer cannot create an appointment without a previous client appointment.");
             }
-            ScheduleType AppointmentType = request.UserRole == UserRole.Lawyer ? ScheduleType.FromLawyer : ScheduleType.FromClient;
             var appointmentsQuery = await _unitOfWork.Appointments.GetAllAsync(
                 filter: a =>
                     a.Status == ScheduleStatus.Accepted &&
@@ -82,6 +83,8 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedul
             }
 
             var appointment = _mapper.Map<Appointment>(request);
+            ScheduleType AppointmentType = request.UserRole == UserRole.Lawyer ? ScheduleType.FromLawyer : ScheduleType.FromClient;
+            appointment.Type = AppointmentType;
 
             await _unitOfWork.Appointments.AddAsync(appointment);
             job.Status = request.UserRole == UserRole.Lawyer ? JobStatus.LawyerRequestedAppointment : JobStatus.ClientRequestedAppointment;

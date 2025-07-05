@@ -6,7 +6,6 @@ using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
@@ -15,9 +14,7 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
             IMapper mapper,
             IUnitOfWork unitOfWork,
             ResponseHandler responseHandler,
-            IHttpContextAccessor httpContextAccessor,
-            UserManager<User> userManager
-
+            IHttpContextAccessor httpContextAccessor
         )
         : IRequestHandler<GetJobByIdClientQuery, Response<JobDetailsForClientDTO>>
     {
@@ -25,7 +22,6 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
         private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         private readonly ResponseHandler _responseHandler = responseHandler ?? throw new ArgumentNullException(nameof(responseHandler));
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-        private readonly UserManager<User> _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
 
         public async Task<Response<JobDetailsForClientDTO>> Handle(GetJobByIdClientQuery request, CancellationToken cancellationToken)
         {
@@ -33,7 +29,9 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
             {
                 return _responseHandler.BadRequest<JobDetailsForClientDTO>("Invalid job ID.");
             }
-            var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userIdStringified = _httpContextAccessor.HttpContext?.User?.FindFirstValue("userId");
+            int.TryParse(userIdStringified, out int userId);
+
             var job = await _unitOfWork.Jobs.GetJobByIdForClient(request.JobId);
 
             if (job == null)
@@ -41,9 +39,7 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient
                 return _responseHandler.NotFound<JobDetailsForClientDTO>("Job not found.");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (job.ClientId != user?.Client.Id)
+            if (job.ClientId != userId)
             {
                 return _responseHandler.BadRequest<JobDetailsForClientDTO>("You do not have permission to view this job.");
             }
