@@ -19,6 +19,7 @@ namespace AdviLaw.Application.DTOs.Users
         public string? PhoneNumber { get; set; }
         public Roles Role { get; set; } = Roles.Lawyer;
         public string City { get; set; } = string.Empty;
+        public Gender Gender { get; set; }
         public string Country { get; set; } = string.Empty;
         public string? CountryCode { get; set; } = string.Empty;
         public string PostalCode { get; set; } = string.Empty;

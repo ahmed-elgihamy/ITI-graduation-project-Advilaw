@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class v2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -486,13 +486,13 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    SessionId = table.Column<int>(type: "int", nullable: false),
-                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ReceiverId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

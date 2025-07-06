@@ -1,6 +1,5 @@
 using AdviLaw.Application.DTOs.Users;
 using AdviLaw.Domain.Entities.UserSection;
-using AdviLaw.Domain.Enums;
 using AutoMapper;
 
 namespace AdviLaw.Application.Features.Users.Commands.CreateUser

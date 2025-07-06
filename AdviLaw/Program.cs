@@ -36,9 +36,11 @@ namespace AdviLaw
             builder.Services.AddAuthorization();
             builder.AddPresentation();                 
             builder.Services.AddApplication();           
-            builder.Services.AddInfrastructure(builder.Configuration); 
+            builder.Services.AddInfrastructure(builder.Configuration);
+         
 
             builder.Services.AddControllers()
+       
 
                 .AddJsonOptions(options =>
                 {
@@ -48,6 +50,9 @@ namespace AdviLaw
 
 
             var app = builder.Build();
+
+          
+
 
             if (app.Environment.IsDevelopment())
             {
@@ -72,13 +77,15 @@ namespace AdviLaw
             app.UseMiddleware<ErrorHandlerMiddleware>(); 
             app.UseHttpsRedirection();
 
-      
 
-            app.UseCors("AllowAll");
+
+            app.UseCors("AllowAngularDev");
 
             app.UseAuthorization();
             app.UseCors();
             app.MapControllers();
+
+            app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularDev");
 
             app.Run();
         }

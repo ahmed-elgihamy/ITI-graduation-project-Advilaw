@@ -1,6 +1,6 @@
 ﻿using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entities.UserSection;
-using AdviLaw.Domain.Enums;
+
 using AdviLaw.Domain.IGenericRepo;
 using System;
 using System.Collections.Generic;
