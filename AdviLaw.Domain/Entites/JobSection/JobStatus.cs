@@ -6,7 +6,7 @@
         WaitingAppointment,
         WaitingPayment,
         NotStarted,
-
+            
         LawyerRequestedAppointment,
         ClientRequestedAppointment,
 
