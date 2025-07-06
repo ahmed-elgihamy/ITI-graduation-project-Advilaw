@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Domain.Repositories
 {
-    public interface IReviewRepository : IGenericRepository<Review>
-    {
-        Task<List<Review>> GetReviewsByLawyerId(int lawyerId);
-    }
+ 
+  
+        public interface IReviewRepository : IGenericRepository<Review>
+        {
+            Task<List<Review>> GetReviewsByLawyerId(Guid lawyerId);
+        }
+
+    
 }

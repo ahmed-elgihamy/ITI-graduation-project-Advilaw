@@ -1,6 +1,11 @@
+
+﻿
+using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
+
 ﻿using AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile;
 using AdviLaw.Application.Features.Lawyers.Queries.GetAllLawyers;
 using AdviLaw.Application.Features.LawyerSection.DTOs;
+
 using AdviLaw.Application.Features.LawyerSection.Queries.GetAllLawyers;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerPayments;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerReviews;
@@ -30,6 +35,9 @@ namespace AdviLaw.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+
+
+
         [HttpGet("all")]
         public async Task<ActionResult<LawyerListDTO>> GetAll([FromQuery]GetAllLawyersQuery command)
         {
@@ -38,11 +46,12 @@ namespace AdviLaw.Controllers
         }
    
         [HttpGet("api/lawyers/{id}/profile")]
-        public async Task<IActionResult> GetLawyerProfile(int id)
+        public async Task<IActionResult> GetLawyerProfile(string id)
         {
             var result = await _mediator.Send(new GetLawyerProfileQuery(id));
             return Ok(result);
         }
+
 
         [Authorize(Roles = "Lawyer")]
         [HttpGet("me/reviews")]

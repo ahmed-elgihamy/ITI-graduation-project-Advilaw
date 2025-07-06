@@ -18,7 +18,7 @@ namespace AdviLaw.Domain.Entites.JobSection
 
         //Navigation Properties
         public int JobFieldId { get; set; }
-        public JobField JobField { get; set; } = new();
+        public JobField JobField { get; set; }
 
         public int? LawyerId { get; set; }
         public Lawyer? Lawyer { get; set; }  // لا تهيئة هنا
@@ -33,6 +33,11 @@ namespace AdviLaw.Domain.Entites.JobSection
         public Session? Session { get; set; }  // لا تهيئة
 
         public List<Proposal>? Proposals { get; set; }
+
+        public DateTime? AppointmentTime { get; set; }
+        public double? DurationHours { get; set; }
+
         public List<Appointment>? Appointments { get; set; }
+
     }
 }

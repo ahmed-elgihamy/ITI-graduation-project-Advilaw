@@ -1,14 +1,6 @@
-﻿using AdviLaw.Application.Features.ProposalSection.DTOs;
-using AdviLaw.Domain.Entites.EscrowTransactionSection;
+﻿using AdviLaw.Application.Features.AppointmentSection.DTOs;
+using AdviLaw.Domain.Entites.AppointmentSection;
 using AdviLaw.Domain.Entites.JobSection;
-using AdviLaw.Domain.Entites.ProposalSection;
-using AdviLaw.Domain.Entites.SessionSection;
-using AdviLaw.Domain.Entities.UserSection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdviLaw.Application.Features.JobSection.DTOs
 {
@@ -31,5 +23,6 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         public string ClientProfilePictureUrl { get; set; } = string.Empty; // mapped
         public int? EscrowTransactionId { get; set; }
         public int? SessionId { get; set; }
+        public List<AppointmentDetailsDTO>? Appointments { get; set; }
     }
 }

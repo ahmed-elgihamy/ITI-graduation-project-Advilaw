@@ -22,6 +22,38 @@ namespace AdviLaw.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AdviLaw.Domain.Entites.AppointmentSection.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("AdviLaw.Domain.Entites.Auth.PasswordResetCode", b =>
                 {
                     b.Property<int>("Id")
@@ -119,6 +151,9 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("AppointmentTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Budget")
                         .HasColumnType("int");
 
@@ -128,6 +163,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("DurationHours")
+                        .HasColumnType("float");
 
                     b.Property<int?>("EscrowTransactionId")
                         .HasColumnType("int");
@@ -642,6 +680,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Experience")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
@@ -919,6 +960,23 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("AdviLaw.Domain.Entites.AppointmentSection.Appointment", b =>
+                {
+                    b.HasOne("AdviLaw.Domain.Entites.JobSection.Job", "Job")
+                        .WithMany("Appointments")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AdviLaw.Domain.Entites.ScheduleSection.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId");
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.EscrowTransactionSection.EscrowTransaction", b =>
@@ -1282,6 +1340,8 @@ namespace AdviLaw.Infrastructure.Migrations
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.JobSection.Job", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("EscrowTransaction");
 
                     b.Navigation("Proposals");

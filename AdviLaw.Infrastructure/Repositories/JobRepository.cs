@@ -30,6 +30,7 @@ namespace AdviLaw.Infrastructure.Repositories
                 .Include(j => j.Proposals)
                     .ThenInclude(p => p.Lawyer)
                         .ThenInclude(l => l.User)
+                .Include(j => j.Appointments)
                 .FirstOrDefaultAsync(j => j.Id == jobId);
             return job;
         }
@@ -40,6 +41,7 @@ namespace AdviLaw.Infrastructure.Repositories
                 .Include(j => j.Client)
                     .ThenInclude(c => c.User)
                 .Include(j => j.JobField)
+                .Include(j => j.Appointments)
                 .FirstOrDefaultAsync(j => j.Id == jobId);
             return job;
         }

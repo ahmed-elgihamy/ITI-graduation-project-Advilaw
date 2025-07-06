@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using AdviLaw.Application.Behaviors;
+﻿using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
@@ -10,6 +9,8 @@ using AdviLaw.MiddleWare;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.FileProviders;
+using Stripe;
+using System.Text.Json.Serialization;
 
 namespace AdviLaw
 {
@@ -78,7 +79,7 @@ namespace AdviLaw
 
       
             app.UseCors("AllowAll");
-
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
             app.UseAuthorization();
             app.UseCors();
 

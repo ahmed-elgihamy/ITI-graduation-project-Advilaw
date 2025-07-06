@@ -8,9 +8,10 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedul
 {
     public class CreateAppointmentCommand : IRequest<Response<AppointmentDetailsDTO>>
     {
-        public UserRole UserRole { get; set; }
+        public UserRole? UserRole { get; set; }
         public int JobId { get; set; }
         public int? ScheduleId { get; set; }
         public DateTime Date { get; set; }
     }
 }
+`
