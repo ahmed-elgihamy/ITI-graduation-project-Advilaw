@@ -1,0 +1,16 @@
+﻿using AdviLaw.Application.Basics;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment
+{
+    public class ConfirmSessionPaymentCommand
+        : IRequest<Response<int>>
+    {
+        public string SessionId { get; set; } = string.Empty;
+    }
+}

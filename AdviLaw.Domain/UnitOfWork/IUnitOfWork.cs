@@ -23,10 +23,12 @@ namespace AdviLaw.Domain.UnitOfWork
         IProposalRepository Proposals { get; }
         IReviewRepository Reviews { get; }
         IScheduleRepository Schedules { get; }
+        ISessionRepository Sessions { get; }
+        IEscrowRepository Escrows { get; }
         Task<int> SaveChangesAsync();
         void Update<T>(T entity) where T : class;
         IRefreshTokenRepository RefreshTokens { get; }
-   
+
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
