@@ -36,13 +36,17 @@ namespace AdviLaw.Extensions
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
+                options.AddPolicy("AllowAngularDev", policy =>
                 {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader();
+                    policy
+                        .WithOrigins("http://localhost:4200") 
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials(); 
                 });
             });
+
+            builder.Services.AddSignalR();
         }
     }
 }

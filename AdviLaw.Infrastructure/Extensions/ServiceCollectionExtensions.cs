@@ -66,6 +66,8 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+
 
             services.AddScoped<ILawyerRepository, LawyerRepository>();
 

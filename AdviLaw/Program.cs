@@ -39,12 +39,16 @@ namespace AdviLaw
 
             // ✅ Configure controllers to serialize enums as strings
             builder.Services.AddControllers()
+
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
             var app = builder.Build();
+
+          
+
 
             if (app.Environment.IsDevelopment())
             {
@@ -85,6 +89,8 @@ namespace AdviLaw
             });
 
             app.MapControllers();
+
+            app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularDev");
 
             app.Run();
         }
