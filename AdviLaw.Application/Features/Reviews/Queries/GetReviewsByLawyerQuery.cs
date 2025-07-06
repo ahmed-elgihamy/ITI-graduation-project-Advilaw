@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace AdviLaw.Application.Features.Reviews.Queries
 {
- public class GetReviewsByLawyerQuery : IRequest<Response<List<ReviewDTO>>>
+    public class GetReviewsByLawyerQuery : IRequest<Response<List<ReviewDTO>>>
     {
-        public int LawyerId { get; set; }
+        public Guid LawyerId { get; set; }
 
-        public GetReviewsByLawyerQuery(int lawyerId)
+        public GetReviewsByLawyerQuery(Guid lawyerId)
         {
             LawyerId = lawyerId;
         }
     }
+
 }

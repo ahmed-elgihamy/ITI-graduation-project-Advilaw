@@ -1,5 +1,8 @@
-﻿using AdviLaw.Application.Features.Schedule.Queries;
+﻿using AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedule;
+using AdviLaw.Application.Features.Schedule.Queries;
+using AdviLaw.Domain.Entities.UserSection;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("api/lawyers/{id}/schedule")]
@@ -14,9 +17,11 @@ public class ScheduleController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetScheduleByLawyerId(int id)
+    public async Task<IActionResult> GetScheduleByLawyerId(Guid id)
     {
         var result = await _mediator.Send(new GetSchedulesByLawyerQuery(id));
         return Ok(result);
     }
+
+
 }

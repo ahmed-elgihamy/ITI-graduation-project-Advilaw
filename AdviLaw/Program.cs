@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using AdviLaw.Application.Behaviors;
+﻿using AdviLaw.Application.Behaviors;
 using AdviLaw.Application.Extensions;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
@@ -9,6 +8,9 @@ using AdviLaw.Infrastructure.UnitOfWork;
 using AdviLaw.MiddleWare;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.FileProviders;
+using Stripe;
+using System.Text.Json.Serialization;
 
 namespace AdviLaw
 {
@@ -20,7 +22,7 @@ namespace AdviLaw
 
 
 
-            
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngularApp", policy =>
@@ -28,24 +30,25 @@ namespace AdviLaw
                     policy.WithOrigins("http://localhost:4200")
                           .AllowAnyHeader()
                           .AllowAnyMethod()
-                          .AllowCredentials(); 
+                          .AllowCredentials();
                 });
             });
 
-           
-            builder.Services.AddAuthorization();
-            builder.AddPresentation();                 
-            builder.Services.AddApplication();           
-            builder.Services.AddInfrastructure(builder.Configuration);
-         
 
+            builder.Services.AddAuthorization();
+            builder.AddPresentation();
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
+
+            //serialize and deserialize enums as strings instead of integers.
             builder.Services.AddControllers()
        
 
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                });
+                }); 
+
 
 
 
@@ -66,7 +69,8 @@ namespace AdviLaw
                 app.UseSwaggerUI();
             }
 
-           
+
+            // Redirect root URL to Swagger UI
             app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
@@ -77,12 +81,24 @@ namespace AdviLaw
             app.UseMiddleware<ErrorHandlerMiddleware>(); 
             app.UseHttpsRedirection();
 
-
-
-            app.UseCors("AllowAngularDev");
-
+      
+            app.UseCors("AllowAll");
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
             app.UseAuthorization();
             app.UseCors();
+
+            app.UseStaticFiles(); // For wwwroot
+
+            // For Uploads
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+                RequestPath = "/Uploads"
+            });
+
+            app.UseRouting();
+
             app.MapControllers();
 
             app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularDev");

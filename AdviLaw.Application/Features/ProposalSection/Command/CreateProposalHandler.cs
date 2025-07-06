@@ -16,7 +16,7 @@ namespace AdviLaw.Application.Features.ProposalSection.Command
     {
         public async Task<Response<CreatedProposalDTO>> Handle(CreateProposalCommand request, CancellationToken cancellationToken)
         {
-            var lawyerAlreadyMadeProposal = unitOfWork.Proposals.FindFirstAsync(p=>p.LawyerId == request.LawyerId);
+            var lawyerAlreadyMadeProposal = await unitOfWork.Proposals.FindFirstAsync(p=>p.LawyerId == request.LawyerId && p.JobId == request.JobId);
             if ( lawyerAlreadyMadeProposal != null )
             {
                 return responseHandler.BadRequest<CreatedProposalDTO>("You can't make more than one proposal.");

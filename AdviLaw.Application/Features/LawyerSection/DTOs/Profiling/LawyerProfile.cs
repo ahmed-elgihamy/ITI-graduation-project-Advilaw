@@ -15,6 +15,9 @@ namespace AdviLaw.Application.Features.LawyerSection.DTOs.Profiling
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User!.Gender))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.User!.Role))
+                .ForMember(dest => dest.IsApproved, opt => opt.MapFrom(src => src.IsApproved))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.ProfileHeader, opt => opt.MapFrom(src => src.ProfileHeader))
                 .ReverseMap();
         }
     }

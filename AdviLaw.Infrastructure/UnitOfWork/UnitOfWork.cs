@@ -5,6 +5,7 @@ using AdviLaw.Domain.UnitOfWork;
 using AdviLaw.Infrastructure.GenericRepo;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdviLaw.Infrastructure.UnitOfWork
 {
@@ -12,6 +13,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
     {
         private readonly AdviLawDBContext _dbContext;
 
+        public IAppointmentRepository Appointments { get; }
         public IGenericRepository<Lawyer> GenericLawyers { get; }
         public IRefreshTokenRepository RefreshTokens { get; }
         public IJobFieldRepository JobFields { get; }
@@ -22,13 +24,24 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public ISubscriptionPointRepository SubscriptionPoints { get; }
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
-        public IProposalRepository Proposals { get; }
+
+
+        public IGenericRepository<Admin> GenericAdmins { get; }
+
         public IScheduleRepository Schedules { get; }
         public IReviewRepository Reviews { get; }
+
+        public IProposalRepository Proposals { get; }
+
+        public IEscrowRepository Escrows { get; }
+
+        public ISessionRepository Sessions { get; }
+
         public UnitOfWork(AdviLawDBContext dbContext)
         {
             _dbContext = dbContext;
 
+            Appointments = new AppointmentRepository(_dbContext);
             GenericLawyers = new GenericRepository<Lawyer>(_dbContext);
             RefreshTokens = new RefreshTokenRepository(_dbContext);
             JobFields = new JobFieldRepository(_dbContext);
@@ -40,8 +53,14 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
             UserSubscriptions = new UserSubscriptionRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
+
+            GenericAdmins = new GenericRepository<Admin>(_dbContext);
+
             Reviews = new ReviewRepository(_dbContext);
             Schedules = new ScheduleRepository(_dbContext);
+            Escrows = new EscrowRepository(_dbContext);
+            Sessions = new SessionRepository(_dbContext);
+
         }
 
 
@@ -57,5 +76,11 @@ namespace AdviLaw.Infrastructure.UnitOfWork
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
             => _dbContext.SaveChangesAsync(cancellationToken);
+
+
+        public void Update<T>(T entity) where T : class
+        {
+            _dbContext.Set<T>().Update(entity);
+        }
     }
 }
