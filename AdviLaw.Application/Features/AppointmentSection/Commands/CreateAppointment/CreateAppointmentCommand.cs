@@ -14,4 +14,3 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.CreateSchedul
         public DateTime Date { get; set; }
     }
 }
-`
