@@ -29,11 +29,13 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IGenericRepository<Admin> GenericAdmins { get; }
 
         public IScheduleRepository Schedules { get; }
-         public IReviewRepository Reviews { get; }
+        public IReviewRepository Reviews { get; }
 
         public IProposalRepository Proposals { get; }
 
+        public IEscrowRepository Escrows { get; }
 
+        public ISessionRepository Sessions { get; }
 
         public UnitOfWork(AdviLawDBContext dbContext)
         {
@@ -56,6 +58,8 @@ namespace AdviLaw.Infrastructure.UnitOfWork
 
             Reviews = new ReviewRepository(_dbContext);
             Schedules = new ScheduleRepository(_dbContext);
+            Escrows = new EscrowRepository(_dbContext);
+            Sessions = new SessionRepository(_dbContext);
 
         }
 

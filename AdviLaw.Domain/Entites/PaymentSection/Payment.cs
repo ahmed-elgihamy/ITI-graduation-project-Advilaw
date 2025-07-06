@@ -11,6 +11,8 @@ namespace AdviLaw.Domain.Entites.PaymentSection
     {
         public int Id { get; set; }
         public PaymentType Type { get; set; }
+        public decimal Amount { get; set; }
+
 
         //Navigation Properties
         public string? SenderId { get; set; }
