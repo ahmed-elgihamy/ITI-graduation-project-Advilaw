@@ -1,0 +1,23 @@
+﻿using AdviLaw.Application.Features.Clients.Queries.GetProfile;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+
+namespace AdviLaw.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ClientController(IMediator mediator) : ControllerBase
+    {
+        private readonly IMediator _mediator = mediator;
+
+        [HttpGet("me/profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            var userIdStringify = User.FindFirstValue("userId");
+            var userId = int.TryParse(userIdStringify, out var id) ? id : default;
+            var result = await _mediator.Send(new GetProfileQuery(userId));
+            return Ok(result);
+        }
+    }
+}
