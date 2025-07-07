@@ -1,4 +1,5 @@
-﻿using AdviLaw.Application.Features.Clients.Queries.GetProfile;
+﻿using AdviLaw.Application.Features.Clients.Commands;
+using AdviLaw.Application.Features.Clients.Queries.GetProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -17,6 +18,16 @@ namespace AdviLaw.Controllers
             var userIdStringify = User.FindFirstValue("userId");
             var userId = int.TryParse(userIdStringify, out var id) ? id : default;
             var result = await _mediator.Send(new GetProfileQuery(userId));
+            return Ok(result);
+        }
+
+        [HttpPatch("me/profile")]
+        public async Task<IActionResult> EditProfile([FromBody] UpdateClientProfileCommand command)
+        {
+            var userIdStringify = User.FindFirstValue("userId");
+            var userId = int.TryParse(userIdStringify, out var id) ? id : default;
+            command.ClientId = userId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }
