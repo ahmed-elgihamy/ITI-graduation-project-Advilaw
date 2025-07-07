@@ -25,7 +25,7 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
 
-
+        public Iuser Users { get; }
         public IGenericRepository<Admin> GenericAdmins { get; }
 
         public IScheduleRepository Schedules { get; }

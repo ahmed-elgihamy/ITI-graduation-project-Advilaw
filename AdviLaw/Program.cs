@@ -72,6 +72,7 @@ namespace AdviLaw
             // ✅ Apply CORS before Authorization
             app.UseCors("AllowAngularApp");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // ✅ Stripe configuration

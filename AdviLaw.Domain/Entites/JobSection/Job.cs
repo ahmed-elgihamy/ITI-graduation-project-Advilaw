@@ -15,7 +15,7 @@ namespace AdviLaw.Domain.Entites.JobSection
         public JobStatus Status { get; set; } = JobStatus.NotAssigned;
         public JobType Type { get; set; }
         public bool IsAnonymus { get; set; } = false;
-
+        public DateTime CreatedAt { get; set; }
         //Navigation Properties
         public int JobFieldId { get; set; }
         public JobField JobField { get; set; }

@@ -1,16 +1,20 @@
-﻿using System.Security.Claims;
-using System.Text;
+﻿using AdviLaw.Application.Basics;
+using AdviLaw.Application.Features.AppointmentSection.DTOs;
+using AdviLaw.Application.Features.Shared.DTOs;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
 using AdviLaw.Infrastructure.Persistence;
 using AdviLaw.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 namespace AdviLaw.Infrastructure.Extensions
 {
@@ -68,7 +72,13 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
 
+            // In Program.cs or startup
+            //services.AddScoped<IRequestHandler<GetPendingConsultationsQuery, Response<PagedResponse<AppointmentDetailsDTO>>>, GetPendingConsultationsHandler>();
+            //;
 
+
+            services.AddHttpContextAccessor();
+           // services.AddScoped<IRequestHandler<GetPendingConsultationsQuery, Response<PagedResponse<AppointmentDetailsDTO>>>, GetPendingConsultationsHandler>();
             services.AddScoped<ILawyerRepository, LawyerRepository>();
 
         }
