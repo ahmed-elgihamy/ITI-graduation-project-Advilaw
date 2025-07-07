@@ -9,7 +9,8 @@
             
         LawyerRequestedAppointment,
         ClientRequestedAppointment,
-
+        Accepted ,
+        Rejected ,
         Started,
         Ended,
     }
