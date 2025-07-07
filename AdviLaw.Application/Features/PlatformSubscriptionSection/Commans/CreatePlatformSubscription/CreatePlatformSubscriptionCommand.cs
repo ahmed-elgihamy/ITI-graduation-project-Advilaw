@@ -11,6 +11,6 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.Creat
         public decimal Price { get; set; }
         public int Points { get; set; }
         //public int Duration { get; set; } = 30; //30 days Default
-        public List<CreateSubscriptionPointDTO> Details { get; set; } = new();
+        public List<CreateSubscriptionPointDTO>? Details { get; set; } = new();
     }
 }

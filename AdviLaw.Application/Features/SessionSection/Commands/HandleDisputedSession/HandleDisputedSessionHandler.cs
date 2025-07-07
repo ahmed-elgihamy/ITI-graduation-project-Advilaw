@@ -8,6 +8,7 @@ using AdviLaw.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using Stripe;
 
 namespace AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSession
 {
@@ -44,8 +45,31 @@ namespace AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSes
 
             if (cmd.CausedBy.ToLower() == "client")
             {
-                decimal refundAmount = amount * 0.9m;
+                decimal refundAmount = amount * 0.95m;
 
+                // 1. Retrieve the PaymentIntentId from escrow.TransferId
+                string paymentIntentId = escrow.TransferId;
+                if (string.IsNullOrEmpty(paymentIntentId))
+                    return _responseHandler.BadRequest<bool>("No PaymentIntentId found for this escrow.");
+
+                // 2. Call Stripe Refund API
+                var refundOptions = new RefundCreateOptions
+                {
+                    PaymentIntent = paymentIntentId,
+                    Amount = (long)(refundAmount * 100), // Stripe expects amount in cents
+                    Reason = "requested_by_customer"
+                };
+                var refundService = new RefundService();
+                try
+                {
+                    var refund = await refundService.CreateAsync(refundOptions);
+                }
+                catch (StripeException ex)
+                {
+                    return _responseHandler.BadRequest<bool>($"Stripe refund failed: {ex.Message}");
+                }
+
+                // 3. Log the refund in the database
                 var payment = new Payment
                 {
                     Type = PaymentType.RefundPayment,
@@ -60,6 +84,29 @@ namespace AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSes
             }
             else if (cmd.CausedBy.ToLower() == "lawyer")
             {
+                // 1. Retrieve the PaymentIntentId from escrow.TransferId
+                string paymentIntentId = escrow.TransferId;
+                if (string.IsNullOrEmpty(paymentIntentId))
+                    return _responseHandler.BadRequest<bool>("No PaymentIntentId found for this escrow.");
+
+                // 2. Call Stripe Refund API for full amount
+                var refundOptions = new RefundCreateOptions
+                {
+                    PaymentIntent = paymentIntentId,
+                    Amount = (long)(amount * 100), // Full refund, in cents
+                    Reason = "requested_by_customer"
+                };
+                var refundService = new RefundService();
+                try
+                {
+                    var refund = await refundService.CreateAsync(refundOptions);
+                }
+                catch (StripeException ex)
+                {
+                    return _responseHandler.BadRequest<bool>($"Stripe refund failed: {ex.Message}");
+                }
+
+                // 3. Log the refund in the database
                 var payment = new Payment
                 {
                     Type = PaymentType.RefundPayment,
@@ -71,7 +118,6 @@ namespace AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSes
                 };
 
                 await _unitOfWork.Payments.AddAsync(payment);
-
 
                 var subscription = await _unitOfWork.UserSubscriptions.FindFirstAsync(
                     s => s.LawyerId == session.LawyerId && s.IsActive);
