@@ -119,6 +119,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("StripeSessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TransferId")
                         .HasColumnType("nvarchar(max)");
 
@@ -431,14 +434,16 @@ namespace AdviLaw.Infrastructure.Migrations
                 {
 
                     b.Property<Guid>("Id")
+
+
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
 
                     b.Property<string>("ReceiverId")
@@ -446,11 +451,15 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.Property<string>("SenderId")
 
+
+
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
+
+
 
 
                         .HasColumnType("nvarchar(450)");
@@ -1191,7 +1200,12 @@ namespace AdviLaw.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                         .OnDelete(DeleteBehavior.Restrict);
+
 
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")

@@ -1,9 +1,11 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment;
+using AdviLaw.Domain.Entites.SessionSection;
 using AdviLaw.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Stripe.Checkout;
+using AdviLaw.Domain.Entites.EscrowTransactionSection;
 
 namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment
 {
@@ -30,22 +32,43 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             Stripe.StripeConfiguration.ApiKey = secretKey;
 
             var service = new SessionService();
-            var session = await service.GetAsync(cmd.SessionId);
-            if (session.PaymentStatus != "paid")
+            var stripeSession = await service.GetAsync(cmd.StripeSessionId);
+            if (stripeSession.PaymentStatus != "paid")
                 return _responseHandler.BadRequest<int>("Payment not completed");
 
-            if (!session.Metadata.TryGetValue("EscrowId", out var escIdStr)
-             || !int.TryParse(escIdStr, out var escId))
-                return _responseHandler.BadRequest<int>("Escrow ID missing");
-
-            var escrow = await _unitOfWork.Escrows.GetByIdAsync(escId);
+            // Find escrow by StripeSessionId
+            var escrow = await _unitOfWork.Escrows.FindFirstAsync(e => e.StripeSessionId == cmd.StripeSessionId);
             if (escrow == null)
                 return _responseHandler.NotFound<int>("Escrow not found");
 
-            escrow.Status = Domain.Entites.EscrowTransactionSection.EscrowTransactionStatus.Completed;
+            escrow.Status =EscrowTransactionStatus.Completed;
 
+            // If no session linked, create one
             if (escrow.SessionId == null)
-                return _responseHandler.BadRequest<int>("No session linked to this escrow");
+            {
+                // You may need to fetch job, client, lawyer info as needed
+                var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
+                if (job == null)
+                    return _responseHandler.BadRequest<int>("Job not found for escrow.");
+
+                var jobField = await _unitOfWork.JobFields.GetByIdAsync(job.JobFieldId);
+                if (jobField == null)
+                    return _responseHandler.BadRequest<int>("JobField not found for job.");
+
+                var session = new AdviLaw.Domain.Entites.SessionSection.Session
+                {
+                    JobId = job.Id,
+                    ClientId = job.ClientId ?? 0, 
+                    LawyerId = job.LawyerId ?? 0, 
+                    EscrowTransactionId = escrow.Id,
+                    Status = SessionStatus.ClientReady
+                };
+
+                await _unitOfWork.Sessions.AddAsync(session);
+                await _unitOfWork.SaveChangesAsync(ct);
+
+                escrow.SessionId = session.Id;
+            }
 
             await _unitOfWork.SaveChangesAsync(ct);
 

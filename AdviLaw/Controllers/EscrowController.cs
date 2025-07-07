@@ -5,6 +5,8 @@ using AdviLaw.Application.Features.EscrowSection.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
+using Microsoft.EntityFrameworkCore;
+using AdviLaw.Infrastructure.Persistence;
 
 
 //Handles escrow payments for legal sessions (client payments, confirming payments, releasing funds).
@@ -63,6 +65,18 @@ public class EscrowController : ControllerBase
         var svc = new SessionService();
         var session = svc.Create(options);
 
+        // Save Stripe session ID to escrow record
+        using (var scope = HttpContext.RequestServices.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<AdviLawDBContext>();
+            var escrow = dbContext.EscrowTransactions.FirstOrDefault(e => e.Id == escResp.Data.EscrowId);
+            if (escrow != null)
+            {
+                escrow.StripeSessionId = session.Id;
+                dbContext.SaveChanges();
+            }
+        }
+
         return Ok(new
         {
             escResp.Data.EscrowId,
@@ -75,7 +89,7 @@ public class EscrowController : ControllerBase
     {
         var result = await _med.Send(new ConfirmSessionPaymentCommand
         {
-            SessionId = dto.SessionId
+            StripeSessionId = dto.StripeSessionId
         });
 
         if (!result.Succeeded)
@@ -84,7 +98,7 @@ public class EscrowController : ControllerBase
         return Ok(new
         {
             Message = "Escrow marked as completed.",
-            SessionId = dto.SessionId
+            SessionId = result.Data
         });
     }
 
