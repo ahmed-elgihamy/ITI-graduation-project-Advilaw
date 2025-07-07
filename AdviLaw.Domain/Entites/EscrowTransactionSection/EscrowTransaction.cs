@@ -1,6 +1,4 @@
-﻿
-
-using AdviLaw.Domain.Entites.JobSection;
+﻿using AdviLaw.Domain.Entites.JobSection;
 using AdviLaw.Domain.Entites.PaymentSection;
 using AdviLaw.Domain.Entites.SessionSection;
 using AdviLaw.Domain.Entities.UserSection;
@@ -33,6 +31,9 @@ namespace AdviLaw.Domain.Entites.EscrowTransactionSection
         //Session Section
         public int? SessionId { get; set; }  // Optional, for when the session is created
         public Session? Session { get; set; }
+
+        // Stripe Session
+        public string? StripeSessionId { get; set; } // Stores the Stripe session ID
 
         //Payment Section
         public int? PaymentId { get; set; }
