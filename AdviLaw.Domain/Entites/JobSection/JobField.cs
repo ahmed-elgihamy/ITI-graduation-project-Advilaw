@@ -11,3 +11,5 @@
         public List<LawyerJobField> LawyerJobs { get; set; } = new();
     }
 }
+
+
