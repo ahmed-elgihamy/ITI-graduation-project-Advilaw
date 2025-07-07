@@ -58,8 +58,9 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                 var session = new AdviLaw.Domain.Entites.SessionSection.Session
                 {
                     JobId = job.Id,
-                    ClientId = job.ClientId ?? 0, 
-                    LawyerId = job.LawyerId ?? 0, 
+                    Job = null,
+                    ClientId = job.ClientId ?? 0,
+                    LawyerId = job.LawyerId ?? 0,
                     EscrowTransactionId = escrow.Id,
                     Status = SessionStatus.ClientReady
                 };
