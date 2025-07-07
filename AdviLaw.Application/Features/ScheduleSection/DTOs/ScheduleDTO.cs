@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdviLaw.Application.Features.Schedule.DTOs
+namespace AdviLaw.Application.Features.ScheduleSection.DTOs
 {
   public class ScheduleDTO
     {

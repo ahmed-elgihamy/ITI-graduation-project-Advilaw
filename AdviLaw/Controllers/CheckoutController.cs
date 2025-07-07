@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Stripe.Checkout;
 
+// Handles subscription payments (lawyer subscriptions to the platform). 
+
 [ApiController]
 [Route("api/[controller]")]
 public class CheckoutController : ControllerBase

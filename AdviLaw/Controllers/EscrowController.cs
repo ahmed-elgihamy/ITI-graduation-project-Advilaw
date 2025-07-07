@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 
+
+//Handles escrow payments for legal sessions (client payments, confirming payments, releasing funds).
 [ApiController]
 [Route("api/[controller]")]
 public class EscrowController : ControllerBase
@@ -79,7 +81,11 @@ public class EscrowController : ControllerBase
         if (!result.Succeeded)
             return BadRequest(result.Message);
 
-        return Ok("Escrow marked as completed.");
+        return Ok(new
+        {
+            Message = "Escrow marked as completed.",
+            SessionId = dto.SessionId
+        });
     }
 
 

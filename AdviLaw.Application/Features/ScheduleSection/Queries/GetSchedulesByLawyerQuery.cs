@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.Schedule.DTOs;
+using AdviLaw.Application.Features.ScheduleSection.DTOs;
 using MediatR;
 using System.Collections.Generic;
 

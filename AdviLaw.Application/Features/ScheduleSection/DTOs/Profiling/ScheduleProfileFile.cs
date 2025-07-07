@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdviLaw.Application.Features.ScheduleSection.DTOs;
 
 namespace AdviLaw.Application.Features.Schedule.DTOs.Profiling
 {
