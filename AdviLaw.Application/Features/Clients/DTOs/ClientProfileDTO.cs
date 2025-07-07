@@ -9,6 +9,8 @@ namespace AdviLaw.Application.Features.Clients.DTOs
         public string? UserId { get; set; }
         public string NationalIDImagePath { get; set; } = string.Empty;
 
+        public string UserName { get; set; } = string.Empty;
+        public string Email { get; set; }= string.Empty;
 
         public string City { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
