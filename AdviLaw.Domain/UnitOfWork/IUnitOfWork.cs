@@ -28,7 +28,7 @@ namespace AdviLaw.Domain.UnitOfWork
         Task<int> SaveChangesAsync();
         void Update<T>(T entity) where T : class;
         IRefreshTokenRepository RefreshTokens { get; }
-
+        Iuser Users { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
