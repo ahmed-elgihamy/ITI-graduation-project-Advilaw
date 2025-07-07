@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\AppointmentSection\Profile\" />
     <Folder Include="Features\LawyerProfile\Commands\" />
     <Folder Include="Features\LawyerSection\Commands\" />
     <Folder Include="Features\ProposalSection\DTOs\ProposalProfiling\" />

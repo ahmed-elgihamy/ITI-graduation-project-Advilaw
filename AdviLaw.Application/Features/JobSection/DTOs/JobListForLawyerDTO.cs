@@ -12,5 +12,8 @@
         public string ClientImageUrl { get; set; } = string.Empty;
         public int JobFieldId { get; set; }
         public string JobFieldName { get; set; } = string.Empty;
+        public DateTime Date { get; set; }
+
+      
     }
 }

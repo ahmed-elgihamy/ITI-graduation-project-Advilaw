@@ -1,15 +1,19 @@
-﻿using AdviLaw.Application.Features.JobSection.Commands.CreateJob;
+﻿
+using AdviLaw.Application.Features.JobSection.Commands.AcceptConsultation;
+using AdviLaw.Application.Features.JobSection.Commands.CreateJob;
+using AdviLaw.Application.Features.JobSection.Commands.RejectConsultation;
 using AdviLaw.Application.Features.JobSection.DTOs;
-using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForLawyer;
+using AdviLaw.Application.Features.JobSection.Queries.GetClientActiveJobs;
 using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient;
+using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForLawyer;
+using AdviLaw.Application.Features.JobSection.Queries.GetLawyerActiveJobs;
+using AdviLaw.Application.Features.JobSection.Queries.GetLawyerConsultations;
 using AdviLaw.Application.Features.JobSection.Queries.GetPagedJobs;
 using AdviLaw.Application.Features.Shared.DTOs;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using AdviLaw.Application.Features.JobSection.Queries.GetLawyerActiveJobs;
-using AdviLaw.Application.Features.JobSection.Queries.GetClientActiveJobs;
 
 namespace AdviLaw.Controllers
 {
@@ -145,6 +149,62 @@ namespace AdviLaw.Controllers
         //    return StatusCode((int)result.StatusCode, result);
         //}
 
+
+
+
+
+
+        [HttpGet("me/consultations")]
+        public async Task<IActionResult> GetMyConsultations([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var userIdStringified = User.FindFirstValue("userId");
+            if (userIdStringified == null)
+                return Unauthorized("User ID not found in claims.");
+            int.TryParse(userIdStringified, out var userId);
+
+            var result = await _mediator.Send(new GetLawyerConsultationsQuery
+            {
+                LawyerId = userId,
+                PageNumber = page,
+                PageSize = pageSize
+            });
+
+            return Ok(result);
+        }
+
+        [HttpPost("consultation/{id}/accept")]
+        public async Task<IActionResult> AcceptConsultation(int id)
+        {
+            var userIdStringified = User.FindFirstValue("userId");
+            if (userIdStringified == null)
+                return Unauthorized("User ID not found in claims.");
+            int.TryParse(userIdStringified, out var userId);
+
+            var result = await _mediator.Send(new AcceptConsultationCommand
+            {
+                JobId = id,
+                LawyerId = userId
+            });
+
+            return Ok(result);
+        }
+        [HttpPost("consultation/{id}/reject")]
+        public async Task<IActionResult> RejectConsultation(int id, [FromBody] string reason)
+        {
+            var userIdStringified = User.FindFirstValue("userId");
+            if (userIdStringified == null)
+                return Unauthorized("User ID not found in claims.");
+            int.TryParse(userIdStringified, out var userId);
+
+            var result = await _mediator.Send(new RejectConsultationCommand
+            {
+                JobId = id,
+                LawyerId = userId,
+                Reason = reason
+            });
+
+            return Ok(result);
+        }
 
     }
 }
