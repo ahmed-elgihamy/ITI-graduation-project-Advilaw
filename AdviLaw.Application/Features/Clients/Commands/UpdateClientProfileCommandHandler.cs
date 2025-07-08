@@ -32,17 +32,27 @@ namespace AdviLaw.Application.Features.Clients.Commands
             if (client == null || client.User == null)
                 return _responseHandler.NotFound<ClientProfileDTO>("Client not found.");
 
-            // Update user fields
-            client.User.UserName = request.UserName;
-            client.User.Email = request.Email;
-            client.User.City = request.City;
-            client.User.Country = request.Country;
-            client.User.CountryCode = request.CountryCode;
-            client.User.PostalCode = request.PostalCode;
-            client.User.NationalityId = request.NationalityId;
-            client.User.ImageUrl = request.ImageUrl;
-            client.User.IsActive = request.IsActive;
-            client.User.Gender = request.Gender;
+            // Update user fields only if provided (not default/empty)
+            if (!string.IsNullOrEmpty(request.UserName))
+                client.User.UserName = request.UserName;
+            if (!string.IsNullOrEmpty(request.Email))
+                client.User.Email = request.Email;
+            if (!string.IsNullOrEmpty(request.City))
+                client.User.City = request.City;
+            if (!string.IsNullOrEmpty(request.Country))
+                client.User.Country = request.Country;
+            if (!string.IsNullOrEmpty(request.CountryCode))
+                client.User.CountryCode = request.CountryCode;
+            if (!string.IsNullOrEmpty(request.PostalCode))
+                client.User.PostalCode = request.PostalCode;
+            if (request.NationalityId != 0)
+                client.User.NationalityId = request.NationalityId;
+            if (!string.IsNullOrEmpty(request.ImageUrl))
+                client.User.ImageUrl = request.ImageUrl;
+            if (request.IsActive != default(bool))
+                client.User.IsActive = request.IsActive;
+            if ((int)request.Gender != 0)
+                client.User.Gender = request.Gender;
             client.User.UpdatedAt = System.DateTime.UtcNow;
 
             _unitOfWork.Update(client.User);

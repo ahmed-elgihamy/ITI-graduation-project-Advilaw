@@ -30,5 +30,18 @@ namespace AdviLaw.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpPost("me/profile/image")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadProfileImage([FromForm] IFormFile image)
+        {
+            var userIdStringify = User.FindFirstValue("userId");
+            var userId = int.TryParse(userIdStringify, out var id) ? id : default;
+            if (userId == 0) return Unauthorized();
+
+            var command = new UpdateClientProfileImageCommand { ClientId = userId, Image = image };
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }
