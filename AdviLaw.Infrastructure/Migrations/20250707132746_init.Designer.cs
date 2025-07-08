@@ -4,6 +4,7 @@ using AdviLaw.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    partial class AdviLawDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250707132746_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +122,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("StripeSessionId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TransferId")
                         .HasColumnType("nvarchar(max)");
 
@@ -162,12 +162,6 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
-
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -432,38 +426,19 @@ namespace AdviLaw.Infrastructure.Migrations
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.MessageSection.Message", b =>
                 {
-
-                    b.Property<Guid>("Id")
-
-
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Id")
-
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
 
                     b.Property<string>("ReceiverId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SenderId")
-
-
-
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
-
-
-
-
-                        .HasColumnType("nvarchar(450)");
-
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
@@ -1196,17 +1171,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Sender")
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderId")
-
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                        .OnDelete(DeleteBehavior.Restrict);
-
-
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
                         .WithMany("Messages")
