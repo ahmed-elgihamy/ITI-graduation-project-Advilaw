@@ -41,7 +41,10 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             if (escrow == null)
                 return _responseHandler.NotFound<int>("Escrow not found");
 
-            escrow.Status =EscrowTransactionStatus.Completed;
+            // Store the PaymentIntentId from the Stripe session
+            escrow.TransferId = stripeSession.PaymentIntentId;
+
+            escrow.Status = EscrowTransactionStatus.Completed;
 
             // If no session linked, create one
             if (escrow.SessionId == null)

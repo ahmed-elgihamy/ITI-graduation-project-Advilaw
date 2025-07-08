@@ -71,7 +71,8 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
                 Amount = (long)(esc.Amount * 100),
                 Currency = esc.Currency.ToString().ToLower(),
                 Destination = lawyerUser.StripeAccountId,
-                TransferGroup = $"SESSION_{session.Id}"
+                TransferGroup = $"SESSION_{session.Id}",
+                SourceTransaction = esc.TransferId
             };
             var transferService = new TransferService();
             Transfer stripeTransfer;
