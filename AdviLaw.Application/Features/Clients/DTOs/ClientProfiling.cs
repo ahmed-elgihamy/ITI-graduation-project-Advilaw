@@ -20,7 +20,10 @@ namespace AdviLaw.Application.Features.Clients.DTOs
                 .ForMember(dest => dest.Balance, opt => opt.MapFrom(src => src.User!.Balance))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.User!.CreatedAt))
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.User!.UpdatedAt))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.LastLoginAt, opt => opt.MapFrom(src => src.User!.LastLoginAt));
+
         }
     }
 }

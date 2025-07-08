@@ -43,8 +43,9 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
 
             var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
             Directory.CreateDirectory(uploadsPath);
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(request.NationalIDImage.FileName);
 
-            var nationalIdImagePath = Path.Combine(uploadsPath, request.NationalIDImage.FileName);
+            var nationalIdImagePath = Path.Combine(uploadsPath, uniqueFileName);
 
             using (var stream = new FileStream(nationalIdImagePath, FileMode.Create))
                 await request.NationalIDImage.CopyToAsync(stream);
@@ -58,13 +59,10 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
             var result = await _unitOfWork.GenericClients.AddAsync(client);
 
             await _unitOfWork.SaveChangesAsync();
-            if (result == null)
-
-                return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
-
+            
             if (result == null)
             {
-                return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
+                return _responseHandler.BadRequest<object>("Client creation failed. Please try again.");
 
             }
 
