@@ -11,3 +11,5 @@ namespace AdviLaw.Application.Features.EscrowSection.DTOs
         public string StripeSessionId { get; set; } = string.Empty;
     }
 }
+
+

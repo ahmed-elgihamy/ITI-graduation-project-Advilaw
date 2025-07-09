@@ -27,7 +27,7 @@ namespace AdviLaw.Application.Features.AdminSection.Commands
 
         async Task<Response<object>> IRequestHandler<ApproveClientCommand, Response<object>>.Handle(ApproveClientCommand request, CancellationToken cancellationToken)
         {
-            var client = await _unitOfWork.GenericClients.FindFirstAsync(c => c.Id == request.ClientId);
+            var client = await _unitOfWork.Clients.FindFirstAsync(c => c.Id == request.ClientId);
             if (client == null)
             {
                 return _responseHandler.NotFound<object>("Client not found");

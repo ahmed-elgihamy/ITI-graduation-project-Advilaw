@@ -31,6 +31,19 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.CreateSessionPayme
             if (job.Status != JobStatus.WaitingPayment)
                 return _responseHandler.BadRequest<CreatedEscrowDTO>("Job is not in payment status");
 
+            // Check for existing escrow
+            var existingEscrow = await _unitOfWork.Escrows.FindFirstAsync(e => e.JobId == cmd.JobId);
+            if (existingEscrow != null)
+            {
+                var existingDto = new CreatedEscrowDTO
+                {
+                    EscrowId = existingEscrow.Id,
+                    Amount = existingEscrow.Amount,
+                    Currency = existingEscrow.Currency.ToString().ToLower(),
+                    CreatedAt = existingEscrow.CreatedAt
+                };
+                return _responseHandler.Success(existingDto);
+            }
 
             var escrowTransaction = new EscrowTransaction
             {
