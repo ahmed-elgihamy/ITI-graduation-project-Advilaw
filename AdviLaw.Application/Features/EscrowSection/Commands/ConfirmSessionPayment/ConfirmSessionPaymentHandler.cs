@@ -45,31 +45,14 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                 return _responseHandler.NotFound<ConfirmSessionPaymentDTO>("Escrow not found");
 
             escrow.Status = EscrowTransactionStatus.Completed;
-
-
-
+            
+            // Store the PaymentIntentId from Stripe session
+            escrow.TransferId = stripeSession.PaymentIntentId;
 
             var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
             if (job != null && job.Status == JobStatus.WaitingPayment)
             {
                 job.Status = JobStatus.Started;
-
-                // Ensure Lawyer is loaded
-                if (job.Lawyer == null && job.LawyerId.HasValue)
-                {
-                    job.Lawyer = await _unitOfWork.Lawyers.GetByIdAsync(job.LawyerId.Value);
-                }
-
-
-                var payment = new Payment
-                {
-                    Type = PaymentType.SessionPayment,
-                    Amount = escrow.Amount,
-                    SenderId = escrow.SenderId, // Assuming Payment expects string
-                    ReceiverId = job.Lawyer?.UserId, // Use the string UserId for FK
-                    EscrowTransactionId = escrow.Id
-                };
-                await _unitOfWork.Payments.AddAsync(payment);
             }
 
             // If no session linked, create one
@@ -104,12 +87,11 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
 
             var dto = new ConfirmSessionPaymentDTO
             {
-                SessionId = escrow.SessionId,
-                PaymentId = escrow.PaymentId
+                SessionId = escrow.SessionId
             };
             return _responseHandler.Success(dto);
 
         }
 
-        }
+    }
 }

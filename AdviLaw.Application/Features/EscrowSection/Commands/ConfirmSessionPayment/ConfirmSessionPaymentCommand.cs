@@ -13,5 +13,6 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
         : IRequest<Response<ConfirmSessionPaymentDTO>>
     {
         public string StripeSessionId { get; set; } = string.Empty;
+        public int? SessionId { get; set; }
     }
 }
