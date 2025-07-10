@@ -36,8 +36,9 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             if (stripeSession.PaymentStatus != "paid")
                 return _responseHandler.BadRequest<int>("Payment not completed");
 
-            // Find escrow by StripeSessionId
+
             var escrow = await _unitOfWork.Escrows.FindFirstAsync(e => e.StripeSessionId == cmd.StripeSessionId);
+          
             if (escrow == null)
                 return _responseHandler.NotFound<int>("Escrow not found");
 
@@ -49,7 +50,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             // If no session linked, create one
             if (escrow.SessionId == null)
             {
-                // You may need to fetch job, client, lawyer info as needed
+                // fetch job, client, lawyer info
                 var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
                 if (job == null)
                     return _responseHandler.BadRequest<int>("Job not found for escrow.");

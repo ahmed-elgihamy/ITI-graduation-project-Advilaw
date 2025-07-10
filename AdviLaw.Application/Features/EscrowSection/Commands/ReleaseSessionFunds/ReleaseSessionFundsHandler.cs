@@ -30,10 +30,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
             _config = config;
         }
 
-        public async Task<Response<bool>> Handle(
-            ReleaseSessionFundsCommand cmd,
-            CancellationToken ct
-        )
+        public async Task<Response<bool>> Handle(ReleaseSessionFundsCommand cmd,CancellationToken ct)
         {
             var session = await _unitOfWork.Sessions.GetByIdIncludesAsync(
                 cmd.SessionId,
