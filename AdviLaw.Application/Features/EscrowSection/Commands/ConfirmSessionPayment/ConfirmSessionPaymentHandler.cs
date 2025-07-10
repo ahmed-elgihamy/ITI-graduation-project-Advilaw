@@ -1,18 +1,19 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment;
+using AdviLaw.Application.Features.EscrowSection.DTOs;
+using AdviLaw.Domain.Entites.EscrowTransactionSection;
+using AdviLaw.Domain.Entites.JobSection;
+using AdviLaw.Domain.Entites.PaymentSection;
 using AdviLaw.Domain.Entites.SessionSection;
 using AdviLaw.Domain.UnitOfWork;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Stripe.Checkout;
-using AdviLaw.Domain.Entites.EscrowTransactionSection;
-using AdviLaw.Domain.Entites.JobSection;
-using AdviLaw.Domain.Entites.PaymentSection;
 
 namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment
 {
     public class ConfirmSessionPaymentHandler
-        : IRequestHandler<ConfirmSessionPaymentCommand, Response<int>>
+        : IRequestHandler<ConfirmSessionPaymentCommand, Response<ConfirmSessionPaymentDTO>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ResponseHandler _responseHandler;
@@ -25,29 +26,29 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             _config = config;
         }
 
-        public async Task<Response<int>> Handle(ConfirmSessionPaymentCommand cmd, CancellationToken ct)
+        public async Task<Response<ConfirmSessionPaymentDTO>> Handle(ConfirmSessionPaymentCommand cmd, CancellationToken ct)
         {
             var secretKey = _config["Stripe:SecretKey"];
             if (string.IsNullOrWhiteSpace(secretKey))
-                return _responseHandler.BadRequest<int>("Stripe key not configured");
+                return _responseHandler.BadRequest<ConfirmSessionPaymentDTO>("Stripe key not configured");
 
             Stripe.StripeConfiguration.ApiKey = secretKey;
 
             var service = new SessionService();
             var stripeSession = await service.GetAsync(cmd.StripeSessionId);
             if (stripeSession.PaymentStatus != "paid")
-                return _responseHandler.BadRequest<int>("Payment not completed");
+                return _responseHandler.BadRequest<ConfirmSessionPaymentDTO>("Payment not completed");
 
             // Find escrow by StripeSessionId
             var escrow = await _unitOfWork.Escrows.FindFirstAsync(e => e.StripeSessionId == cmd.StripeSessionId);
             if (escrow == null)
-                return _responseHandler.NotFound<int>("Escrow not found");
+                return _responseHandler.NotFound<ConfirmSessionPaymentDTO>("Escrow not found");
 
-            escrow.Status =EscrowTransactionStatus.Completed;
+            escrow.Status = EscrowTransactionStatus.Completed;
 
-            
 
-          
+
+
             var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
             if (job != null && job.Status == JobStatus.WaitingPayment)
             {
@@ -59,8 +60,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                     job.Lawyer = await _unitOfWork.Lawyers.GetByIdAsync(job.LawyerId.Value);
                 }
 
-              
-                var payment = new AdviLaw.Domain.Entites.PaymentSection.Payment
+                var payment = new Payment
                 {
                     Type = PaymentType.SessionPayment,
                     Amount = escrow.Amount,
@@ -69,6 +69,9 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                     EscrowTransactionId = escrow.Id
                 };
                 await _unitOfWork.Payments.AddAsync(payment);
+                await _unitOfWork.SaveChangesAsync(ct); // Save to get payment.Id
+                escrow.PaymentId = payment.Id; // Link payment to escrow
+                await _unitOfWork.SaveChangesAsync(ct); // Save the escrow update
             }
 
             // If no session linked, create one
@@ -77,11 +80,11 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                 // You may need to fetch job, client, lawyer info as needed
                 var jobForSession = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
                 if (jobForSession == null)
-                    return _responseHandler.BadRequest<int>("Job not found for escrow.");
+                    return _responseHandler.BadRequest<ConfirmSessionPaymentDTO>("Job not found for escrow.");
 
                 var jobField = await _unitOfWork.JobFields.GetByIdAsync(jobForSession.JobFieldId);
                 if (jobField == null)
-                    return _responseHandler.BadRequest<int>("JobField not found for job.");
+                    return _responseHandler.BadRequest<ConfirmSessionPaymentDTO>("JobField not found for job.");
 
                 var session = new Domain.Entites.SessionSection.Session
                 {
@@ -95,13 +98,20 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
 
                 await _unitOfWork.Sessions.AddAsync(session);
                 await _unitOfWork.SaveChangesAsync(ct);
-
                 escrow.SessionId = session.Id;
+                await _unitOfWork.SaveChangesAsync(ct); // Save the escrow update
             }
 
             await _unitOfWork.SaveChangesAsync(ct);
 
-            return _responseHandler.Success(escrow.SessionId.Value);
+            var dto = new ConfirmSessionPaymentDTO
+            {
+                SessionId = escrow.SessionId,
+                PaymentId = escrow.PaymentId
+            };
+            return _responseHandler.Success(dto);
+
         }
-    }
+
+        }
 }
