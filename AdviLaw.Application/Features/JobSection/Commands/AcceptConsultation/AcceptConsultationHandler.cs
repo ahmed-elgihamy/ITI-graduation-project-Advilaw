@@ -22,7 +22,30 @@ namespace AdviLaw.Application.Features.JobSection.Commands.AcceptConsultation
             if (job == null || job.Type != JobType.LawyerProposal || job.LawyerId != request.LawyerId)
                 return _responseHandler.NotFound<bool>("Consultation not found or not authorized.");
 
-            job.Status = JobStatus.Accepted;
+            // Ensure Client is loaded
+            if (job.Client == null && job.ClientId.HasValue)
+            {
+                job.Client = await _unitOfWork.Clients.GetByIdAsync(job.ClientId.Value);
+            }
+
+            job.Status = JobStatus.WaitingPayment;
+
+            // منطق ربط الاستشارة بالـ Escrow
+            var existingEscrow = await _unitOfWork.Escrows.FindFirstAsync(e => e.JobId == job.Id);
+            if (existingEscrow == null)
+            {
+                var escrow = new AdviLaw.Domain.Entites.EscrowTransactionSection.EscrowTransaction
+                {
+                    JobId = job.Id,
+                    Amount = job.Budget,
+                    Currency = AdviLaw.Domain.Entites.EscrowTransactionSection.CurrencyType.EGP,
+                    Status = AdviLaw.Domain.Entites.EscrowTransactionSection.EscrowTransactionStatus.Pending,
+                    SenderId = job.Client?.UserId, // Use the string UserId for FK
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _unitOfWork.Escrows.AddAsync(escrow);
+            }
+
             await _unitOfWork.SaveChangesAsync();
 
             return _responseHandler.Success(true, "Consultation accepted.");

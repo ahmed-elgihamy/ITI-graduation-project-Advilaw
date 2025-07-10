@@ -14,6 +14,7 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         public JobStatus Status { get; set; } = JobStatus.NotAssigned;
         public JobType Type { get; set; }
         public bool IsAnonymus { get; set; } = false;
+        public string StatusLabel { get; set; }
 
         //Navigation Properties
         public int JobFieldId { get; set; }
@@ -24,6 +25,7 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         public int ClientId { get; set; }
         public string ClientName { get; set; } = string.Empty;  // mapped
         public string ClientProfilePictureUrl { get; set; } = string.Empty; // mapped
+
 
         public int? EscrowTransactionId { get; set; }
 

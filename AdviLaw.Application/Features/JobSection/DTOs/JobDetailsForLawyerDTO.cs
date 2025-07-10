@@ -18,6 +18,7 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         public int JobFieldId { get; set; }
         public string JobFieldName { get; set; } = string.Empty;  // mapped
         public int? LawyerId { get; set; }
+        public string LawyerName { get; set; } = string.Empty; // mapped from Lawyer.User.UserName
         public int ClientId { get; set; }
         public string ClientName { get; set; } = string.Empty;  // mapped
         public string ClientProfilePictureUrl { get; set; } = string.Empty; // mapped

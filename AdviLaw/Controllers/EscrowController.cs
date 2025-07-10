@@ -34,53 +34,77 @@ public class EscrowController : ControllerBase
         if (!escResp.Succeeded)
             return BadRequest(escResp.Message);
 
-        var options = new SessionCreateOptions
-        {
-            PaymentMethodTypes = new List<string> { "card" },
-            Mode = "payment",
-            LineItems = new List<SessionLineItemOptions>
-            {
-                new()
-                {
-                    PriceData = new SessionLineItemPriceDataOptions
-                    {
-                        UnitAmountDecimal = escResp.Data.Amount * 100,
-                        Currency = escResp.Data.Currency,
-                        ProductData = new SessionLineItemPriceDataProductDataOptions
-                        {
-                            Name = $"Job #{dto.JobId} Escrow Payment"
-                        },
-                    },
-                    Quantity = 1
-                }
-            },
-            SuccessUrl = $"http://localhost:4200/payment-success?session_id={{CHECKOUT_SESSION_ID}}&escrow_id={escResp.Data.EscrowId}",
-            CancelUrl = "http://localhost:4200/payment-cancel",
-            Metadata = new Dictionary<string, string>
-            {
-                { "EscrowId", escResp.Data.EscrowId.ToString() }
-            }
-        };
-
-        var svc = new SessionService();
-        var session = svc.Create(options);
-
-        // Save Stripe session ID to escrow record
+        string checkoutUrl = null;
         using (var scope = HttpContext.RequestServices.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<AdviLawDBContext>();
             var escrow = dbContext.EscrowTransactions.FirstOrDefault(e => e.Id == escResp.Data.EscrowId);
-            if (escrow != null)
+            if (escrow != null && !string.IsNullOrEmpty(escrow.StripeSessionId))
             {
-                escrow.StripeSessionId = session.Id;
-                dbContext.SaveChanges();
+                try
+                {
+                    var svc = new SessionService();
+                    var session = svc.Get(escrow.StripeSessionId);
+                    if (session != null && !string.IsNullOrEmpty(session.Url))
+                    {
+                        checkoutUrl = session.Url;
+                    }
+                }
+                catch { /* ignore and fallback to create new session */ }
+            }
+        }
+
+        if (string.IsNullOrEmpty(checkoutUrl))
+        {
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                Mode = "payment",
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new()
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmountDecimal = escResp.Data.Amount * 100,
+                            Currency = escResp.Data.Currency,
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = $"Job #{dto.JobId} Escrow Payment"
+                            },
+                        },
+                        Quantity = 1
+                    }
+                },
+                SuccessUrl = $"http://localhost:4200/payment-success?session_id={{CHECKOUT_SESSION_ID}}&escrow_id={escResp.Data.EscrowId}",
+                CancelUrl = "http://localhost:4200/payment-cancel",
+                Metadata = new Dictionary<string, string>
+                {
+                    { "EscrowId", escResp.Data.EscrowId.ToString() }
+                }
+            };
+
+            var svcNew = new SessionService();
+            var sessionNew = svcNew.Create(options);
+            checkoutUrl = sessionNew.Url;
+
+            // Save Stripe session ID to escrow record
+            using (var scope = HttpContext.RequestServices.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AdviLawDBContext>();
+                var escrow = dbContext.EscrowTransactions.FirstOrDefault(e => e.Id == escResp.Data.EscrowId);
+                if (escrow != null)
+                {
+                    escrow.StripeSessionId = sessionNew.Id;
+                    dbContext.SaveChanges();
+                }
             }
         }
 
         return Ok(new
         {
             escResp.Data.EscrowId,
-            CheckoutUrl = session.Url
+            CheckoutUrl = checkoutUrl
         });
     }
 
@@ -121,6 +145,31 @@ public class EscrowController : ControllerBase
             Message = "Funds released to lawyer successfully",
             PaymentId = result.Data
         });
+    }
+
+    [HttpGet("my-escrow")]
+    public async Task<IActionResult> GetMyEscrow([FromServices] AdviLaw.Infrastructure.Persistence.AdviLawDBContext dbContext)
+    {
+        var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+            return Unauthorized();
+
+        var escrows = await dbContext.EscrowTransactions
+            .Include(e => e.Job)
+            .Where(e => e.SenderId == userId)
+            .OrderByDescending(e => e.CreatedAt)
+            .Select(e => new {
+                e.Id,
+                e.Amount,
+                e.Status,
+                e.JobId,
+                JobTitle = e.Job.Header,
+                e.CreatedAt,
+                e.ReleasedAt
+            })
+            .ToListAsync();
+
+        return Ok(escrows);
     }
 }
 
