@@ -6,6 +6,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using AdviLaw.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace AdviLaw.Domain.Entities.UserSection
 {
     public enum UserRole
@@ -29,7 +30,7 @@ namespace AdviLaw.Domain.Entities.UserSection
 
         public Gender Gender { get; set; }
 
-
+        public string? StripeAccountId { get; set; }
         public decimal? Balance { get; set; } = 0; // بدل الـ Account
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

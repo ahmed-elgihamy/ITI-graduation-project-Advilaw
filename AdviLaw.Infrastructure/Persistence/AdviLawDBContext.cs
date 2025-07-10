@@ -221,12 +221,11 @@ namespace AdviLaw.Infrastructure.Persistence
 
             //One To Many
             //Messages
-            modelBuilder.Entity<Session>()
-                .HasMany(s => s.Messages)
-                .WithOne(m => m.Session)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
+            modelBuilder.Entity<Message>()
+    .HasOne(m => m.Session)
+    .WithMany(s => s.Messages)
+    .HasForeignKey(m => m.SessionId)
+    .OnDelete(DeleteBehavior.Restrict);
 
 
             //Reviews

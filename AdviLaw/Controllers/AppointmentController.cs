@@ -14,7 +14,7 @@ namespace AdviLaw.Controllers
     {
         private readonly IMediator _mediator = mediator;
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("{jobId}/create")]
         public async Task<IActionResult> CreateSchedule(int jobId, [FromBody] CreateAppointmentCommand command)
         {

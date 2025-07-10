@@ -7,12 +7,13 @@ namespace AdviLaw.Domain.Entites.SubscriptionSection
     public class UserSubscription
     {
         public int Id { get; set; }
-        //public bool IsActive => DateTime.UtcNow >= StartDate && DateTime.UtcNow <= EndDate;
+        public bool IsActive { get; set; } = true;
+
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
-        //public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         //Navigation Properties
-        public int LawyerId { get; set; }  
+        public int LawyerId { get; set; }
         public Lawyer Lawyer { get; set; } = new();
 
         public int SubscriptionTypeId { get; set; }

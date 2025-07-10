@@ -30,8 +30,8 @@ public class TokenService : ITokenService
             new Claim("userId",
                 (
                     user.Role == Roles.Admin ? 
-                    user.Admin.Id : user.Role == Roles.Lawyer ?
-                    user.Lawyer.Id : user.Client.Id
+                    user.Admin?.Id : user.Role == Roles.Lawyer ?
+                    user.Lawyer?.Id : user.Client.Id
                 ).ToString())
         };
 

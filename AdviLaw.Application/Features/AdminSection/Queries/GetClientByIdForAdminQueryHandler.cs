@@ -27,7 +27,7 @@ namespace AdviLaw.Application.Features.AdminSection.Queries
 
         public async Task<Response<ClientListDto>> Handle(GetClientByIdForAdminQuery request, CancellationToken cancellationToken)
         {
-            var client = await _unitOfWork.GenericClients
+            var client = await _unitOfWork.Clients
                 .GetTableNoTracking()
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);

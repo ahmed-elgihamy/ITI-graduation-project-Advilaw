@@ -37,14 +37,15 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
 
 
             //if client already exists
-            var existingClient = await _unitOfWork.GenericClients.FindFirstAsync(c => c.UserId == request.UserId);
+            var existingClient = await _unitOfWork.Clients.FindFirstAsync(c => c.UserId == request.UserId);
             if (existingClient != null)
                 return _responseHandler.BadRequest<object>("Client profile already exists for this user");
 
             var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
             Directory.CreateDirectory(uploadsPath);
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(request.NationalIDImage.FileName);
 
-            var nationalIdImagePath = Path.Combine(uploadsPath, request.NationalIDImage.FileName);
+            var nationalIdImagePath = Path.Combine(uploadsPath, uniqueFileName);
 
             using (var stream = new FileStream(nationalIdImagePath, FileMode.Create))
                 await request.NationalIDImage.CopyToAsync(stream);
@@ -55,16 +56,13 @@ namespace AdviLaw.Application.Features.Clients.Commands.CreateClient
             client.IsApproved = false;
             client.NationalIDImagePath = "/Uploads/" + request.NationalIDImage.FileName;
 
-            var result = await _unitOfWork.GenericClients.AddAsync(client);
+            var result = await _unitOfWork.Clients.AddAsync(client);
 
             await _unitOfWork.SaveChangesAsync();
-            if (result == null)
-
-                return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
-
+            
             if (result == null)
             {
-                return _responseHandler.BadRequest<object>("Lawyer creation failed. Please try again.");
+                return _responseHandler.BadRequest<object>("Client creation failed. Please try again.");
 
             }
 

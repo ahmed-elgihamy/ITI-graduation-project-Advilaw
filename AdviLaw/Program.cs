@@ -20,9 +20,7 @@ namespace AdviLaw
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-
-
+          
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngularApp", policy =>
@@ -34,58 +32,55 @@ namespace AdviLaw
                 });
             });
 
-
             builder.Services.AddAuthorization();
             builder.AddPresentation();
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
-            //serialize and deserialize enums as strings instead of integers.
+       
             builder.Services.AddControllers()
 
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                }); 
-
-
-
+                });
 
             var app = builder.Build();
 
+          
+
+
             if (app.Environment.IsDevelopment())
             {
-
-
                 app.UseMiddleware<ErrorHandlerMiddleware>();
-
-
-
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-
-            // Redirect root URL to Swagger UI
+          
             app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
                 return Task.CompletedTask;
             });
 
-           
-            app.UseMiddleware<ErrorHandlerMiddleware>(); 
             app.UseHttpsRedirection();
 
-      
-            app.UseCors("AllowAll");
-            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+          
+            app.UseRouting();
+
+            app.UseCors("AllowAngularApp");
+
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors();
 
-            app.UseStaticFiles(); // For wwwroot
+       
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
-            // For Uploads
+          
+            app.UseStaticFiles();
+
+         
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -93,9 +88,9 @@ namespace AdviLaw
                 RequestPath = "/Uploads"
             });
 
-            app.UseRouting();
-
             app.MapControllers();
+
+            app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularApp");
 
             app.Run();
         }
