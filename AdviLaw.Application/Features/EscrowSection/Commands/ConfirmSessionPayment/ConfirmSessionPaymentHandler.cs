@@ -60,6 +60,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                     job.Lawyer = await _unitOfWork.Lawyers.GetByIdAsync(job.LawyerId.Value);
                 }
 
+
                 var payment = new Payment
                 {
                     Type = PaymentType.SessionPayment,
@@ -69,9 +70,6 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
                     EscrowTransactionId = escrow.Id
                 };
                 await _unitOfWork.Payments.AddAsync(payment);
-                await _unitOfWork.SaveChangesAsync(ct); // Save to get payment.Id
-                escrow.PaymentId = payment.Id; // Link payment to escrow
-                await _unitOfWork.SaveChangesAsync(ct); // Save the escrow update
             }
 
             // If no session linked, create one
@@ -98,8 +96,8 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
 
                 await _unitOfWork.Sessions.AddAsync(session);
                 await _unitOfWork.SaveChangesAsync(ct);
+
                 escrow.SessionId = session.Id;
-                await _unitOfWork.SaveChangesAsync(ct); // Save the escrow update
             }
 
             await _unitOfWork.SaveChangesAsync(ct);
