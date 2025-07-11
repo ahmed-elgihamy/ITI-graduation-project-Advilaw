@@ -9,6 +9,9 @@ using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerDetails;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerPayments;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerReviews;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerSubscriptions;
+using AdviLaw.Domain.Entities.UserSection;
+using AdviLaw.Domain.IGenericRepo;
+using AdviLaw.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +24,12 @@ namespace AdviLaw.Controllers
     public class LawyerController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IGenericRepository<Lawyer> _lawyerRepo;
 
-        public LawyerController(IMediator mediator)
+        public LawyerController(IMediator mediator, IGenericRepository<Lawyer> lawyerRepo )
         {
             _mediator = mediator;
+            _lawyerRepo = lawyerRepo;
         }
 
         [HttpGet("")]
@@ -114,6 +119,24 @@ namespace AdviLaw.Controllers
             command.UserId = userId;
             var result = await _mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpGet("{id}/hourly-rate")]
+        public async Task<IActionResult> GetHourlyRate(string id)
+        {
+            // Try by UserId (string)
+            var lawyer = await _lawyerRepo.FindFirstAsync(l => l.UserId == id);
+            if (lawyer == null)
+            {
+                // Try by int Id
+                if (int.TryParse(id, out int lawyerIntId))
+                {
+                    lawyer = await _lawyerRepo.FindFirstAsync(l => l.Id == lawyerIntId);
+                }
+            }
+            if (lawyer == null)
+                return NotFound();
+            return Ok(new { hourlyRate = lawyer.HourlyRate });
         }
     }
 }
