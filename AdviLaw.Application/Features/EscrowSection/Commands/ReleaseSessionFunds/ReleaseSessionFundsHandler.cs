@@ -30,7 +30,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
             _config = config;
         }
 
-        public async Task<Response<bool>> Handle(ReleaseSessionFundsCommand cmd,CancellationToken ct)
+        public async Task<Response<bool>> Handle(ReleaseSessionFundsCommand cmd, CancellationToken ct)
         {
             var session = await _unitOfWork.Sessions.GetByIdIncludesAsync(
                 cmd.SessionId,
@@ -63,13 +63,39 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
             StripeConfiguration.ApiKey = secret;
 
 
+            // Retrieve the Charge ID from the PaymentIntent
+            var chargeService = new ChargeService();
+            var charges = await chargeService.ListAsync(new ChargeListOptions
+            {
+                PaymentIntent = esc.TransferId
+            });
+
+            var chargeId = charges.Data.FirstOrDefault()?.Id;
+            if (string.IsNullOrEmpty(chargeId))
+                return _responseHandler.BadRequest<bool>("No charge found for this PaymentIntent.");
+
+            var charge = charges.Data.FirstOrDefault();
+            if (charge == null)
+                return _responseHandler.BadRequest<bool>("No charge found for this PaymentIntent.");
+
+            // Fetch the balance transaction to get the actual currency Stripe credited you
+            var balanceTransactionService = new BalanceTransactionService();
+            var balanceTransaction = await balanceTransactionService.GetAsync(charge.BalanceTransactionId);
+            var transferCurrency = balanceTransaction.Currency; // This will be "usd" if Stripe credited you in
+
+            // Calculate 2% commission
+            var commission = Math.Round(esc.Amount * 0.02m, 2); // 2% of escrow amount
+
+            // Amount to transfer to lawyer (98%)
+            var amountToLawyer = esc.Amount - commission;
+
+            // Stripe expects the amount in the smallest currency unit (e.g., piasters)
             var transferOptions = new TransferCreateOptions
             {
-                Amount = (long)(esc.Amount * 100),
-                Currency = esc.Currency.ToString().ToLower(),
+                Amount = (long)(amountToLawyer * 100), // Convert to piasters/cents
+                Currency = transferCurrency,
                 Destination = lawyerUser.StripeAccountId,
                 TransferGroup = $"SESSION_{session.Id}",
-                SourceTransaction = esc.TransferId
             };
             var transferService = new TransferService();
             Transfer stripeTransfer;
@@ -81,6 +107,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
             {
                 return _responseHandler.BadRequest<bool>($"Stripe transfer failed: {ex.Message}");
             }
+
             var payment = new Payment
             {
                 Type = PaymentType.SessionPayment,
@@ -91,6 +118,13 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFund
                 Amount = esc.Amount
             };
             await _unitOfWork.Payments.AddAsync(payment);
+            await _unitOfWork.SaveChangesAsync(ct); // This will populate payment.Id
+
+            // 2. Assign payment ID to session
+            session.PaymentId = payment.Id;
+            await _unitOfWork.Sessions.UpdateAsync(session); // Make sure Update is used if you're tracking manually
+
+            // 3. Save the updated session
             await _unitOfWork.SaveChangesAsync(ct);
 
             return _responseHandler.Success(true);

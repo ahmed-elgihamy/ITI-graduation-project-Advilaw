@@ -48,7 +48,11 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             escrow.TransferId = stripeSession.PaymentIntentId;
 
             escrow.Status = EscrowTransactionStatus.Completed;
-         
+
+
+            // Store the PaymentIntentId from Stripe session
+            escrow.TransferId = stripeSession.PaymentIntentId;
+
 
             var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
             if (job != null && job.Status == JobStatus.WaitingPayment)
@@ -86,7 +90,12 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
 
             await _unitOfWork.SaveChangesAsync(ct);
 
-            
+            // Check if SessionId is still null after all processing
+            if (!escrow.SessionId.HasValue)
+            {
+                return _responseHandler.BadRequest<int>("Failed to create or retrieve session ID");
+            }
+
             return _responseHandler.Success(escrow.SessionId.Value);
 
         }
@@ -94,4 +103,6 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
     }
 
 }
+
+
 

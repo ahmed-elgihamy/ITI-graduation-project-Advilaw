@@ -2,11 +2,15 @@
 using AdviLaw.Application.Features.EscrowSection.Commands.CreateSessionPayment;
 using AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFunds;
 using AdviLaw.Application.Features.EscrowSection.DTOs;
+using AdviLaw.Application.Features.EscrowSection.Queries.GetCompletedSessionsForAdmin;
+using AdviLaw.Application.Features.EscrowSection.Queries.GetSessionHistoryForAdmin;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using Microsoft.EntityFrameworkCore;
 using AdviLaw.Infrastructure.Persistence;
+using AdviLaw.Domain.Entites.SessionSection;
+using AdviLaw.Domain.Entites.EscrowTransactionSection;
 
 
 //Handles escrow payments for legal sessions (client payments, confirming payments, releasing funds).
@@ -41,16 +45,14 @@ public class EscrowController : ControllerBase
             var escrow = dbContext.EscrowTransactions.FirstOrDefault(e => e.Id == escResp.Data.EscrowId);
             if (escrow != null && !string.IsNullOrEmpty(escrow.StripeSessionId))
             {
-                try
-                {
+
                     var svc = new SessionService();
                     var session = svc.Get(escrow.StripeSessionId);
                     if (session != null && !string.IsNullOrEmpty(session.Url))
                     {
                         checkoutUrl = session.Url;
                     }
-                }
-                catch { /* ignore and fallback to create new session */ }
+
             }
         }
 
@@ -148,7 +150,7 @@ public class EscrowController : ControllerBase
     }
 
     [HttpGet("my-escrow")]
-    public async Task<IActionResult> GetMyEscrow([FromServices] AdviLaw.Infrastructure.Persistence.AdviLawDBContext dbContext)
+    public async Task<IActionResult> GetMyEscrow([FromServices] AdviLawDBContext dbContext)
     {
         var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))
