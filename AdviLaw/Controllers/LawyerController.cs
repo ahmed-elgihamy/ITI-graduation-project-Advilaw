@@ -5,6 +5,7 @@ using AdviLaw.Application.Features.Lawyers.Queries.GetAllLawyers;
 using AdviLaw.Application.Features.LawyerSection.Commands.UpdateLawyerProfile;
 using AdviLaw.Application.Features.LawyerSection.DTOs;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetAllLawyers;
+using AdviLaw.Application.Features.LawyerSection.Queries.GetHourlyRate;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerDetails;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerPayments;
 using AdviLaw.Application.Features.LawyerSection.Queries.GetLawyerReviews;
@@ -16,6 +17,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AdviLaw.Controllers
 {
@@ -24,12 +26,12 @@ namespace AdviLaw.Controllers
     public class LawyerController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IGenericRepository<Lawyer> _lawyerRepo;
+        //private readonly IGenericRepository<Lawyer> _lawyerRepo;
 
-        public LawyerController(IMediator mediator, IGenericRepository<Lawyer> lawyerRepo )
+        public LawyerController(IMediator mediator)
         {
             _mediator = mediator;
-            _lawyerRepo = lawyerRepo;
+            //_lawyerRepo = lawyerRepo;
         }
 
         [HttpGet("")]
@@ -125,18 +127,25 @@ namespace AdviLaw.Controllers
         public async Task<IActionResult> GetHourlyRate(string id)
         {
             // Try by UserId (string)
-            var lawyer = await _lawyerRepo.FindFirstAsync(l => l.UserId == id);
-            if (lawyer == null)
+            //var lawyer = await _lawyerRepo.FindFirstAsync(l => l.UserId == id);
+            //if (lawyer == null)
+            //{
+            //    // Try by int Id
+            //    if (int.TryParse(id, out int lawyerIntId))
+            //    {
+            //        lawyer = await _lawyerRepo.FindFirstAsync(l => l.Id == lawyerIntId);
+            //    }
+            //}
+            if (string.IsNullOrEmpty(id))
             {
-                // Try by int Id
-                if (int.TryParse(id, out int lawyerIntId))
-                {
-                    lawyer = await _lawyerRepo.FindFirstAsync(l => l.Id == lawyerIntId);
-                }
+                return BadRequest("Lawyer ID cannot be null or empty.");
             }
-            if (lawyer == null)
-                return NotFound();
-            return Ok(new { hourlyRate = lawyer.HourlyRate });
+            if (!int.TryParse(id, out int lawyerId))
+            {
+                return BadRequest("Invalid Lawyer ID format. It should be a valid integer.");
+            }
+            var result = await _mediator.Send(new GetHourlyRateQuery(lawyerId));
+            return Ok(result);
         }
     }
 }
