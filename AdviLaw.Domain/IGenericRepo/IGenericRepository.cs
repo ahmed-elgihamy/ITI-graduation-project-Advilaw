@@ -21,6 +21,7 @@ namespace AdviLaw.Domain.IGenericRepo
         Task<T?> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(ICollection<T> entities);
+        Task RemoveRangeAsync(ICollection<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
      

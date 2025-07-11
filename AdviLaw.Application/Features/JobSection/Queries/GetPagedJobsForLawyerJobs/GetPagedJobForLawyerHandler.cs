@@ -25,7 +25,7 @@ public class GetPagedJobForLawyerHandler(
                 j => j.Client,
                 j => j.Client.User,
                 j => j.JobField
-            }
+            }   
         );
 
         if (!string.IsNullOrWhiteSpace(request.Search)) 

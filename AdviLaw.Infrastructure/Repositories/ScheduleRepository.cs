@@ -32,9 +32,20 @@ namespace AdviLaw.Infrastructure.Repositories
                 return new List<Schedule>();
 
            return await _dbContext.Schedules
-                .Include(s => s.Job)
-                .Where(s => s.Job.LawyerId == lawyer.Id)
+                //.Include(s => s.Job)
+                //.Where(s => s.Job.LawyerId == lawyer.Id)
                 .OrderByDescending(s => s.Id)
+                .ToListAsync();
+        }
+
+        public async Task<List<Schedule>> GetSchedulesByIds(List<int> list)
+        {
+            if (list == null || !list.Any())
+            {
+                return new List<Schedule>();
+            }
+            return await _dbContext.Schedules
+                .Where(s => list.Contains(s.Id))
                 .ToListAsync();
         }
 

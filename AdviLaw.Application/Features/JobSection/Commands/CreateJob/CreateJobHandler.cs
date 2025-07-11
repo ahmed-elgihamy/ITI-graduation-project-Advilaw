@@ -1,6 +1,8 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.JobSection.DTOs;
+using AdviLaw.Domain.Entites.AppointmentSection;
 using AdviLaw.Domain.Entites.JobSection;
+using AdviLaw.Domain.Entites.ScheduleSection;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
@@ -31,7 +33,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
 
         public async Task<Response<CreatedJobDTO>> Handle(CreateJobCommand request, CancellationToken cancellationToken)
         {
-            
+
             var user = await _userManager.Users
                 .Include(u => u.Client)
                 .FirstOrDefaultAsync(u => u.Id == request.UserId);
@@ -49,7 +51,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
                 ClientId = user.Client.Id
             };
 
-           
+
             if (request.Type == JobType.LawyerProposal)
             {
                 if (request.LawyerId is null || request.AppointmentTime is null || request.DurationHours is null)
@@ -59,23 +61,29 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
                 if (lawyer == null)
                     return _responseHandler.BadRequest<CreatedJobDTO>("Lawyer not found");
 
-             
-                job.Budget = (int)Math.Ceiling((decimal)(request.DurationHours.Value) * lawyer.HourlyRate);
 
+                //job.Budget = (int)Math.Ceiling((decimal)(request.DurationHours.Value) * lawyer.HourlyRate);
+                if (!request.AppointmentTime.HasValue)
+                {
+                    return _responseHandler.BadRequest<CreatedJobDTO>("AppointmentTime is required.");
+                }
+
+                //job.AppointmentTime = DateTime.SpecifyKind(request.AppointmentTime.Value, DateTimeKind.Utc);
                 job.LawyerId = lawyer.Id;
-                job.AppointmentTime = request.AppointmentTime;
                 job.DurationHours = request.DurationHours;
+                job.Budget = request.Budget;
+                job.Status = JobStatus.WaitingApproval;
             }
             else if (request.Type == JobType.ClientPublishing)
             {
-               
-                if (request.budget <= 0)
+
+                if (request.Budget <= 0)
                     return _responseHandler.BadRequest<CreatedJobDTO>("Budget must be greater than 0 for public jobs.");
 
-                job.Budget = request.budget;
+                job.Budget = request.Budget;
             }
 
-         
+
             try
             {
                 await _unitOfWork.Jobs.AddAsync(job);
@@ -85,6 +93,27 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
             {
                 return _responseHandler.BadRequest<CreatedJobDTO>("Something went wrong while saving job.");
             }
+
+            if (request.Type == JobType.LawyerProposal)
+            {
+                var appointment = new Appointment
+                {
+                    JobId = job.Id,
+                    Date = DateTime.SpecifyKind(request.AppointmentTime.Value, DateTimeKind.Utc),
+                    Type = ScheduleType.FromClient,
+                };
+                try
+                {
+                    await _unitOfWork.Appointments.AddAsync(appointment);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return _responseHandler.BadRequest<CreatedJobDTO>("Something went wrong while saving Appointment.");
+                }
+            }
+
+
 
             var dto = _mapper.Map<CreatedJobDTO>(job);
             return _responseHandler.Success(dto);
