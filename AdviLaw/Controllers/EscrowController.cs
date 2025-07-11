@@ -171,5 +171,38 @@ public class EscrowController : ControllerBase
 
         return Ok(escrows);
     }
+        [HttpGet("admin/completed-sessions")]
+    public async Task<IActionResult> GetCompletedSessionsForAdmin()
+    {
+        // Check if user is admin
+        var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+        if (userRole != "Admin" && userRole != "SuperAdmin")
+            return Forbid("Only admins can access this endpoint");
+
+        var query = new GetCompletedSessionsForAdminQuery();
+        var result = await _med.Send(query);
+
+        if (!result.Succeeded)
+            return BadRequest(result.Message);
+
+        return Ok(result.Data);
+    }
+
+    [HttpGet("admin/session-history")]
+    public async Task<IActionResult> GetSessionHistoryForAdmin()
+    {
+        // Check if user is admin
+        var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+        if (userRole != "Admin" && userRole != "SuperAdmin")
+            return Forbid("Only admins can access this endpoint");
+
+        var query = new GetSessionHistoryForAdminQuery();
+        var result = await _med.Send(query);
+
+        if (!result.Succeeded)
+            return BadRequest(result.Message);
+
+        return Ok(result.Data);
+    }
 }
 
