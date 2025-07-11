@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250708140417_Intial")]
+    [Migration("20250711083636_Intial")]
     partial class Intial
     {
         /// <inheritdoc />
@@ -709,6 +709,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<string>("NationalIDImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProfileAbout")
                         .IsRequired()

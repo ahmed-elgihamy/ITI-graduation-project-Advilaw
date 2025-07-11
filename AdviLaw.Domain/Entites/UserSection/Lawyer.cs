@@ -27,6 +27,8 @@ namespace AdviLaw.Domain.Entities.UserSection
             public string NationalIDImagePath { get; set; } = string.Empty;
             public int BarAssociationCardNumber { get; set; }
 
+            public int Points { get; set; } = 0;
+
             public List<LawyerJobField> Fields { get; set; } 
             public List<Job> Jobs { get; set; } = new();
             public List<Proposal> Proposals { get; set; } = new();

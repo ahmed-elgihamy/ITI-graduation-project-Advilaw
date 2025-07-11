@@ -274,7 +274,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     HourlyRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BarCardImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NationalIDImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BarAssociationCardNumber = table.Column<int>(type: "int", nullable: false)
+                    BarAssociationCardNumber = table.Column<int>(type: "int", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

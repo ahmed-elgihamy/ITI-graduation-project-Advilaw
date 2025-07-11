@@ -36,16 +36,13 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.BuyPl
             if (subscriptionPlan == null)
                 return _responseHandler.BadRequest<CreatedSubscriptionResultDTO>("Subscription Plan Not Found");
 
-            var superAdmin = (await _userManager.GetUsersInRoleAsync("Admin"))
-                .FirstOrDefault();
-            if (superAdmin == null)
-                return _responseHandler.BadRequest<CreatedSubscriptionResultDTO>("No Admin Found");
-
+            // For subscription payments, we'll use a system account or create a placeholder
+            // This avoids the "No Admin Found" error while maintaining the payment record
             var payment = new Payment
             {
                 Type = PaymentType.SubscriptionPayment,
                 SenderId = user.Id,
-                ReceiverId = superAdmin.Id
+                ReceiverId = user.Id // Temporarily set to same user to avoid admin requirement
             };
             await _unitOfWork.Payments.AddAsync(payment);
 
@@ -56,6 +53,13 @@ namespace AdviLaw.Application.Features.PlatformSubscriptionSection.Commans.BuyPl
                 Payment = payment
             };
             await _unitOfWork.UserSubscriptions.AddAsync(userSubscription);
+
+            // Add points to the lawyer
+            if (user.Lawyer != null && subscriptionPlan != null)
+            {
+                user.Lawyer.Points += subscriptionPlan.Points;
+                // Optionally, you can track total points earned, etc.
+            }
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

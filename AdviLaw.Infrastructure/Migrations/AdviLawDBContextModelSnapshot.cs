@@ -707,6 +707,9 @@ namespace AdviLaw.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProfileAbout")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
