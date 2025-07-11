@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPayment
 {
     public class ConfirmSessionPaymentCommand
-        : IRequest<Response<ConfirmSessionPaymentDTO>>
+        : IRequest<Response<int>>
     {
         public string StripeSessionId { get; set; } = string.Empty;
+        public int? SessionId { get; set; }
     }
 }
