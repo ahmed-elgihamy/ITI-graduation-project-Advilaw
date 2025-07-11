@@ -101,9 +101,9 @@ namespace AdviLaw.Infrastructure.GenericRepo
 
         public IQueryable<T> GetTableAsTracking() => _dbContext.Set<T>();
         public async Task<T?> FindFirstAsync(
-     Expression<Func<T, bool>> predicate,
-     List<Expression<Func<T, object>>>? includes = null
- )
+             Expression<Func<T, bool>> predicate,
+             List<Expression<Func<T, object>>>? includes = null
+         )
         {
             IQueryable<T> query = _dbContext.Set<T>();
 
