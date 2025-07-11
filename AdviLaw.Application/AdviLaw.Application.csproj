@@ -25,6 +25,7 @@
     <Folder Include="Features\LawyerProfile\Commands\" />
     <Folder Include="Features\LawyerSection\Commands\" />
     <Folder Include="Features\ProposalSection\DTOs\ProposalProfiling\" />
+    <Folder Include="Features\LawyerProfile\Commands\" />    <Folder Include="Features\ProposalSection\DTOs\ProposalProfiling\" />
     <Folder Include="Features\SubscriptionSection\" />
   </ItemGroup>
 

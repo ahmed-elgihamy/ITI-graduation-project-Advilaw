@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Domain.Entites.EscrowTransactionSection;
 using AdviLaw.Domain.Entites.PaymentSection;
+using AdviLaw.Domain.Entites.ScheduleSection;
 using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReportSection;
 using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
@@ -18,10 +19,10 @@ namespace AdviLaw.Domain.Entities.UserSection
     public class User : IdentityUser
     {
 
-        public string City { get; set; } = string.Empty;
-        public string Country { get; set; } = string.Empty;
-        public string CountryCode { get; set; } = string.Empty;
-        public string PostalCode { get; set; } = string.Empty;
+        public string City { get; set; } 
+        public string Country { get; set; } 
+        public string CountryCode { get; set; } 
+        public string PostalCode { get; set; } 
 
         public long NationalityId { get; set; }
 
@@ -54,6 +55,9 @@ namespace AdviLaw.Domain.Entities.UserSection
         //Session => Reports Section
         public List<Report> SentReports { get; set; } = new();
         public List<Report> ReceivedReports { get; set; } = new();
+
+        //Schedule
+        public List<Schedule> Schedules { get; set; } = new();
 
         // Navigation Properties
         public int? LawyerId { get; set; }

@@ -240,6 +240,19 @@ namespace AdviLaw.Infrastructure.Persistence
                 .HasMany(s => s.Reports)
                 .WithOne(m => m.Session)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Review>()
+     .HasOne(r => r.Reviewer)
+     .WithMany()
+     .HasForeignKey(r => r.ReviewerId)
+     .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Reviewee)
+                .WithMany()
+                .HasForeignKey(r => r.RevieweeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
 
 
             // ..............................Job Relations............................

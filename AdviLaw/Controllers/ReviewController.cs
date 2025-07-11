@@ -1,30 +1,41 @@
-﻿using AdviLaw.Application.Features.Reviews.Queries;
+﻿using AdviLaw.Application.Features.Reviews.Commands.CreateReview;
+using AdviLaw.Application.Features.Reviews.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AdviLaw.Controllers
+[Route("api")]
+[ApiController]
+public class ReviewController : ControllerBase
 {
-    [Route("api/lawyers/{id}/reviews")]
-    [ApiController]
-    public class ReviewController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public ReviewController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public ReviewController(IMediator mediator)
+    [HttpGet("lawyers/{id}/reviews")]
+    public async Task<IActionResult> GetReviewsByLawyer(Guid id)
+    {
+        var result = await _mediator.Send(new GetReviewsByLawyerQuery(id));
+        return Ok(result);
+    }
+
+    [HttpPost("reviews")]
+    public async Task<IActionResult> CreateReview([FromBody] CreateReviewCommand command)
+    {
+        try
         {
-            _mediator = mediator;
+            var reviewId = await _mediator.Send(command);
+            return Ok(reviewId);
         }
-
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetReviewsByLawyer(Guid id)
+        catch (ApplicationException ex)
         {
-            var result = await _mediator.Send(new GetReviewsByLawyerQuery(id));
-            return Ok(result);
+            return BadRequest(new { message = ex.Message });
         }
-
-
+        catch (Exception)
+        {
+            return StatusCode(500, new { message = "Something went wrong while saving your review." });
+        }
     }
 }

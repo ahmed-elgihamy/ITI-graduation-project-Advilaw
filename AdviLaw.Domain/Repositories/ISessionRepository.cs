@@ -10,6 +10,6 @@ namespace AdviLaw.Domain.Repositories
 {
     public interface ISessionRepository : IGenericRepository<Session>
     {
-
+        Task<Session?> GetSessionWithClientAndLawyerAsync(int sessionId);
     }
 }

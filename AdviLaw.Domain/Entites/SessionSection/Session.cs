@@ -11,7 +11,7 @@ namespace AdviLaw.Domain.Entites.SessionSection
     public class Session
     {
         public int Id { get; set; }
-        public SessionStatus Status { get; set; } = new();
+        public SessionStatus Status { get; set; } 
 
         //Navigation Properties
 

@@ -10,6 +10,6 @@ namespace AdviLaw.Application.Features.JobSection.Queries.GetLawyerActiveJobs
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string? Search { get; set; } = null;
-        public int LawyerId { get; set; } = 0; 
+        public int LawyerId { get; set; }
     }
 }

@@ -13,7 +13,25 @@ public class ReviewRepository : GenericRepository<Review>, IReviewRepository
         _dbContext = dbContext;
     }
 
-    public async Task<List<Review>> GetReviewsByLawyerId(Guid lawyerId)
+    public async Task AddAsync(Review review, CancellationToken cancellationToken)
+    {
+
+
+        try
+        {
+            await _dbContext.Reviews.AddAsync(review, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine("❌ Failed to save review: " + ex.InnerException?.Message ?? ex.Message);
+
+            throw new ApplicationException("Unable to save the review. Please ensure both users exist.");
+        }
+    
+}
+
+public async Task<List<Review>> GetReviewsByLawyerId(Guid lawyerId)
     {
         var lawyerUserId = lawyerId.ToString();
 

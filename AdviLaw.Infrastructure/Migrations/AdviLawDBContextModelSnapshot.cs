@@ -359,32 +359,22 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
-
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Schedules");
                 });
@@ -532,6 +522,12 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RevieweeId");
@@ -539,6 +535,10 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Reviews");
                 });
@@ -706,6 +706,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<string>("NationalIDImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProfileAbout")
                         .IsRequired()
@@ -1128,13 +1131,13 @@ namespace AdviLaw.Infrastructure.Migrations
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>
                 {
-                    b.HasOne("AdviLaw.Domain.Entites.JobSection.Job", "Job")
-                        .WithMany()
-                        .HasForeignKey("JobId")
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
+                        .WithMany("Schedules")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Job");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionSection.Session", b =>
@@ -1218,12 +1221,12 @@ namespace AdviLaw.Infrastructure.Migrations
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.ReviewSection.Review", b =>
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewee")
-                        .WithMany("ReceivedReviews")
+                        .WithMany()
                         .HasForeignKey("RevieweeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewer")
-                        .WithMany("SentReviews")
+                        .WithMany()
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -1232,6 +1235,14 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("SentReviews")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("ReceivedReviews")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Reviewee");
 
@@ -1442,6 +1453,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("ReceivedReports");
 
                     b.Navigation("ReceivedReviews");
+
+                    b.Navigation("Schedules");
 
                     b.Navigation("SentMessages");
 

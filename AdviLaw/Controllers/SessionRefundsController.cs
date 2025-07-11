@@ -1,5 +1,8 @@
 ﻿using AdviLaw.Application.Features.EscrowSection.Commands.ReleaseSessionFunds;
+using AdviLaw.Application.Features.Messages.DTOs;
+using AdviLaw.Application.Features.Messages.Query;
 using AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSession;
+using AdviLaw.Application.Features.SessionSection.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +35,21 @@ namespace AdviLaw.Controllers
             if (!result.Succeeded) return BadRequest(result.Message);
             return Ok("Dispute resolved and payment handled.");
         }
+
+        [HttpGet("{sessionId}")]
+        public async Task<IActionResult> GetSessionDetails(int sessionId)
+        {
+            var result = await _mediator.Send(new GetSessionDetailsQuery(sessionId));
+            return Ok(result); 
+        }
+
+        [HttpGet("{sessionId}/messages")]
+        public async Task<ActionResult<List<ChatMessageDto>>> GetSessionMessages(int sessionId)
+        {
+            var messages = await _mediator.Send(new GetSessionMessagesQuery(sessionId));
+            return Ok(messages);
+        }
+
     }
 
 }

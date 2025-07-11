@@ -14,11 +14,12 @@ namespace AdviLaw.Domain.Entites.SessionUtilities.ReviewSection
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         //Navigation Properties
         public int SessionId { get; set; }
-        public Session Session { get; set; } = new();
-
+        public Session Session { get; set; }
         public string? ReviewerId { get; set; }
         public User? Reviewer { get; set; }
+
         public string? RevieweeId { get; set; }
         public User? Reviewee { get; set; }
+
     }
 }

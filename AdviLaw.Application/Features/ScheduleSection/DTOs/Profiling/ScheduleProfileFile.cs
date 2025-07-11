@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using AdviLaw.Application.Features.Schedule.DTOs;
 using AdviLaw.Domain.Entites.ScheduleSection;
 using System;
 using System.Collections.Generic;
@@ -6,16 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AdviLaw.Application.Features.ScheduleSection.DTOs;
+using AutoMapper;
 
-namespace AdviLaw.Application.Features.Schedule.DTOs.Profiling
+
+public class ScheduleProfileFile : Profile
 {
-    public class ScheduleProfileFile : Profile
+    public ScheduleProfileFile()
     {
-        public ScheduleProfileFile()
-        {
-            CreateMap<AdviLaw.Domain.Entites.ScheduleSection.Schedule, ScheduleDTO>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
-        }
+        CreateMap<Schedule, ScheduleDTO>();
+        //.ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()))
+        //.ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+        CreateMap<CreateScheduleDTO, Schedule>().ReverseMap();
+        CreateMap<Schedule, CreatedScheduleDTO>().ReverseMap();
     }
 }

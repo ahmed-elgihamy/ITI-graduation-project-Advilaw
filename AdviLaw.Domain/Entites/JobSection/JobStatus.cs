@@ -2,6 +2,7 @@
 {
     public enum JobStatus
     {
+        WaitingApproval = 0,
         NotAssigned = 1,
         WaitingAppointment=2,
         WaitingPayment=3,

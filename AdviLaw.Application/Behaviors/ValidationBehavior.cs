@@ -47,8 +47,4 @@ namespace AdviLaw.Application.Behaviors
             return await next();
         }
     }
-
-
-
-
 }

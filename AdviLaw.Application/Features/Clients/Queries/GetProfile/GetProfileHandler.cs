@@ -22,7 +22,7 @@ namespace AdviLaw.Application.Features.Clients.Queries.GetProfile
                 {
                     j => j.User,
                 }
-            );
+            );  
             if (client == null)
                 return _responseHandler.NotFound<ClientProfileDTO>("Client profile not found.");
             var clientDto = _mapper.Map<ClientProfileDTO>(client);
