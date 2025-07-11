@@ -22,8 +22,7 @@ public class GetPagedJobForClientHandler(
     {
         //var query = await _unitOfWork.Jobs.GetAllActivePublishedJobs();
         var query = await _unitOfWork.Jobs.GetAllAsync(
-            //filter: j => j.Type == JobType.ClientPublishing && j.Status == JobStatus.NotAssigned && j.ClientId == request.ClientId,
-            filter: j => j.Type == JobType.ClientPublishing && j.ClientId == request.ClientId,
+            filter: j => (j.Type == JobType.ClientPublishing || j.Type == JobType.LawyerProposal) && j.ClientId == request.ClientId,
             includes: new List<Expression<Func<Job, object>>>
             {
                 j => j.Lawyer,

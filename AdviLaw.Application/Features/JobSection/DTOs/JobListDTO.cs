@@ -21,5 +21,6 @@ namespace AdviLaw.Application.Features.JobSection.DTOs
         public int Type { get; set; }
         public int? Duration { get; set; }
         public DateTime? AppointmentTime { get; set; }
+        public string LawyerName { get; set; }
     }
 }

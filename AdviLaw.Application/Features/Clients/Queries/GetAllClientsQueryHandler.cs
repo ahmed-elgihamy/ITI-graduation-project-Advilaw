@@ -19,7 +19,7 @@ namespace AdviLaw.Application.Features.Clients.Queries
         }
         public async Task<List<ClientListDto>> Handle(GetAllClientsQuery request, CancellationToken cancellationToken)
         {
-            var clients = await _unitOfWork.GenericClients.GetAllAsync(c => c.IsApproved == false, null, new List<Expression<System.Func<Client, object>>> { c => c.User });
+            var clients = await _unitOfWork.Clients.GetAllAsync(c => c.IsApproved == false, null, new List<Expression<System.Func<Client, object>>> { c => c.User });
             var clientList = clients.Select(c => new ClientListDto
             {
                 Id = c.Id,

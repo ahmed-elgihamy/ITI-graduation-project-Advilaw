@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    [Migration("20250710224753_v1")]
+    [Migration("20250711084303_v1")]
     partial class v1
     {
         /// <inheritdoc />

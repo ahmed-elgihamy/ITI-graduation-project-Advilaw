@@ -1,9 +1,9 @@
-﻿
-using AdviLaw.Application.Features.JobSection.Commands.AcceptConsultation;
+﻿using AdviLaw.Application.Features.JobSection.Commands.AcceptConsultation;
 using AdviLaw.Application.Features.JobSection.Commands.CreateJob;
 using AdviLaw.Application.Features.JobSection.Commands.RejectConsultation;
 using AdviLaw.Application.Features.JobSection.DTOs;
 using AdviLaw.Application.Features.JobSection.Queries.GetClientActiveJobs;
+using AdviLaw.Application.Features.JobSection.Queries.GetClientConsultations;
 using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForClient;
 using AdviLaw.Application.Features.JobSection.Queries.GetJobByIdForLawyer;
 using AdviLaw.Application.Features.JobSection.Queries.GetLawyerActiveJobs;
@@ -172,6 +172,7 @@ namespace AdviLaw.Controllers
             return Ok(result);
         }
 
+    
         [HttpPost("consultation/{id}/accept")]
         public async Task<IActionResult> AcceptConsultation(int id)
         {
@@ -189,7 +190,7 @@ namespace AdviLaw.Controllers
             return Ok(result);
         }
         [HttpPost("consultation/{id}/reject")]
-        public async Task<IActionResult> RejectConsultation(int id, [FromBody] string reason)
+        public async Task<IActionResult> RejectConsultation(int id, [FromBody] RejectConsultationRequest request)
         {
             var userIdStringified = User.FindFirstValue("userId");
             if (userIdStringified == null)
@@ -200,7 +201,25 @@ namespace AdviLaw.Controllers
             {
                 JobId = id,
                 LawyerId = userId,
-                Reason = reason
+                Reason = request.Reason
+            });
+
+            return Ok(result);
+        }
+
+        [HttpGet("me/client-consultations")]
+        public async Task<IActionResult> GetMyClientConsultations([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var userIdStringified = User.FindFirstValue("userId");
+            if (userIdStringified == null)
+                return Unauthorized("User ID not found in claims.");
+            int.TryParse(userIdStringified, out var userId);
+
+            var result = await _mediator.Send(new GetClientConsultationsQuery
+            {
+                ClientId = userId,
+                PageNumber = page,
+                PageSize = pageSize
             });
 
             return Ok(result);

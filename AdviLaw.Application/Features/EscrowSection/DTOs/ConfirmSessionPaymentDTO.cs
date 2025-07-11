@@ -9,5 +9,9 @@ namespace AdviLaw.Application.Features.EscrowSection.DTOs
     public class ConfirmSessionPaymentDTO
     {
         public string StripeSessionId { get; set; } = string.Empty;
+
+      
     }
 }
+
+

@@ -30,7 +30,7 @@ namespace AdviLaw.Application.Features.Clients.Commands
             if (request.Image == null || request.Image.Length == 0)
                 return _responseHandler.BadRequest<ClientProfileDTO>("No image uploaded.");
 
-            var client = await _unitOfWork.GenericClients.GetByIdIncludesAsync(request.ClientId, includes: new System.Collections.Generic.List<Expression<Func<Client, object>>>
+            var client = await _unitOfWork.Clients.GetByIdIncludesAsync(request.ClientId, includes: new System.Collections.Generic.List<Expression<Func<Client, object>>>
             {
                 j => j.User,
             });

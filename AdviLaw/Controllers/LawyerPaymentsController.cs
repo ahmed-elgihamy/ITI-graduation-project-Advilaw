@@ -130,7 +130,8 @@ using AdviLaw.Domain.Entities.UserSection;
                     account.Capabilities,
                     account.DetailsSubmitted,
                     account.PayoutsEnabled,
-                    account.Requirements
+                    account.Requirements,
+                    account.ChargesEnabled
                 });
             }
             catch (StripeException ex)
@@ -170,4 +171,7 @@ using AdviLaw.Domain.Entities.UserSection;
                 return StatusCode(500, "An unexpected error occurred.");
             }
         }
+
+
+
     }
