@@ -26,13 +26,13 @@ namespace AdviLaw.Application.Features.ScheduleSection.Commands.CreateSchedule
         {
             var schedule = new AdviLaw.Domain.Entites.ScheduleSection.Schedule
             {
-                JobId = request.JobId,
+                //JobId = request.JobId,
                 StartTime = request.StartTime.TimeOfDay,
                 EndTime = request.EndTime.TimeOfDay,
-                Day = request.Day,
-                Content = request.Content,
-                Type = ScheduleType.FromClient,
-                Status = ScheduleStatus.None
+                //Day = request.Day,
+                //Content = request.Content,
+                //Type = ScheduleType.FromClient,
+                //Status = ScheduleStatus.None
             };
 
             await _unitOfWork.Schedules.AddAsync(schedule);
