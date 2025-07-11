@@ -88,7 +88,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
                 //job.AppointmentTime = DateTime.SpecifyKind(request.AppointmentTime.Value, DateTimeKind.Utc);
                 job.LawyerId = lawyer.Id;
                 job.DurationHours = request.DurationHours;
-                job.Budget = request.Budget;
+                //job.Budget = request.Budget;
                 job.Status = JobStatus.WaitingApproval;
                 job.Budget = (int)Math.Ceiling(
                     (decimal)request.DurationHours.Value * lawyer.HourlyRate);
@@ -143,10 +143,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
 
             var dto = _mapper.Map<CreatedJobDTO>(job);
             return _responseHandler.Success(dto);
-          
-            var createdDto = _mapper.Map<CreatedJobDTO>(job);
-
-            return _responseHandler.Success(createdDto);
+         
         }
     }
 }
