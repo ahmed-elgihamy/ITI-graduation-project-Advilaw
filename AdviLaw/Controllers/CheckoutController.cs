@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Stripe.Checkout;
 
+// Handles subscription payments (lawyer subscriptions to the platform). 
+
 [ApiController]
 [Route("api/[controller]")]
 public class CheckoutController : ControllerBase
@@ -37,8 +39,8 @@ public class CheckoutController : ControllerBase
         {
             PaymentMethodTypes = new List<string> { "card" },
             Mode = "payment",
-            SuccessUrl = "https://frontend.url/subscription-success?session_id={CHECKOUT_SESSION_ID}",
-            CancelUrl = "https://frontend.url/subscription-cancel",
+            SuccessUrl = "http://localhost:4200/subscription-success?session_id={CHECKOUT_SESSION_ID}",
+            CancelUrl = "http://localhost:4200/subscription-cancel",
             LineItems = lineItems,
             Metadata = new Dictionary<string, string>
             {
@@ -80,12 +82,21 @@ public class CheckoutController : ControllerBase
                 }
                 else
                 {
-
                     return BadRequest(result.Message);
                 }
             }
 
-            return Ok(results);
+            // Fetch the lawyer's updated points
+            var lawyerProfileResult = await _mediator.Send(
+                new AdviLaw.Application.Features.LawyerProfile.Queries.GetLawyerProfile.GetLawyerProfileQuery(lawyerId)
+            );
+            int updatedPoints = 0;
+            if (lawyerProfileResult.Succeeded && lawyerProfileResult.Data != null)
+            {
+                updatedPoints = lawyerProfileResult.Data.Points;
+            }
+
+            return Ok(new { results, updatedPoints });
         }
 
         return BadRequest("Payment not successful.");

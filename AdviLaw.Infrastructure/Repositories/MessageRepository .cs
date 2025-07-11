@@ -1,6 +1,7 @@
 ﻿using AdviLaw.Domain.Entites.SessionUtilities.MessageSection;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,14 @@ namespace AdviLaw.Infrastructure.Repositories
         {
             _context.Messages.Add(message);
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<List<Message>> GetBySessionIdAsync(int sessionId, CancellationToken cancellationToken)
+        {
+            return await _context.Messages
+                .Where(m => m.SessionId == sessionId)
+                .OrderBy(m => m.SentAt)
+                .ToListAsync(cancellationToken);
         }
     }
 }

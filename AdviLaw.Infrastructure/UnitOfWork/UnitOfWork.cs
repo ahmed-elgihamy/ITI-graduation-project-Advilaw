@@ -19,13 +19,14 @@ namespace AdviLaw.Infrastructure.UnitOfWork
         public IJobFieldRepository JobFields { get; }
         public ILawyerRepository Lawyers { get; }
         public IJobRepository Jobs { get; }
-        public IGenericRepository<Client> GenericClients { get; }
+
         public IPlatformSubscriptionRepository PlatformSubscriptions { get; }
         public ISubscriptionPointRepository SubscriptionPoints { get; }
         public IUserSubscriptionRepository UserSubscriptions { get; }
         public IPaymentRepository Payments { get; }
+        public IClient Clients { get; }
 
-
+        public Iuser Users { get; }
         public IGenericRepository<Admin> GenericAdmins { get; }
 
         public IScheduleRepository Schedules { get; }
@@ -47,20 +48,19 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             JobFields = new JobFieldRepository(_dbContext);
             Lawyers = new LawyerRepository(_dbContext);
             Jobs = new JobRepository(_dbContext);
-            GenericClients = new GenericRepository<Client>(_dbContext);
+          
             PlatformSubscriptions = new PlatformSubscripitonRepository(_dbContext);
             Proposals = new ProposalRepository(_dbContext);
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);
             UserSubscriptions = new UserSubscriptionRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
-
+          
             GenericAdmins = new GenericRepository<Admin>(_dbContext);
-
             Reviews = new ReviewRepository(_dbContext);
             Schedules = new ScheduleRepository(_dbContext);
             Escrows = new EscrowRepository(_dbContext);
             Sessions = new SessionRepository(_dbContext);
-
+            Clients = new ClientRepo(_dbContext);
         }
 
 

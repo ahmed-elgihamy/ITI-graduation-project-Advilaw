@@ -1,4 +1,5 @@
 ﻿using AdviLaw.Application.Basics;
+using AdviLaw.Application.Features.EscrowSection.DTOs;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
     public class ConfirmSessionPaymentCommand
         : IRequest<Response<int>>
     {
-        public string SessionId { get; set; } = string.Empty;
+        public string StripeSessionId { get; set; } = string.Empty;
+        public int? SessionId { get; set; }
     }
 }

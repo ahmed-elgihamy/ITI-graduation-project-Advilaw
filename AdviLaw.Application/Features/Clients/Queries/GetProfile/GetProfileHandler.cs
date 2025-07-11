@@ -16,7 +16,7 @@ namespace AdviLaw.Application.Features.Clients.Queries.GetProfile
 
         public async Task<Response<ClientProfileDTO>> Handle(GetProfileQuery request, CancellationToken cancellationToken)
         {
-            var client = await _unitOfWork.GenericClients.GetByIdIncludesAsync(
+            var client = await _unitOfWork.Clients.GetByIdIncludesAsync(
                 request.UserId,
                 includes: new List<Expression<Func<Client, object>>>
                 {

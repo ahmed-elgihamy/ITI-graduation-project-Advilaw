@@ -4,6 +4,7 @@ using AdviLaw.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    partial class AdviLawDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250711084303_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,6 +122,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("StripeSessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TransferId")
                         .HasColumnType("nvarchar(max)");
 
@@ -159,6 +165,9 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -353,22 +362,32 @@ namespace AdviLaw.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Day")
-                        .HasColumnType("int");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
 
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("JobId");
 
                     b.ToTable("Schedules");
                 });
@@ -516,6 +535,12 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RevieweeId");
@@ -523,6 +548,10 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Reviews");
                 });
@@ -1112,13 +1141,13 @@ namespace AdviLaw.Infrastructure.Migrations
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.ScheduleSection.Schedule", b =>
                 {
-                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "User")
-                        .WithMany("Schedules")
-                        .HasForeignKey("UserId")
+                    b.HasOne("AdviLaw.Domain.Entites.JobSection.Job", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionSection.Session", b =>
@@ -1202,12 +1231,12 @@ namespace AdviLaw.Infrastructure.Migrations
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.ReviewSection.Review", b =>
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewee")
-                        .WithMany("ReceivedReviews")
+                        .WithMany()
                         .HasForeignKey("RevieweeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewer")
-                        .WithMany("SentReviews")
+                        .WithMany()
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -1216,6 +1245,14 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("SentReviews")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("ReceivedReviews")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Reviewee");
 
@@ -1426,8 +1463,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Navigation("ReceivedReports");
 
                     b.Navigation("ReceivedReviews");
-
-                    b.Navigation("Schedules");
 
                     b.Navigation("SentMessages");
 

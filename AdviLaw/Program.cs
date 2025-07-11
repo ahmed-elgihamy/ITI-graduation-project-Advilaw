@@ -20,7 +20,7 @@ namespace AdviLaw
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ✅ Add CORS Policy
+          
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAngularApp", policy =>
@@ -37,7 +37,7 @@ namespace AdviLaw
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
-            // ✅ Configure controllers to serialize enums as strings
+       
             builder.Services.AddControllers()
 
                 .AddJsonOptions(options =>
@@ -57,7 +57,7 @@ namespace AdviLaw
                 app.UseSwaggerUI();
             }
 
-            // Redirect root URL to Swagger UI
+          
             app.MapGet("/", context =>
             {
                 context.Response.Redirect("/swagger");
@@ -66,21 +66,21 @@ namespace AdviLaw
 
             app.UseHttpsRedirection();
 
-            // ✅ UseRouting MUST be before CORS and Authorization
+          
             app.UseRouting();
 
-            // ✅ Apply CORS before Authorization
             app.UseCors("AllowAngularApp");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            // ✅ Stripe configuration
+       
             StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
-            // ✅ Static files from wwwroot
+          
             app.UseStaticFiles();
 
-            // ✅ Static files from "Uploads" folder
+         
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -90,7 +90,7 @@ namespace AdviLaw
 
             app.MapControllers();
 
-            app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularDev");
+            app.MapHub<ChatHub>("/chathub").RequireCors("AllowAngularApp");
 
             app.Run();
         }

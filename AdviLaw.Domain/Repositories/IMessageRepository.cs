@@ -10,5 +10,7 @@ namespace AdviLaw.Domain.Repositories
     public interface IMessageRepository
     {
         Task AddAsync(Message message, CancellationToken cancellationToken);
+        Task<List<Message>> GetBySessionIdAsync(int sessionId, CancellationToken cancellationToken);
+
     }
 }

@@ -1,5 +1,11 @@
 ﻿using AdviLaw.Application.Features.Schedule.DTOs;
 using AdviLaw.Domain.Entites.ScheduleSection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AdviLaw.Application.Features.ScheduleSection.DTOs;
 using AutoMapper;
 
 

@@ -7,6 +7,7 @@ using AdviLaw.Domain.Entites.SessionUtilities.ReviewSection;
 using AdviLaw.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace AdviLaw.Domain.Entities.UserSection
 {
     public enum UserRole
