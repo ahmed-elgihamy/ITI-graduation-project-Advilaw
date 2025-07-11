@@ -18,43 +18,27 @@ namespace AdviLaw
             await Groups.AddToGroupAsync(Context.ConnectionId, $"Session_{sessionId}");
         }
 
-        public async Task SendMessage(int sessionId, string senderId, string content)
+        public async Task SendMessage(int sessionId, string senderId, string content, string? receiverId)
         {
-            //try
-            //{
-            //    var command = new CreateMessageCommand
-            //    {
-            //        SessionId = sessionId,
-            //        SenderId = senderId,
-            //        Content = content
-            //    };
+            var command = new CreateMessageCommand
+            {
+                SessionId = sessionId,
+                SenderId = senderId,
+                ReceiverId = receiverId,
+                Text = content
+            };
 
-            //    await _mediator.Send(command);
+            await _mediator.Send(command);
 
-            //    await Clients.Group($"Session_{sessionId}").SendAsync("ReceiveMessage", new
-            //    {
-            //        sessionId,
-            //        senderId,
-            //        content,
-            //        sentAt = DateTime.UtcNow
-            //    });
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("❌ SendMessage error: " + ex.Message);
-            //    throw;
-            //}
-
-            Console.WriteLine($"💬 Message from {senderId} in session {sessionId}: {content}");
-
-            // إرسال الرسالة فقط بدون أي تعامل مع الـ DB
             await Clients.Group($"Session_{sessionId}").SendAsync("ReceiveMessage", new
             {
                 sessionId,
                 senderId,
+                receiverId,
                 content,
                 sentAt = DateTime.UtcNow
             });
         }
+
     }
 }

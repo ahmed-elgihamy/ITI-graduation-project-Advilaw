@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AdviLaw.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStripeSessionIdToEscrow : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -341,6 +341,7 @@ namespace AdviLaw.Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     IsAnonymus = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     JobFieldId = table.Column<int>(type: "int", nullable: false),
                     LawyerId = table.Column<int>(type: "int", nullable: true),
                     ClientId = table.Column<int>(type: "int", nullable: true),
@@ -634,7 +635,9 @@ namespace AdviLaw.Infrastructure.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
                     ReviewerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RevieweeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    RevieweeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -651,6 +654,16 @@ namespace AdviLaw.Infrastructure.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Sessions_SessionId",
                         column: x => x.SessionId,
@@ -935,6 +948,16 @@ namespace AdviLaw.Infrastructure.Migrations
                 name: "IX_Reviews_SessionId",
                 table: "Reviews",
                 column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId1",
+                table: "Reviews",
+                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedules_JobId",

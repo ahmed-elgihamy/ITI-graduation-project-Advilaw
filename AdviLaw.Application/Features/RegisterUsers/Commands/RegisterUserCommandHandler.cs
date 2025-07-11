@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.Clients.Commands.CreateClient;
 using AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer;
+using AdviLaw.Application.Features.SessionSection.DTOs;
+using AdviLaw.Application.Features.SessionSection.Query;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Enums;
 using AdviLaw.Domain.Repositories;
@@ -16,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AdviLaw.Application.Features.RegisterUsers.Commands
 {
+
     public class RegisterUserCommandHandler: IRequestHandler<RegisterUserCommand, Response<object>>
     {
         private readonly UserManager<User> _userManager;

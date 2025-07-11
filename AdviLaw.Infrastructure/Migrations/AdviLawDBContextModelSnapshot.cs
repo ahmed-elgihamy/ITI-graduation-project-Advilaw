@@ -163,11 +163,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -432,38 +429,19 @@ namespace AdviLaw.Infrastructure.Migrations
 
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.MessageSection.Message", b =>
                 {
-
-                    b.Property<Guid>("Id")
-
-
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Id")
-
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
 
                     b.Property<string>("ReceiverId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SenderId")
-
-
-
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
-
-
-
-
-                        .HasColumnType("nvarchar(450)");
-
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
@@ -554,6 +532,12 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RevieweeId");
@@ -561,6 +545,10 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Reviews");
                 });
@@ -1196,17 +1184,8 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Sender")
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderId")
-
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                        .OnDelete(DeleteBehavior.Restrict);
-
-
 
                     b.HasOne("AdviLaw.Domain.Entites.SessionSection.Session", "Session")
                         .WithMany("Messages")
@@ -1249,12 +1228,12 @@ namespace AdviLaw.Infrastructure.Migrations
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.ReviewSection.Review", b =>
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewee")
-                        .WithMany("ReceivedReviews")
+                        .WithMany()
                         .HasForeignKey("RevieweeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewer")
-                        .WithMany("SentReviews")
+                        .WithMany()
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -1263,6 +1242,14 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("SentReviews")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
+                        .WithMany("ReceivedReviews")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Reviewee");
 

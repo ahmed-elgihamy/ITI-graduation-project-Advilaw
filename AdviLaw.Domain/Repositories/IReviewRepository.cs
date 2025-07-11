@@ -13,7 +13,8 @@ namespace AdviLaw.Domain.Repositories
         public interface IReviewRepository : IGenericRepository<Review>
         {
             Task<List<Review>> GetReviewsByLawyerId(Guid lawyerId);
-        }
+        Task AddAsync(Review review, CancellationToken cancellationToken);
+    }
 
     
 }
