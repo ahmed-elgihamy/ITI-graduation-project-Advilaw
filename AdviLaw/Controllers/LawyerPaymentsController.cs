@@ -172,6 +172,4 @@ using AdviLaw.Domain.Entities.UserSection;
             }
         }
 
-
-
     }
