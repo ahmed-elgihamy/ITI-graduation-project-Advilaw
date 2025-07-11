@@ -25,7 +25,7 @@ namespace AdviLaw.Application.Features.AppointmentSection.Commands.AcceptAppoint
             }
             if(
                 appointment.Type == ScheduleType.FromLawyer && request.UserRole != UserRole.Client ||
-                appointment.Type != ScheduleType.FromClient && request.UserRole != UserRole.Lawyer
+                appointment.Type == ScheduleType.FromClient && request.UserRole != UserRole.Lawyer
             )
             { return _responseHandler.Unauthorized<bool>("You do not have permission to accept this appointment."); }
             appointment.Status = ScheduleStatus.Accepted;

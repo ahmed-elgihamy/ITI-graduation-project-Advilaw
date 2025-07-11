@@ -1,4 +1,6 @@
-﻿namespace AdviLaw.Application.Features.Schedule.DTOs
+﻿using AdviLaw.Application.Features.ScheduleSection.DTOs;
+
+namespace AdviLaw.Application.Features.Schedule.DTOs
 {
  public class LawyerScheduleDTO
     {

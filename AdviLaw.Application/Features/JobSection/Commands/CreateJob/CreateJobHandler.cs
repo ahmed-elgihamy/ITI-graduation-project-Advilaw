@@ -100,7 +100,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
                 if (request.Budget <= 0)
                     return _responseHandler.BadRequest<CreatedJobDTO>("Budget must be greater than 0 for public jobs.");
                 // → Budget must come from request and be positive
-                if (request.budget <= 0)
+                if (request.Budget <= 0)
                     return _responseHandler.BadRequest<CreatedJobDTO>(
                         "Budget must be greater than 0 for public jobs");
 

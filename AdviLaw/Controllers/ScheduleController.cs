@@ -2,7 +2,6 @@
 using AdviLaw.Application.Features.Schedule.Commands.CreateSchedule;
 using AdviLaw.Application.Features.Schedule.Queries;
 using AdviLaw.Application.Features.Schedule.Queries.GetScheduleByLawyerIdNormal;
-using AdviLaw.Application.Features.ScheduleSection.Commands.CreateSchedule;
 using AdviLaw.Domain.Entities.UserSection;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
