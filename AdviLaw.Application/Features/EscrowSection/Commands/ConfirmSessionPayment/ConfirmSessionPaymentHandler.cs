@@ -49,7 +49,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
 
             escrow.Status = EscrowTransactionStatus.Completed;
 
-            
+
             // Store the PaymentIntentId from Stripe session
             escrow.TransferId = stripeSession.PaymentIntentId;
 
@@ -95,7 +95,7 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             {
                 return _responseHandler.BadRequest<int>("Failed to create or retrieve session ID");
             }
-            
+
             return _responseHandler.Success(escrow.SessionId.Value);
 
         }
