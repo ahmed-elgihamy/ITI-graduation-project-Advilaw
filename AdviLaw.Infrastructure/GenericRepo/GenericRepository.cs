@@ -83,6 +83,10 @@ namespace AdviLaw.Infrastructure.GenericRepo
 
         public async Task AddRangeAsync(ICollection<T> entities) => await _dbContext.Set<T>().AddRangeAsync(entities);
 
+        public async Task RemoveRangeAsync(ICollection<T> entities)
+        {
+            _dbContext.Set<T>().RemoveRange(entities);
+        }
         public async Task UpdateAsync(T entity)
         {
             _dbContext.Set<T>().Update(entity);

@@ -171,7 +171,8 @@ public class EscrowController : ControllerBase
 
         return Ok(escrows);
     }
-        [HttpGet("admin/completed-sessions")]
+
+    [HttpGet("admin/completed-sessions")]
     public async Task<IActionResult> GetCompletedSessionsForAdmin()
     {
         // Check if user is admin
