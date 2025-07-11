@@ -4,6 +4,7 @@ using AdviLaw.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdviLaw.Infrastructure.Migrations
 {
     [DbContext(typeof(AdviLawDBContext))]
-    partial class AdviLawDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250711083636_Intial")]
+    partial class Intial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -532,12 +535,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RevieweeId");
@@ -545,10 +542,6 @@ namespace AdviLaw.Infrastructure.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.HasIndex("SessionId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Reviews");
                 });
@@ -1231,12 +1224,12 @@ namespace AdviLaw.Infrastructure.Migrations
             modelBuilder.Entity("AdviLaw.Domain.Entites.SessionUtilities.ReviewSection.Review", b =>
                 {
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewee")
-                        .WithMany()
+                        .WithMany("ReceivedReviews")
                         .HasForeignKey("RevieweeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("AdviLaw.Domain.Entities.UserSection.User", "Reviewer")
-                        .WithMany()
+                        .WithMany("SentReviews")
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -1245,14 +1238,6 @@ namespace AdviLaw.Infrastructure.Migrations
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
-                        .WithMany("SentReviews")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("AdviLaw.Domain.Entities.UserSection.User", null)
-                        .WithMany("ReceivedReviews")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Reviewee");
 
