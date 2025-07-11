@@ -44,10 +44,11 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
             if (escrow == null)
                 return _responseHandler.NotFound<int>("Escrow not found");
 
-            escrow.Status = EscrowTransactionStatus.Completed;
-            
-            // Store the PaymentIntentId from Stripe session
+            //strore the paymentIntentId from Stripe session
             escrow.TransferId = stripeSession.PaymentIntentId;
+
+            escrow.Status = EscrowTransactionStatus.Completed;
+         
 
             var job = await _unitOfWork.Jobs.GetByIdAsync(escrow.JobId);
             if (job != null && job.Status == JobStatus.WaitingPayment)
@@ -91,4 +92,6 @@ namespace AdviLaw.Application.Features.EscrowSection.Commands.ConfirmSessionPaym
         }
 
     }
+
 }
+
