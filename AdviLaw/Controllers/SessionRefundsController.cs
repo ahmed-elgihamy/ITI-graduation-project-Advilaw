@@ -2,6 +2,7 @@
 using AdviLaw.Application.Features.Messages.DTOs;
 using AdviLaw.Application.Features.Messages.Query;
 using AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSession;
+using AdviLaw.Application.Features.SessionSection.Commands.MarkSessionAsCompleted.AdviLaw.Application.Features.SessionSection.Commands;
 using AdviLaw.Application.Features.SessionSection.Query;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -49,6 +50,22 @@ namespace AdviLaw.Controllers
             var messages = await _mediator.Send(new GetSessionMessagesQuery(sessionId));
             return Ok(messages);
         }
+
+        [HttpPost("{id}/complete")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] MarkSessionAsCompletedCommand command)
+        {
+            if (id != command.SessionId)
+                return BadRequest("ID mismatch.");
+
+            var result = await _mediator.Send(command);
+
+            if (!result)
+                return NotFound("Session not found.");
+
+            return NoContent(); // 204: Successfully updated
+        }
+
+
 
     }
 
