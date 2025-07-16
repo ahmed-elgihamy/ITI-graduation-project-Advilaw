@@ -14,7 +14,7 @@ namespace AdviLaw.Application.Features.LawyerSection.DTOs.Profiling
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User!.Gender))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.User!.City))
                 .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.User!.Country))
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
+                .ForMember(dest => dest.imageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User!.Gender))
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.User!.Role))
                 .ForMember(dest => dest.IsApproved, opt => opt.MapFrom(src => src.IsApproved))
@@ -32,6 +32,7 @@ namespace AdviLaw.Application.Features.LawyerSection.DTOs.Profiling
                 .ForMember(dest => dest.CountryCode, opt => opt.MapFrom(src => src.User!.CountryCode))
                 .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.User!.PostalCode))
                 .ForMember(dest => dest.NationalityId, opt => opt.MapFrom(src => src.User!.NationalityId))
+                .ForMember(dest => dest.BarAssociationCardNumber, opt => opt.MapFrom(src => src.BarAssociationCardNumber))
                 .ReverseMap();
 
             CreateMap<Lawyer, LawyerDetailsDTO>()
@@ -44,6 +45,9 @@ namespace AdviLaw.Application.Features.LawyerSection.DTOs.Profiling
                 .ForMember(dest => dest.CountryCode, opt => opt.MapFrom(src => src.User!.CountryCode))
                 .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.User!.PostalCode))
                 .ForMember(dest => dest.NationalityId, opt => opt.MapFrom(src => src.User!.NationalityId))
+                .ForMember(dest => dest.BarAssociationCardNumber, opt => opt.MapFrom(src => src.BarAssociationCardNumber))
+                .ForMember(dest => dest.imageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
+                .ForMember(dest => dest.Experience, opt => opt.MapFrom(src => src.Experience))
                 .ReverseMap();
 
 

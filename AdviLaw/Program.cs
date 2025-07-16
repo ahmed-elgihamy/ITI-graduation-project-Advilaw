@@ -87,6 +87,7 @@ namespace AdviLaw
                     Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
                 RequestPath = "/Uploads"
             });
+            app.UseRouting();
 
             app.MapControllers();
 

@@ -4,6 +4,7 @@ using AdviLaw.Domain.UnitOfWork;
 using AutoMapper;
 using MediatR;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace AdviLaw.Application.Features.LawyerSection.Commands.UpdateLawyerProfile
 {
@@ -32,6 +33,33 @@ namespace AdviLaw.Application.Features.LawyerSection.Commands.UpdateLawyerProfil
             }
             // Map the request to the lawyer entity
             _mapper.Map(request, lawyer);
+
+            // Handle profile image upload (base64 to file)
+            if (!string.IsNullOrEmpty(request.ImageUrl))
+            {
+                if (request.ImageUrl.StartsWith("data:image"))
+                {
+                    var base64Data = Regex.Replace(request.ImageUrl, @"^data:image\/[^;]+;base64,", string.Empty);
+                    var fileName = $"{Guid.NewGuid()}.png";
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+                    var filePath = Path.Combine(uploadsFolder, fileName);
+                    byte[] imageBytes = Convert.FromBase64String(base64Data);
+                    File.WriteAllBytes(filePath, imageBytes);
+                    // Build the full URL
+                    var baseUrl = "https://localhost:44302"; // You may want to make this configurable
+                    var fullImageUrl = $"{baseUrl}/Uploads/{fileName}";
+                    lawyer.User.ImageUrl = fullImageUrl;
+                }
+                else
+                {
+                    lawyer.User.ImageUrl = request.ImageUrl;
+                }
+            }
+
             // Update the lawyer profile in the database
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             // Map the updated lawyer entity to DTO

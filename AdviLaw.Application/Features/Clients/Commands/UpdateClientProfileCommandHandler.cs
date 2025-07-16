@@ -47,8 +47,8 @@ namespace AdviLaw.Application.Features.Clients.Commands
                 client.User.PostalCode = request.PostalCode;
             if (request.NationalityId != 0)
                 client.User.NationalityId = request.NationalityId;
-            if (!string.IsNullOrEmpty(request.ImageUrl))
-                client.User.ImageUrl = request.ImageUrl;
+            if (!string.IsNullOrEmpty(request.imageUrl))
+                client.User.ImageUrl = request.imageUrl;
             if (request.IsActive != default(bool))
                 client.User.IsActive = request.IsActive;
             if ((int)request.Gender != 0)

@@ -8,4 +8,5 @@
     public string PhotoUrl { get; set; } = string.Empty;
     public decimal HourlyRate { get; set; }
     public int Points { get; set; } // Add this property
+    public string ProfileHeader { get; set; } = string.Empty;
 }

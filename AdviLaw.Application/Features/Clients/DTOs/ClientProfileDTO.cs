@@ -19,7 +19,7 @@ namespace AdviLaw.Application.Features.Clients.DTOs
 
         public long NationalityId { get; set; }
 
-        public string ImageUrl { get; set; } = string.Empty;
+        public string imageUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
 
         public Gender Gender { get; set; }

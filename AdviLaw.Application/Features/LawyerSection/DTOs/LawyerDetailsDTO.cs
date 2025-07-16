@@ -17,6 +17,10 @@ namespace AdviLaw.Application.Features.LawyerSection.DTOs
         public string PostalCode { get; set; } = string.Empty;
 
         public long NationalityId { get; set; }
+        
         public Gender Gender { get; set; }
+        public int BarAssociationCardNumber { get; set; }
+        public string imageUrl { get; set; } = string.Empty;
+        public int Experience { get; set; }
     }
 }

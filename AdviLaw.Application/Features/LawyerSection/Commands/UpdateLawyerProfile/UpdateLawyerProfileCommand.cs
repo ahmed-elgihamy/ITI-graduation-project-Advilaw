@@ -20,5 +20,8 @@ namespace AdviLaw.Application.Features.LawyerSection.Commands.UpdateLawyerProfil
 
         public long NationalityId { get; set; }
         public Gender Gender { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+        public int Experience { get; set; }
+        public int BarAssociationCardNumber { get; set; }
     }
 }
