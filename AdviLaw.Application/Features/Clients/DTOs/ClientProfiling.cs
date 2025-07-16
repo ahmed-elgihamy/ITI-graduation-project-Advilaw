@@ -13,7 +13,7 @@ namespace AdviLaw.Application.Features.Clients.DTOs
                 .ForMember(dest => dest.CountryCode, opt => opt.MapFrom(src => src.User!.CountryCode))
                 .ForMember(dest => dest.PostalCode, opt => opt.MapFrom(src => src.User!.PostalCode))
                 .ForMember(dest => dest.NationalityId, opt => opt.MapFrom(src => src.User!.NationalityId))
-                .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
+                .ForMember(dest => dest.imageUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.User!.IsActive))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.User!.Gender))
                 .ForMember(dest => dest.StripeAccountId, opt => opt.MapFrom(src => src.User!.StripeAccountId))

@@ -14,7 +14,8 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
             // wait for admin review to be approved
                CreateMap<CreateLawyerCommand, Lawyer>()
                 .ForMember(dest => dest.IsApproved, opt => opt.MapFrom(src => false))
-                .ForMember(dest => dest.Fields, opt => opt.Ignore()); // ✅
+                .ForMember(dest => dest.Fields, opt => opt.Ignore())
+                .ForMember(dest => dest.BarAssociationCardNumber, opt => opt.MapFrom(src => src.BarAssociationCardNumber)); // ✅
 
 
             CreateMap<Lawyer, LawyerResponseDto>();

@@ -14,7 +14,7 @@ namespace AdviLaw.Application.Features.Clients.Commands
         public string CountryCode { get; set; } = string.Empty;
         public string PostalCode { get; set; } = string.Empty;
         public long NationalityId { get; set; }
-        public string ImageUrl { get; set; } = string.Empty;
+        public string imageUrl { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public AdviLaw.Domain.Enums.Gender Gender { get; set; }
     }

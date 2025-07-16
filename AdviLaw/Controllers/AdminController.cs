@@ -14,7 +14,7 @@ using GetLawyerForAdminQuery = AdviLaw.Application.Features.AdminSection.Queries
 
 namespace AdviLaw.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase

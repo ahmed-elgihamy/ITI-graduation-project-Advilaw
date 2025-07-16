@@ -14,6 +14,7 @@ namespace AdviLaw.Application.Features.Lawyers.Commands.CreateLawyer
         public IFormFile BarCardImage { get; set; } = null!;
 
         public List<int> FieldIds { get; set; }
+        public int BarAssociationCardNumber { get; set; }
 
     }
 } 

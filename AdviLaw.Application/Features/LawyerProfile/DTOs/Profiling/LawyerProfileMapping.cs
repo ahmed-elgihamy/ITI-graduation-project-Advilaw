@@ -18,7 +18,8 @@ namespace AdviLaw.Application.Features.LawyerProfile.DTOs.Profiling
     .ForMember(dest => dest.HourlyRate, opt => opt.MapFrom(src => src.HourlyRate))
     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.User!.UserName))
     .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.User!.ImageUrl))
-    .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Points)); // Map Points
+    .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.Points))
+    .ForMember(dest => dest.ProfileHeader, opt => opt.MapFrom(src => src.ProfileHeader)); // Map Points
 
         }
     }
