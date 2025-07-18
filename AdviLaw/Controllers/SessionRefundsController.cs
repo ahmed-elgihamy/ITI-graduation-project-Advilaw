@@ -3,10 +3,10 @@ using AdviLaw.Application.Features.Messages.DTOs;
 using AdviLaw.Application.Features.Messages.Query;
 using AdviLaw.Application.Features.SessionSection.Commands.HandleDisputedSession;
 using AdviLaw.Application.Features.SessionSection.Query;
-using AdviLaw.Application.Features.SessionSection.Commands.MarkSessionAsCompletedCommand;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AdviLaw.Application.Features.SessionSection.Commands.MarkSessionAsCompleted;
 
 namespace AdviLaw.Controllers
 {

@@ -30,8 +30,12 @@ namespace AdviLaw.Infrastructure.Repositories
                          .FirstOrDefaultAsync(s => s.Id == sessionId);
         }
 
-  
 
 
+        public async Task UpdateAsync(Session session, CancellationToken cancellationToken)
+        {
+            _dbContext.Sessions.Update(session);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
     }
 }

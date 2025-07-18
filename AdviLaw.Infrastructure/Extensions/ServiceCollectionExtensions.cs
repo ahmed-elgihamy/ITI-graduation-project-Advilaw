@@ -72,7 +72,7 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
-
+            services.AddScoped<ISessionRepository, SessionRepository>();
             // In Program.cs or startup
             //services.AddScoped<IRequestHandler<GetPendingConsultationsQuery, Response<PagedResponse<AppointmentDetailsDTO>>>, GetPendingConsultationsHandler>();
             //;
