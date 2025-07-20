@@ -1,5 +1,6 @@
 ﻿using AdviLaw.Application.Basics;
 using AdviLaw.Application.Features.AppointmentSection.DTOs;
+using AdviLaw.Application.Features.Clients.Queries.GetChat;
 using AdviLaw.Application.Features.Shared.DTOs;
 using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.Repositories;
@@ -73,6 +74,7 @@ namespace AdviLaw.Infrastructure.Extensions
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
+            services.AddScoped<IClientChatService, ClientChatService>();
             // In Program.cs or startup
             //services.AddScoped<IRequestHandler<GetPendingConsultationsQuery, Response<PagedResponse<AppointmentDetailsDTO>>>, GetPendingConsultationsHandler>();
             //;

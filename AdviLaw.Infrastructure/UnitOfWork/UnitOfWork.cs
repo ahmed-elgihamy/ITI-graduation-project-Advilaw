@@ -1,4 +1,5 @@
-﻿using AdviLaw.Domain.Entities.UserSection;
+﻿using AdviLaw.Application.Features.Clients.Queries.GetChat;
+using AdviLaw.Domain.Entities.UserSection;
 using AdviLaw.Domain.IGenericRepo;
 using AdviLaw.Domain.Repositories;
 using AdviLaw.Domain.UnitOfWork;
@@ -48,7 +49,6 @@ namespace AdviLaw.Infrastructure.UnitOfWork
             JobFields = new JobFieldRepository(_dbContext);
             Lawyers = new LawyerRepository(_dbContext);
             Jobs = new JobRepository(_dbContext);
-          
             PlatformSubscriptions = new PlatformSubscripitonRepository(_dbContext);
             Proposals = new ProposalRepository(_dbContext);
             SubscriptionPoints = new SubscriptionPointRepository(_dbContext);

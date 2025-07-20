@@ -23,6 +23,7 @@ namespace AdviLaw.Domain.UnitOfWork
         IReviewRepository Reviews { get; }
         IScheduleRepository Schedules { get; }
         ISessionRepository Sessions { get; }
+        
         IEscrowRepository Escrows { get; }
         IClient Clients { get; }
         Task<int> SaveChangesAsync();

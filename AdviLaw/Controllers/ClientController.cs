@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using AdviLaw.Application.Features.Clients.Commands;
 using AdviLaw.Application.Features.Clients.DTOs;
+using AdviLaw.Application.Features.Clients.Queries.GetChat;
 using AdviLaw.Application.Features.Clients.Queries.GetProfile;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,13 @@ namespace AdviLaw.Controllers
 
             var command = new UpdateClientProfileImageCommand { ClientId = userId, Image = dto.Image };
             var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("{clientId}/chats")]
+        public async Task<IActionResult> GetClientChats(string clientId)
+        {
+            var result = await _mediator.Send(new GetClientJobChatsQuery(clientId));
             return Ok(result);
         }
     }

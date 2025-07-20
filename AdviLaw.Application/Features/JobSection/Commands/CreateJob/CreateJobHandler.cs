@@ -50,6 +50,7 @@ namespace AdviLaw.Application.Features.JobSection.Commands.CreateJob
                 Type = request.Type,
                 IsAnonymus = request.IsAnonymus,
                 JobFieldId = request.JobFieldId,
+                SessionId =request.sesstionId,
                 ClientId = user.Client.Id,
                 Status = request.Type == JobType.LawyerProposal
                                  ? JobStatus.WaitingAppointment

@@ -10,6 +10,5 @@ namespace AdviLaw.Domain.Repositories
 {
  public interface IClient:IGenericRepository<Client>
     {
-
     }
 }
