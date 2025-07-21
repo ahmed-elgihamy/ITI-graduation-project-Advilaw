@@ -6,7 +6,7 @@ namespace AdviLaw.Application.Features.PaymentSection.DTOs
     {
         public int Id { get; set; }
         public PaymentType Type { get; set; } = PaymentType.SessionPayment;
-        public int Amount { get; set; } //mapped
+        public decimal Amount { get; set; } //mapped
         public string? SenderId { get; set; }
         public string SenderName { get; set; } = string.Empty; //mapped
         public string SenderImgUrl { get; set; } = string.Empty; //mapped
