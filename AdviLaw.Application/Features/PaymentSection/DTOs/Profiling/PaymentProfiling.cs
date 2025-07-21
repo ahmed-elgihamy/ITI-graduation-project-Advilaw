@@ -10,7 +10,7 @@ namespace AdviLaw.Application.Features.PaymentSection.DTOs.Profiling
             CreateMap<Payment, LawyerPaymentListDTO>()
                 .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender.UserName))
                 .ForMember(dest => dest.SenderImgUrl, opt => opt.MapFrom(src => src.Sender.ImageUrl))
-                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.EscrowTransaction.Amount))
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount))
                 .ReverseMap();
         }
     }
